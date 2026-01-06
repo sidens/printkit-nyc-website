@@ -18,6 +18,12 @@ const Header = () => {
             >
               Pricing
             </Link>
+            <Link
+              to="/faq"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              FAQ
+            </Link>
             {isHome ? (
               <a
                 href="#availability"

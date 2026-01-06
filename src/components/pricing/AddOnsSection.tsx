@@ -1,4 +1,4 @@
-import { Image, Package, Server, Layers } from "lucide-react";
+import { Image, Package, Server } from "lucide-react";
 import addonsImage from "@/assets/addons-layout.jpg";
 
 const addons = [
@@ -19,12 +19,6 @@ const addons = [
     name: "WCMPlus Print Server",
     price: "$35 per day",
     description: "Wireless printing from any device on the network",
-  },
-  {
-    icon: Layers,
-    name: "Spare media backup kit",
-    price: "$25 flat",
-    description: "Extra media roll for high-volume events",
   },
 ];
 
