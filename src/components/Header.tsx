@@ -1,8 +1,14 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isHome = location.pathname === "/";
+
+  const handleRequestClick = () => {
+    navigate("/request");
+    window.scrollTo(0, 0);
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -32,20 +38,20 @@ const Header = () => {
                 Check availability
               </a>
             ) : (
-              <Link
-                to="/request"
+              <button
+                onClick={handleRequestClick}
                 className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
               >
                 Request dates
-              </Link>
+              </button>
             )}
           </nav>
-          <Link
-            to="/request"
+          <button
+            onClick={handleRequestClick}
             className="md:hidden text-sm font-medium text-primary"
           >
             Book now
-          </Link>
+          </button>
         </div>
       </div>
     </header>
