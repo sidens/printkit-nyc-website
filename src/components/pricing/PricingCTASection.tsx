@@ -1,7 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PricingCTASection = () => {
+  const navigate = useNavigate();
+
+  const handleRequestClick = () => {
+    navigate("/request");
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section className="section-padding bg-background">
       <div className="container-narrow">
@@ -10,8 +17,8 @@ const PricingCTASection = () => {
           <p className="text-lg text-muted-foreground mb-8">
             Request your dates and we'll confirm availability before payment.
           </p>
-          <Button variant="hero" size="xl" asChild>
-            <Link to="/request">Request your dates</Link>
+          <Button variant="hero" size="xl" onClick={handleRequestClick}>
+            Request your dates
           </Button>
         </div>
       </div>
