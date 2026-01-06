@@ -4,8 +4,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import wcmplusImage from "@/assets/wcmplus-server.jpg";
+import airprintImage from "@/assets/airprint-ipad.jpg";
 
-const faqs = [
+const generalFaqs = [
   {
     question: "What exactly is included in a PrintKit?",
     answer:
@@ -31,6 +33,42 @@ const faqs = [
     answer:
       "You can either pay $0.40 per print based on usage after return, or choose a prepaid media kit for up to 400 prints. We'll review usage together when the kit is returned.",
   },
+];
+
+const equipmentFaqs = [
+  {
+    question: "What is the WCMPlus Print Server?",
+    answer:
+      "WCMPlus is an optional print server that connects the DNP DS40 to your network and enables wireless printing, including AirPrint from Apple devices. It's commonly used in photo booth and event setups where printing directly from an iPad or iPhone is preferred.",
+  },
+  {
+    question: "What does the WCMPlus enable that a direct USB connection does not?",
+    answer:
+      "With WCMPlus, the printer can receive print jobs over the network instead of requiring a physical USB connection. This allows supported devices — including iPads, iPhones, and Macs — to send prints wirelessly using AirPrint or standard network printing.",
+  },
+  {
+    question: "Do I need the WCMPlus Print Server?",
+    answer:
+      "Not always. If you're printing from a single laptop connected via USB, you likely don't need it. The WCMPlus is most useful if you want to print wirelessly from an iPad, support multiple devices, or simplify a photo booth workflow.",
+  },
+  {
+    question: "Can I print from an iPad or iPhone?",
+    answer:
+      "Yes — when the WCMPlus Print Server is included, the DS40 supports AirPrint from Apple devices, allowing compatible apps to send print jobs without installing drivers or connecting cables.",
+  },
+  {
+    question: "Is the WCMPlus required for photo strip printing?",
+    answer:
+      "No. Photo strip layouts are handled by your photo booth software or app. The WCMPlus only affects how print jobs are sent to the printer, not the print layout itself.",
+  },
+  {
+    question: "Will this work with my photo booth app?",
+    answer:
+      "Most photo booth apps that support AirPrint or standard printer output will work with the DS40 when paired with WCMPlus. If your app can print via AirPrint or to a network printer, it should be compatible. If you're unsure, feel free to ask before booking.",
+  },
+];
+
+const policyFaqs = [
   {
     question: "Why is PrintKit pickup-only?",
     answer:
@@ -63,27 +101,94 @@ const faqs = [
   },
 ];
 
+interface FAQSectionProps {
+  title: string;
+  faqs: { question: string; answer: string }[];
+  startIndex: number;
+}
+
+const FAQSection = ({ title, faqs, startIndex }: FAQSectionProps) => (
+  <div className="space-y-4">
+    <h3 className="text-xl font-semibold text-foreground mb-6">{title}</h3>
+    <Accordion type="single" collapsible className="space-y-3">
+      {faqs.map((faq, index) => (
+        <AccordionItem
+          key={startIndex + index}
+          value={`item-${startIndex + index}`}
+          className="card-elevated px-6 border-none"
+        >
+          <AccordionTrigger className="text-left hover:no-underline py-5">
+            <span className="font-medium text-base pr-4">{faq.question}</span>
+          </AccordionTrigger>
+          <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+            {faq.answer}
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  </div>
+);
+
 const FAQAccordion = () => {
   return (
     <section className="section-padding section-alt">
       <div className="container-narrow">
-        <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="card-elevated px-6 border-none"
-              >
-                <AccordionTrigger className="text-left hover:no-underline py-5">
-                  <span className="font-medium text-lg pr-4">{faq.question}</span>
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+        <div className="max-w-3xl mx-auto space-y-12">
+          {/* General Questions */}
+          <FAQSection title="General Questions" faqs={generalFaqs} startIndex={0} />
+
+          {/* Equipment Details */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold text-foreground">Equipment Details</h3>
+            
+            {/* Images Row */}
+            <div className="grid gap-4 sm:grid-cols-2 mb-6">
+              <div className="card-elevated overflow-hidden">
+                <img
+                  src={wcmplusImage}
+                  alt="WCMPlus Print Server enabling wireless printing from iPad to DS40 printer"
+                  className="w-full h-auto object-cover aspect-[4/3]"
+                />
+                <div className="p-3 bg-muted/50">
+                  <p className="text-xs text-muted-foreground text-center">
+                    WCMPlus Print Server
+                  </p>
+                </div>
+              </div>
+              <div className="card-elevated overflow-hidden">
+                <img
+                  src={airprintImage}
+                  alt="iPad printing wirelessly to DNP DS40 via AirPrint"
+                  className="w-full h-auto object-cover aspect-[4/3]"
+                />
+                <div className="p-3 bg-muted/50">
+                  <p className="text-xs text-muted-foreground text-center">
+                    AirPrint from Apple Devices
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <Accordion type="single" collapsible className="space-y-3">
+              {equipmentFaqs.map((faq, index) => (
+                <AccordionItem
+                  key={`equipment-${index}`}
+                  value={`equipment-${index}`}
+                  className="card-elevated px-6 border-none"
+                >
+                  <AccordionTrigger className="text-left hover:no-underline py-5">
+                    <span className="font-medium text-base pr-4">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+
+          {/* Policies & Logistics */}
+          <FAQSection title="Policies & Logistics" faqs={policyFaqs} startIndex={100} />
         </div>
       </div>
     </section>
