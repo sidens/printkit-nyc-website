@@ -1,31 +1,45 @@
+import { Link, useLocation } from "react-router-dom";
+
 const Header = () => {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container-narrow">
         <div className="flex items-center justify-between h-16 px-6">
-          <a href="/" className="text-xl font-semibold tracking-tight">
+          <Link to="/" className="text-xl font-semibold tracking-tight">
             PrintKit <span className="text-muted-foreground font-normal">NYC</span>
-          </a>
+          </Link>
           <nav className="hidden md:flex items-center gap-8">
-            <a
-              href="#pricing"
+            <Link
+              to="/pricing"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Pricing
-            </a>
-            <a
-              href="#availability"
-              className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              Check availability
-            </a>
+            </Link>
+            {isHome ? (
+              <a
+                href="#availability"
+                className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+              >
+                Check availability
+              </a>
+            ) : (
+              <Link
+                to="/request"
+                className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+              >
+                Request dates
+              </Link>
+            )}
           </nav>
-          <a
-            href="#availability"
+          <Link
+            to="/request"
             className="md:hidden text-sm font-medium text-primary"
           >
             Book now
-          </a>
+          </Link>
         </div>
       </div>
     </header>
