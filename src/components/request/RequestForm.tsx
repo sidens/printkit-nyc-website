@@ -10,7 +10,6 @@ import { useToast } from "@/hooks/use-toast";
 const addons = [
   { id: "prepaid-media", label: "Prepaid media kit ($150 — up to 400 prints)" },
   { id: "print-server", label: "WCMPlus Print Server ($35/day)" },
-  { id: "spare-media", label: "Spare media backup kit ($25)" },
 ];
 
 const RequestForm = () => {
