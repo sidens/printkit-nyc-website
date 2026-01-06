@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const pricingItems = [
   { label: "Printer rental", value: "$95", unit: "/ day" },
@@ -39,7 +40,7 @@ const PricingSection = () => {
             </div>
             <div className="mt-8 pt-6 border-t border-border text-center">
               <Button variant="outline" asChild>
-                <a href="#availability">See full pricing details</a>
+                <Link to="/pricing">See full pricing details</Link>
               </Button>
             </div>
           </div>

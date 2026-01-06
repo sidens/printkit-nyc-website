@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-printer.jpg";
 
 const HeroSection = () => {
@@ -16,10 +17,10 @@ const HeroSection = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button variant="hero" size="xl" asChild>
-                <a href="#availability">Check availability</a>
+                <Link to="/request">Check availability</Link>
               </Button>
               <Button variant="heroOutline" size="xl" asChild>
-                <a href="#pricing">View pricing</a>
+                <Link to="/pricing">View pricing</Link>
               </Button>
             </div>
           </div>
