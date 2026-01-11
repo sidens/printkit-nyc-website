@@ -14,6 +14,11 @@ const generalFaqs = [
       "Each PrintKit includes a DNP DS40 professional photo printer, a protective travel case, power and USB cables, and a quick-start setup guide. Nothing extra is required to get started.",
   },
   {
+    question: "How heavy is the printer?",
+    answer:
+      "The DNP DS40 weighs approximately 24 lbs (11 kg). The protective travel case adds a few more pounds, so plan accordingly if you're carrying it up stairs or transporting it by hand. Most renters find it manageable, but it's worth being prepared.",
+  },
+  {
     question: "Do I need special software to use the printer?",
     answer:
       "No. If your setup can print, it can print to the DNP DS40. The printer works with Mac and Windows and is compatible with photo booth software, DSLR tethering, and standard print drivers.",
