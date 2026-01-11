@@ -4,8 +4,8 @@ import samplePrints from "@/assets/sample-prints.jpg";
 const features = [
   {
     icon: Sparkles,
-    title: "Lab-quality 4×6 prints",
-    description: "Professional dye-sublimation technology for vibrant, long-lasting prints.",
+    title: "Lab-quality prints",
+    description: "Professional dye-sublimation: 4×6 standard prints or 2× 2×6 photobooth strips per sheet.",
   },
   {
     icon: Clock,

@@ -31,31 +31,42 @@ const RequestForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          pickupDate: formData.pickupDate,
+          returnDate: formData.returnDate,
+          eventType: formData.eventType,
+          addons: formData.addons.join(", ") || "None",
+          notes: formData.notes || "None",
+        }),
+      });
 
-    // Build mailto link as fallback
-    const subject = encodeURIComponent("PrintKit Rental Request");
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\n` +
-        `Email: ${formData.email}\n` +
-        `Phone: ${formData.phone}\n` +
-        `Pickup Date: ${formData.pickupDate}\n` +
-        `Return Date: ${formData.returnDate}\n` +
-        `Event Type: ${formData.eventType}\n` +
-        `Add-ons: ${formData.addons.join(", ") || "None"}\n` +
-        `Notes: ${formData.notes || "None"}`
-    );
-
-    window.location.href = `mailto:hello@printkitnyc.com?subject=${subject}&body=${body}`;
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-
-    toast({
-      title: "Request prepared!",
-      description: "Your email client should open with your request details.",
-    });
+      if (response.ok) {
+        setIsSubmitted(true);
+        toast({
+          title: "Request sent!",
+          description: "We'll respond within 24 hours with availability.",
+        });
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again or email us directly at hello@printkitnyc.com",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleAddonChange = (addonId: string, checked: boolean) => {
