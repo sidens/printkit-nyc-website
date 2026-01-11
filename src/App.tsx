@@ -8,12 +8,14 @@ import Pricing from "./pages/Pricing";
 import Request from "./pages/Request";
 import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
+import LocalBusinessSchema from "./components/LocalBusinessSchema";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <LocalBusinessSchema />
       <Toaster />
       <Sonner />
       <Routes>

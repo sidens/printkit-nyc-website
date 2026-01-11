@@ -19,6 +19,7 @@ const PricingHero = () => {
                 src={pricingHero}
                 alt="DNP DS40 professional photo printer detail view"
                 className="w-full h-auto object-cover aspect-[16/9]"
+                loading="lazy"
               />
             </div>
           </div>
