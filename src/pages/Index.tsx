@@ -6,10 +6,12 @@ import PricingSection from "@/components/PricingSection";
 import PrintQualitySection from "@/components/PrintQualitySection";
 import CompatibilitySection from "@/components/CompatibilitySection";
 import PickupSection from "@/components/PickupSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 
 const Index = () => {
   return (
@@ -21,6 +23,7 @@ const Index = () => {
         ogTitle="Pro Photo Printer Rental in NYC | PrintKit NYC"
         ogDescription="Industrial-grade photo printing for events, projects, and more. Pickup in Clinton Hill, Brooklyn."
       />
+      <BreadcrumbSchema items={[{ name: "Home", path: "/" }]} />
       <Header />
       <main className="flex-1">
         <HeroSection />
@@ -30,6 +33,7 @@ const Index = () => {
         <PrintQualitySection />
         <CompatibilitySection />
         <PickupSection />
+        <TestimonialsSection />
         <FAQSection />
         <CTASection />
       </main>
