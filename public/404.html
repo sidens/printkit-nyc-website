@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=/printkit-nyc-website/" />
+    <script>
+      // Preserve path/query/hash by converting it into a hash route fallback
+      // (works even if you keep BrowserRouter; alternatively use HashRouter)
+      var l = window.location;
+      var base = "/printkit-nyc-website";
+      l.replace(base + "/?p=" + encodeURIComponent(l.pathname + l.search + l.hash));
+    </script>
+  </head>
+  <body></body>
+</html>
