@@ -30,6 +30,7 @@ const HeroSection = () => {
                 src={heroImage}
                 alt="DNP DS40 professional photo printer powered on, ready for rental"
                 className="w-full h-auto object-cover aspect-[4/3]"
+                fetchPriority="high"
               />
             </div>
           </div>

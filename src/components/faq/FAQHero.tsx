@@ -24,6 +24,7 @@ const FAQHero = () => {
                 src={faqHero}
                 alt="PrintKit printer detail"
                 className="w-full h-auto object-cover aspect-[4/3]"
+                loading="lazy"
               />
             </div>
           </div>
