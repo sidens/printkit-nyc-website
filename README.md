@@ -1,73 +1,43 @@
-# Welcome to your Lovable project
+# Photo Booth Printer Rental
 
-## Project info
+A modern, responsive website for renting professional DNP DS40 photo booth printers with WCM Plus wireless connectivity.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Features
 
-## How can I edit this code?
+- **Professional Equipment**: DNP DS40 dye-sublimation printer with lab-quality 4x6 and 2x6 photobooth strip prints
+- **Wireless Printing**: WCM Plus server enables AirPrint from any Apple device
+- **Complete Kit Rental**: Everything included - printer, media, wireless server, cables, and carrying case
+- **Easy Booking**: Integrated request form powered by Formspree
 
-There are several ways of editing your application.
+## Pages
 
-**Use Lovable**
+- **Home** (`/`) - Main landing page with equipment details, how it works, and pricing overview
+- **Pricing** (`/pricing`) - Detailed pricing, add-ons, and rental terms
+- **FAQ** (`/faq`) - Frequently asked questions
+- **Request** (`/request`) - Rental request form
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui components
+- React Router
+- Formspree (form submissions)
 
-**Use your preferred IDE**
+## Development
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# Install dependencies
+npm install
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Build for production
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+## Deployment
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The site is configured for static hosting (GitHub Pages compatible) with client-side routing support via `404.html`.
