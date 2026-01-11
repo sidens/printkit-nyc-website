@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import kitImage from "@/assets/kit-contents.jpg";
+import kitImage from "@/assets/dnp-ds40-angle.jpg";
 
 const kitItems = [
   "DNP DS40 professional photo printer",
