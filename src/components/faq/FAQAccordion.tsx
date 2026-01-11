@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import wcmplusImage from "@/assets/wcmplus-server.jpg";
+import wcmplusImage from "@/assets/wcm-plus-product.jpg";
 import airprintImage from "@/assets/airprint-ipad.jpg";
 
 const generalFaqs = [

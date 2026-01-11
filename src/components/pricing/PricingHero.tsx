@@ -1,4 +1,4 @@
-import pricingHero from "@/assets/pricing-hero.jpg";
+import pricingHero from "@/assets/dnp-ds40-angle.jpg";
 
 const PricingHero = () => {
   return (
