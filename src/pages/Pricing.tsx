@@ -8,7 +8,6 @@ import CancellationSection from "@/components/pricing/CancellationSection";
 import PickupDetailsSection from "@/components/pricing/PickupDetailsSection";
 import PricingCTASection from "@/components/pricing/PricingCTASection";
 import SEO from "@/components/SEO";
-import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 
 const Pricing = () => {
   return (
@@ -19,12 +18,6 @@ const Pricing = () => {
         path="/pricing"
         ogTitle="Photo Printer Rental Pricing | PrintKit NYC"
         ogDescription="Transparent daily rates for professional photo printer rental in NYC. $75/day plus optional add-ons."
-      />
-      <BreadcrumbSchema
-        items={[
-          { name: "Home", path: "/" },
-          { name: "Pricing", path: "/pricing" },
-        ]}
       />
       <Header />
       <main className="flex-1">

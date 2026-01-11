@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RequestForm from "@/components/request/RequestForm";
 import SEO from "@/components/SEO";
-import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 
 const Request = () => {
   return (
@@ -13,12 +12,6 @@ const Request = () => {
         path="/request"
         ogTitle="Book Your Photo Printer Rental | PrintKit NYC"
         ogDescription="Request rental dates for your event or project. Fast response and simple booking."
-      />
-      <BreadcrumbSchema
-        items={[
-          { name: "Home", path: "/" },
-          { name: "Request Dates", path: "/request" },
-        ]}
       />
       <Header />
       <main className="flex-1">
