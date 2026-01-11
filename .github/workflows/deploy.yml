@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: npm run build -- --base=/printkit-nyc-website/
 
       # Vite outputs to dist/ by default
       - name: Upload artifact
