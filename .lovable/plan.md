@@ -37,6 +37,9 @@ This app is a client-rendered SPA, so crawlers that don't execute JavaScript see
 - `src/pages/NotFound.tsx` — add `<Helmet><meta name="robots" content="noindex" /></Helmet>`.
 - `public/sitemap.xml` — hand-edited static file; keep that mechanism.
 
+### 7. Fix homepage pricing button destination
+The "See full pricing details" button currently links to `/pricing` in source, but the reported behavior lands on the security deposit section. Verify with a browser test; if scroll restoration or a hash is causing the jump, fix the link to explicitly navigate to the top of the pricing page.
+
 ## Verification
 
 After the changes, run an SEO review from the SEO tab to confirm the crawl and structured-data checks pass.
