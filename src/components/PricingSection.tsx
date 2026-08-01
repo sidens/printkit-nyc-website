@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { PRICING, formatPrice } from "@/lib/pricingData";
 
 const pricingItems = [
-  { label: "Printer rental", value: "$95", unit: "/ day" },
-  { label: "Print media", value: "$0.40", unit: "per print", note: "(or prepaid kit available)" },
-  { label: "Refundable deposit", value: "$200", unit: "" },
+  { label: PRICING.baseRental.name, value: `$${PRICING.baseRental.price}`, unit: "/ day" },
+  { label: PRICING.printMedia.name, value: `$${PRICING.printMedia.price.toFixed(2)}`, unit: "per print", note: "(or prepaid kit available)" },
+  { label: PRICING.securityDeposit.name, value: `$${PRICING.securityDeposit.price}`, unit: "refundable" },
 ];
 
 const PricingSection = () => {
