@@ -28,7 +28,7 @@ export const generalFaqs = [
   {
     question: "How does print media billing work?",
     answer:
-      "You can either pay $0.40 per print based on usage after return, or choose a prepaid media kit for up to 400 prints. We'll review usage together when the kit is returned.",
+      "You can either pay $0.40 per print based on usage after return, or choose a prepaid media kit for $75 covering up to 400 prints. We'll review usage together when the kit is returned.",
   },
 ];
 
