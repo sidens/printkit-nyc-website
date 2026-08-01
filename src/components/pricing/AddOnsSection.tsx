@@ -11,7 +11,7 @@ const addons = [
   {
     icon: Package,
     name: "Prepaid media kit",
-    price: "$150 flat",
+    price: "$75 flat",
     description: "Up to 400 prints — no usage tracking needed",
   },
   {
