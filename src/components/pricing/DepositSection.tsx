@@ -1,4 +1,5 @@
 import { ShieldCheck } from "lucide-react";
+import { PRICING } from "@/lib/pricingData";
 
 const DepositSection = () => {
   return (
@@ -11,11 +12,11 @@ const DepositSection = () => {
           <h2 className="text-3xl md:text-4xl font-semibold mb-6">Security Deposit</h2>
           <div className="card-elevated p-8 md:p-10 text-left">
             <div className="text-center mb-6">
-              <span className="text-4xl md:text-5xl font-semibold">$200</span>
+              <span className="text-4xl md:text-5xl font-semibold">${PRICING.securityDeposit.price}</span>
               <span className="text-lg text-muted-foreground ml-2">refundable</span>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-6 text-center">
-              A $200 refundable security deposit is required for all rentals. The deposit 
+              A ${PRICING.securityDeposit.price} refundable security deposit is required for all rentals. The deposit 
               is refunded within 48 hours of return, provided the kit is returned in working condition.
             </p>
             <div className="highlight-box rounded-lg p-4">
