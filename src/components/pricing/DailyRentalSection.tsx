@@ -1,4 +1,5 @@
 import { Check, Printer } from "lucide-react";
+import { PRICING } from "@/lib/pricingData";
 
 const inclusions = [
   "DNP DS40 professional printer",
@@ -21,8 +22,8 @@ const DailyRentalSection = () => {
             </div>
             <h3 className="text-xl font-semibold mb-2">PrintKit (DNP DS40 + travel case)</h3>
             <div className="mb-6">
-              <span className="text-5xl md:text-6xl font-semibold">$95</span>
-              <span className="text-xl text-muted-foreground ml-2">per day</span>
+              <span className="text-5xl md:text-6xl font-semibold">${PRICING.baseRental.price}</span>
+              <span className="text-xl text-muted-foreground ml-2">per {PRICING.baseRental.unit}</span>
             </div>
             <div className="highlight-box rounded-lg p-4 mb-6">
               <p className="text-sm font-medium text-foreground">

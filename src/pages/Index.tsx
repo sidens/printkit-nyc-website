@@ -10,6 +10,7 @@ import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import ServiceSchema from "@/components/ServiceSchema";
 
 const Index = () => {
   return (
@@ -21,6 +22,7 @@ const Index = () => {
         ogTitle="Pro Photo Printer Rental in NYC | PrintKit NYC"
         ogDescription="Industrial-grade photo printing for events, projects, and more. Pickup in Clinton Hill, Brooklyn."
       />
+      <ServiceSchema />
       <Header />
       <main className="flex-1">
         <HeroSection />

@@ -9,6 +9,7 @@ import Request from "./pages/Request";
 import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
 import LocalBusinessSchema from "./components/LocalBusinessSchema";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <LocalBusinessSchema />
+      <ScrollToTop />
       <Toaster />
       <Sonner />
       <Routes>

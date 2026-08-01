@@ -29,28 +29,6 @@ const LocalBusinessSchema = () => {
     image: "https://printkitnyc.com/og-image.jpg",
     sameAs: [],
     serviceType: "Photo Printer Rental",
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "Printer Rental Services",
-      itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "DNP DS40 Printer Rental",
-            description: "Professional photo printer rental for events and projects",
-          },
-          price: "75.00",
-          priceCurrency: "USD",
-          priceSpecification: {
-            "@type": "UnitPriceSpecification",
-            price: "75.00",
-            priceCurrency: "USD",
-            unitText: "day",
-          },
-        },
-      ],
-    },
   };
 
   return (
