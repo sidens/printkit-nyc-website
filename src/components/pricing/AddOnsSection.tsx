@@ -1,26 +1,22 @@
 import { Image, Package, Server } from "lucide-react";
 import addonsImage from "@/assets/addons-layout.jpg";
+import { PRICING, formatPrice } from "@/lib/pricingData";
 
-const addons = [
-  {
-    icon: Image,
-    name: "Print media (paper + ribbon)",
-    price: "$0.40 per print",
-    description: "Billed after return based on usage",
-  },
-  {
-    icon: Package,
-    name: "Prepaid media kit",
-    price: "$75 flat",
-    description: "Up to 400 prints — no usage tracking needed",
-  },
-  {
-    icon: Server,
-    name: "WCMPlus Print Server",
-    price: "$35 per day",
-    description: "Wireless printing from any device on the network",
-  },
-];
+const addonMeta = [
+  { icon: Image, key: "printMedia" as const },
+  { icon: Package, key: "prepaidMediaKit" as const },
+  { icon: Server, key: "printServer" as const },
+] as const;
+
+const getAddonDescription = (key: typeof addonMeta[number]["key"]) => {
+  if (key === "prepaidMediaKit") {
+    return "Up to 400 prints — no usage tracking needed";
+  }
+  if (key === "printServer") {
+    return "Wireless printing from any device on the network";
+  }
+  return "Billed after return based on usage";
+};
 
 const AddOnsSection = () => {
   return (
@@ -33,25 +29,28 @@ const AddOnsSection = () => {
               Nothing is required. Add only what helps your setup.
             </p>
             <div className="space-y-4">
-              {addons.map((addon, index) => (
-                <div
-                  key={index}
-                  className="card-elevated p-5 flex items-start gap-4"
-                >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <addon.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 mb-1">
-                      <h3 className="font-semibold">{addon.name}</h3>
-                      <span className="text-primary font-semibold whitespace-nowrap">
-                        {addon.price}
-                      </span>
+              {addonMeta.map(({ icon: Icon, key }, index) => {
+                const addon = PRICING[key];
+                return (
+                  <div
+                    key={index}
+                    className="card-elevated p-5 flex items-start gap-4"
+                  >
+                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-primary" />
                     </div>
-                    <p className="text-sm text-muted-foreground">{addon.description}</p>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 mb-1">
+                        <h3 className="font-semibold">{addon.name}</h3>
+                        <span className="text-primary font-semibold whitespace-nowrap">
+                          {formatPrice(addon.price, addon.unit)}
+                        </span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{getAddonDescription(key)}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
           <div className="lg:sticky lg:top-24">
