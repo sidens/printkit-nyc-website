@@ -88,8 +88,8 @@ const RequestForm = () => {
             </div>
             <h1 className="text-3xl md:text-4xl font-semibold mb-4">Request sent!</h1>
             <p className="text-lg text-muted-foreground mb-8">
-              Check your email client — your rental request should be ready to send. 
-              We'll respond within 24 hours with availability and next steps.
+              Request received! We'll review your dates and send you a text message
+              within 1–2 business days with availability and next steps.
             </p>
             <Button
               variant="outline"
