@@ -14,13 +14,13 @@ We'll respond within 24 hours with availability and next steps.
 This text incorrectly tells the user to check their email and implies the business will respond via email.
 
 ## Proposed Change
-Replace the confirmation paragraph with a message that tells the user to expect a text-message reply.
+Replace the confirmation paragraph with a message that tells the user to expect a text-message reply without committing to a 24-hour response time.
 
-Suggested copy:
+Suggested copy (flexible):
 
 ```text
 Request received! We'll review your dates and send you a text message
-within 24 hours with availability and next steps.
+with availability and next steps as soon as we can.
 ```
 
 ## Implementation Steps
@@ -28,4 +28,11 @@ within 24 hours with availability and next steps.
 2. Verify the change by viewing the component and running a build check.
 
 ## Open Question
-Let me know if you'd like different wording, keep the same 24-hour timeframe, or want the phone number field mentioned in the confirmation.
+What response-time wording would you prefer? A few options:
+
+- **No timeframe:** "as soon as we can"
+- **Business hours:** "within 1–2 business days"
+- **Same-day intent:** "as soon as possible, usually same day"
+- **Custom text:** tell me exactly what you'd like it to say
+
+Let me know and I'll lock in the final wording.
