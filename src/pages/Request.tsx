@@ -9,10 +9,10 @@ const Request = () => {
     <div className="min-h-screen flex flex-col">
       <SEO
         title="Request Dates | PrintKit NYC - Book Your Rental"
-        description="Check availability and request your photo printer rental dates. Quick response, easy booking process. Pickup in Clinton Hill, Brooklyn."
+        description="Check availability and request your photo printer rental dates. We reply within 1–2 business days. Pickup in Clinton Hill, Brooklyn."
         path="/request"
         ogTitle="Book Your Photo Printer Rental | PrintKit NYC"
-        ogDescription="Request rental dates for your event or project. Fast response and simple booking."
+        ogDescription="Request rental dates for your event or project. We reply within 1–2 business days."
       />
       <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Request Dates", path: "/request" }]} />
       <Header />

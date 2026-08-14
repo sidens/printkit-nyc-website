@@ -84,7 +84,7 @@ export const policyFaqs = [
   {
     question: "What happens if something breaks or stops working?",
     answer:
-      "Normal wear is expected. If something is damaged due to misuse or an accident, responsibility is capped at the cost of repair or replacement — whichever is lower. If you run into issues during your rental, email support is available.",
+      "Normal wear is expected. Email us at hello@printkitnyc.com as soon as you notice an issue and we'll troubleshoot with you and help figure out the best path forward. If something is damaged due to misuse or an accident, responsibility is capped at the cost of repair or replacement — whichever is lower.",
   },
   {
     question: "What is your cancellation policy?",
@@ -94,7 +94,7 @@ export const policyFaqs = [
   {
     question: "Can I add accessories later or change my rental?",
     answer:
-      "Yes, as long as availability allows. Just reach out before pickup and we'll do our best to accommodate changes.",
+      "Often yes, subject to availability. Email us before pickup and we'll let you know what's possible.",
   },
 ];
 

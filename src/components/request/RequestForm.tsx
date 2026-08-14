@@ -53,7 +53,7 @@ const RequestForm = () => {
         setIsSubmitted(true);
         toast({
           title: "Request sent!",
-          description: "We'll respond within 24 hours with availability.",
+          description: "We'll reply within 1–2 business days with availability.",
         });
       } else {
         throw new Error("Form submission failed");
@@ -88,8 +88,8 @@ const RequestForm = () => {
             </div>
             <h1 className="text-3xl md:text-4xl font-semibold mb-4">Request sent!</h1>
             <p className="text-lg text-muted-foreground mb-8">
-              Request received! We'll review your dates and send you a text message
-              within 1–2 business days with availability and next steps.
+              Request received! We'll review your dates and reply by text message
+              (or email) within 1–2 business days with availability and next steps.
             </p>
             <Button
               variant="outline"
@@ -125,7 +125,7 @@ const RequestForm = () => {
             </div>
             <h1 className="text-3xl md:text-4xl font-semibold mb-4">Request your dates</h1>
             <p className="text-lg text-muted-foreground">
-              Tell us when you need the PrintKit. We'll confirm availability within 24 hours.
+              Tell us when you need the PrintKit. We'll confirm availability within 1–2 business days.
             </p>
           </div>
 
