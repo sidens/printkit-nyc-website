@@ -6,7 +6,7 @@ const kitItems = [
   "Protective travel case",
   "Power and USB cables",
   "Quick-start setup guide",
-  "Email support during rental",
+  "Setup help and troubleshooting by email during your rental",
 ];
 
 const KitSection = () => {

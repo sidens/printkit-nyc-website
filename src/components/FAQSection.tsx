@@ -19,7 +19,7 @@ const faqs = [
   {
     question: "What happens if something breaks?",
     answer:
-      "Contact us immediately via email or phone. We'll troubleshoot with you and, if needed, arrange a replacement or alternative solution. The refundable deposit covers accidental damage, so you're protected.",
+      "Email us at hello@printkitnyc.com as soon as you notice an issue. We'll troubleshoot with you and help figure out the best path forward. The refundable deposit covers accidental damage, and responsibility is capped at the cost of repair or replacement — whichever is lower.",
   },
   {
     question: "What size table do I need?",
