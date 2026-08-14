@@ -9,7 +9,7 @@ const FAQCTASection = () => {
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-semibold mb-4">Still have questions?</h2>
           <p className="text-lg text-muted-foreground mb-8">
-            We're happy to help. Reach out anytime and we'll get back to you within 24 hours.
+            We're happy to help. Reach out and we'll get back to you within 1–2 business days.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="hero" size="xl" asChild>
