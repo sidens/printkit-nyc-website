@@ -25,7 +25,7 @@
 
 ## Proposed revised support language
 
-- **Response time everywhere:** Standardize on "within 1–2 business days" and clarify that it's by text message after form submission.
+- **Response time everywhere:** Standardize on "within 1–2 business days," phrased as a reply "by text message (or email)" so you keep both channels open without committing to one.
 - **Contact channel:** Lead with email (`hello@printkitnyc.com`) and the phone field collected on the request form. Remove the generic "phone" support promise unless a number is actually published.
 - **Breakage / issues:** Replace "replacement or alternative solution" with language like "we'll troubleshoot with you and help determine the best path forward" — no guaranteed replacement.
 - **Support scope:** Change "Email support during rental" to something narrower, e.g., "Setup help and troubleshooting via email during your rental."
