@@ -53,7 +53,7 @@ const RequestForm = () => {
         setIsSubmitted(true);
         toast({
           title: "Request sent!",
-          description: "We'll respond within 24 hours with availability.",
+          description: "We'll reply within 1–2 business days with availability.",
         });
       } else {
         throw new Error("Form submission failed");
