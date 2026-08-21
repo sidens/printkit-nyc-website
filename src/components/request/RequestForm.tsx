@@ -20,6 +20,7 @@ const RequestForm = () => {
     name: "",
     email: "",
     phone: "",
+    smsOk: false,
     pickupDate: "",
     returnDate: "",
     eventType: "",
@@ -41,6 +42,7 @@ const RequestForm = () => {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
+          smsOk: formData.smsOk ? "Yes" : "No",
           pickupDate: formData.pickupDate,
           returnDate: formData.returnDate,
           eventType: formData.eventType,
@@ -99,6 +101,7 @@ const RequestForm = () => {
                   name: "",
                   email: "",
                   phone: "",
+                  smsOk: false,
                   pickupDate: "",
                   returnDate: "",
                   eventType: "",
@@ -163,6 +166,21 @@ const RequestForm = () => {
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder="(555) 123-4567"
               />
+              <div className="flex items-center space-x-3 pt-1">
+                <Checkbox
+                  id="smsOk"
+                  checked={formData.smsOk}
+                  onCheckedChange={(checked) =>
+                    setFormData({ ...formData, smsOk: checked as boolean })
+                  }
+                />
+                <Label
+                  htmlFor="smsOk"
+                  className="text-sm font-normal cursor-pointer"
+                >
+                  It's okay to text me at this number about my rental
+                </Label>
+              </div>
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2">
