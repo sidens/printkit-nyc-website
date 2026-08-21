@@ -174,14 +174,26 @@ const RequestForm = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone number</Label>
+              <Label htmlFor="phone">Phone number *</Label>
               <Input
                 id="phone"
                 type="tel"
+                required
+                aria-invalid={phoneError ? true : undefined}
+                aria-describedby={phoneError ? "phone-error" : undefined}
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, phone: e.target.value });
+                  if (phoneError) setPhoneError("");
+                }}
                 placeholder="(555) 123-4567"
               />
+              {phoneError && (
+                <p id="phone-error" className="text-sm text-destructive">
+                  {phoneError}
+                </p>
+              )}
+
               <div className="flex items-center space-x-3 pt-1">
                 <Checkbox
                   id="smsOk"
