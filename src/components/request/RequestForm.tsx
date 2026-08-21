@@ -113,6 +113,8 @@ const RequestForm = () => {
               variant="outline"
               onClick={() => {
                 setIsSubmitted(false);
+                setPhoneError("");
+
                 setFormData({
                   name: "",
                   email: "",
