@@ -16,6 +16,7 @@ const RequestForm = () => {
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,9 +29,21 @@ const RequestForm = () => {
     addons: [] as string[],
   });
 
+  const isValidPhone = (value: string) => value.replace(/\D/g, "").length >= 10;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!isValidPhone(formData.phone)) {
+      setPhoneError("Please enter a valid phone number with at least 10 digits.");
+      return;
+    }
+    setPhoneError("");
     setIsSubmitting(true);
+
+    const addonLabels = formData.addons
+      .map((id) => addons.find((a) => a.id === id)?.label ?? id)
+      .join(", ");
 
     try {
       const response = await fetch("https://formspree.io/f/mqeezrqr", {
@@ -39,15 +52,17 @@ const RequestForm = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          smsOk: formData.smsOk ? "Yes" : "No",
-          pickupDate: formData.pickupDate,
-          returnDate: formData.returnDate,
-          eventType: formData.eventType,
-          addons: formData.addons.join(", ") || "None",
-          notes: formData.notes || "None",
+          _replyto: formData.email,
+          _subject: `New PrintKit request — ${formData.name}`,
+          Name: formData.name,
+          Email: formData.email,
+          Phone: formData.phone,
+          "OK to text": formData.smsOk ? "Yes" : "No",
+          "Pickup date": formData.pickupDate,
+          "Return date": formData.returnDate,
+          "Event type": formData.eventType || "Not specified",
+          "Add-ons": addonLabels || "None",
+          Notes: formData.notes || "None",
         }),
       });
 
@@ -70,6 +85,7 @@ const RequestForm = () => {
       setIsSubmitting(false);
     }
   };
+
 
   const handleAddonChange = (addonId: string, checked: boolean) => {
     setFormData((prev) => ({
@@ -97,6 +113,8 @@ const RequestForm = () => {
               variant="outline"
               onClick={() => {
                 setIsSubmitted(false);
+                setPhoneError("");
+
                 setFormData({
                   name: "",
                   email: "",
@@ -158,14 +176,26 @@ const RequestForm = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone number</Label>
+              <Label htmlFor="phone">Phone number *</Label>
               <Input
                 id="phone"
                 type="tel"
+                required
+                aria-invalid={phoneError ? true : undefined}
+                aria-describedby={phoneError ? "phone-error" : undefined}
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, phone: e.target.value });
+                  if (phoneError) setPhoneError("");
+                }}
                 placeholder="(555) 123-4567"
               />
+              {phoneError && (
+                <p id="phone-error" className="text-sm text-destructive">
+                  {phoneError}
+                </p>
+              )}
+
               <div className="flex items-center space-x-3 pt-1">
                 <Checkbox
                   id="smsOk"
