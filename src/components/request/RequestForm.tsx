@@ -20,6 +20,7 @@ const RequestForm = () => {
     name: "",
     email: "",
     phone: "",
+    smsOk: false,
     pickupDate: "",
     returnDate: "",
     eventType: "",
