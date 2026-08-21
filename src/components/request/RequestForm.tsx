@@ -16,6 +16,7 @@ const RequestForm = () => {
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [phoneError, setPhoneError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,9 +29,21 @@ const RequestForm = () => {
     addons: [] as string[],
   });
 
+  const isValidPhone = (value: string) => value.replace(/\D/g, "").length >= 10;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!isValidPhone(formData.phone)) {
+      setPhoneError("Please enter a valid phone number with at least 10 digits.");
+      return;
+    }
+    setPhoneError("");
     setIsSubmitting(true);
+
+    const addonLabels = formData.addons
+      .map((id) => addons.find((a) => a.id === id)?.label ?? id)
+      .join(", ");
 
     try {
       const response = await fetch("https://formspree.io/f/mqeezrqr", {
@@ -39,15 +52,17 @@ const RequestForm = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          smsOk: formData.smsOk ? "Yes" : "No",
-          pickupDate: formData.pickupDate,
-          returnDate: formData.returnDate,
-          eventType: formData.eventType,
-          addons: formData.addons.join(", ") || "None",
-          notes: formData.notes || "None",
+          _replyto: formData.email,
+          _subject: `New PrintKit request — ${formData.name}`,
+          Name: formData.name,
+          Email: formData.email,
+          Phone: formData.phone,
+          "OK to text": formData.smsOk ? "Yes" : "No",
+          "Pickup date": formData.pickupDate,
+          "Return date": formData.returnDate,
+          "Event type": formData.eventType || "Not specified",
+          "Add-ons": addonLabels || "None",
+          Notes: formData.notes || "None",
         }),
       });
 
@@ -70,6 +85,7 @@ const RequestForm = () => {
       setIsSubmitting(false);
     }
   };
+
 
   const handleAddonChange = (addonId: string, checked: boolean) => {
     setFormData((prev) => ({
