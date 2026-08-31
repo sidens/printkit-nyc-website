@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { PRICING } from "@/lib/pricingData";
+import { trackCtaClick } from "@/lib/analytics";
 
 const pricingItems = [
   { label: PRICING.baseRental.name, value: `$${PRICING.baseRental.price}`, unit: "/ day" },
@@ -41,7 +42,12 @@ const PricingSection = () => {
             </div>
             <div className="mt-8 pt-6 border-t border-border text-center">
               <Button variant="outline" asChild>
-                <Link to="/pricing">See full pricing details</Link>
+                <Link
+                  to="/pricing"
+                  onClick={() => trackCtaClick("home_see_full_pricing", "/pricing")}
+                >
+                  See full pricing details
+                </Link>
               </Button>
             </div>
           </div>

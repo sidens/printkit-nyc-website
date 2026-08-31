@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { trackCtaClick } from "@/lib/analytics";
 
 const Header = () => {
   return (
@@ -23,6 +24,7 @@ const Header = () => {
             </Link>
             <Link
               to="/request"
+              onClick={() => trackCtaClick("header_check_availability", "/request")}
               className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
             >
               Check availability
