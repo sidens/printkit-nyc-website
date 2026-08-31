@@ -4,7 +4,7 @@ import { PRICING, formatPrice } from "@/lib/pricingData";
 
 const pricingItems = [
   { label: PRICING.baseRental.name, value: `$${PRICING.baseRental.price}`, unit: "/ day" },
-  { label: PRICING.printMedia.name, value: `$${PRICING.printMedia.price.toFixed(2)}`, unit: "per print", note: "(or prepaid kit available)" },
+  { label: `${PRICING.prepaidMediaKit.name} (optional)`, value: `$${PRICING.prepaidMediaKit.price}`, unit: "flat", note: "(up to 400 prints)" },
   { label: PRICING.securityDeposit.name, value: `$${PRICING.securityDeposit.price}`, unit: "refundable" },
 ];
 

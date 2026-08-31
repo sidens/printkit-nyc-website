@@ -3,7 +3,6 @@ import addonsImage from "@/assets/addons-layout.jpg";
 import { PRICING, formatPrice } from "@/lib/pricingData";
 
 const addonMeta = [
-  { icon: Image, key: "printMedia" as const },
   { icon: Package, key: "prepaidMediaKit" as const },
   { icon: Server, key: "printServer" as const },
 ] as const;
