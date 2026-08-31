@@ -23,12 +23,12 @@ export const generalFaqs = [
   {
     question: "How many prints can I make?",
     answer:
-      "A standard media kit produces approximately 400 4×6 prints. You can pay per print after your rental or choose a prepaid media kit if you prefer predictable costs.",
+      "A standard media kit produces approximately 400 4×6 prints. You can add our prepaid media kit to your rental, or bring your own DNP DS40 media.",
   },
   {
-    question: "How does print media billing work?",
+    question: "How do I get print media?",
     answer:
-      "You can either pay $0.40 per print based on usage after return, or choose a prepaid media kit for $75 covering up to 400 prints. We'll review usage together when the kit is returned.",
+      "The easiest option is our prepaid media kit: $75 flat for up to 400 prints, with no usage tracking. If you prefer, you're welcome to bring your own DNP DS40-compatible media instead.",
   },
 ];
 

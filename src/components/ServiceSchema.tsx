@@ -3,7 +3,6 @@ import { PRICING } from "@/lib/pricingData";
 
 const ServiceSchema = () => {
   const base = PRICING.baseRental;
-  const media = PRICING.printMedia;
   const prepaid = PRICING.prepaidMediaKit;
   const server = PRICING.printServer;
   const deposit = PRICING.securityDeposit;
@@ -57,39 +56,6 @@ const ServiceSchema = () => {
             "@type": "City",
             name: "New York City",
           },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Product",
-            name: "Print Media (paper + ribbon)",
-            description: "Billed after return based on usage",
-            url: "https://printkitnyc.com/pricing",
-            image: "https://printkitnyc.com/og-image.jpg",
-            brand: { "@type": "Brand", name: "PrintKit NYC" },
-            offers: {
-              "@type": "Offer",
-              url: "https://printkitnyc.com/pricing",
-              price: media.price.toFixed(2),
-              priceCurrency: media.currency,
-              availability: "https://schema.org/InStock",
-              priceSpecification: {
-                "@type": "UnitPriceSpecification",
-                price: media.price.toFixed(2),
-                priceCurrency: media.currency,
-                unitText: media.unit,
-              },
-            },
-          },
-          price: media.price.toFixed(2),
-          priceCurrency: media.currency,
-          priceSpecification: {
-            "@type": "UnitPriceSpecification",
-            price: media.price.toFixed(2),
-            priceCurrency: media.currency,
-            unitText: media.unit,
-          },
-          availability: "https://schema.org/InStock",
         },
         {
           "@type": "Offer",
