@@ -1,4 +1,4 @@
-import { Image, Package, Server } from "lucide-react";
+import { Package, Server } from "lucide-react";
 import addonsImage from "@/assets/addons-layout.jpg";
 import { PRICING, formatPrice } from "@/lib/pricingData";
 

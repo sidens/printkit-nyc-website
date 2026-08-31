@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { PRICING, formatPrice } from "@/lib/pricingData";
+import { PRICING } from "@/lib/pricingData";
 
 const pricingItems = [
   { label: PRICING.baseRental.name, value: `$${PRICING.baseRental.price}`, unit: "/ day" },
