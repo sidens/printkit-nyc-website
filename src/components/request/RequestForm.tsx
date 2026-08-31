@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CalendarDays, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { trackGenerateLead, trackFormError } from "@/lib/analytics";
 
 const addons = [
   { id: "prepaid-media", label: "Prepaid media kit ($75 — up to 400 prints)" },
@@ -68,6 +69,7 @@ const RequestForm = () => {
 
       if (response.ok) {
         setIsSubmitted(true);
+        trackGenerateLead();
         toast({
           title: "Request sent!",
           description: "We'll reply within 1–2 business days with availability.",
@@ -76,6 +78,7 @@ const RequestForm = () => {
         throw new Error("Form submission failed");
       }
     } catch (error) {
+      trackFormError();
       toast({
         title: "Something went wrong",
         description: "Please try again or email us directly at hello@printkitnyc.com",
