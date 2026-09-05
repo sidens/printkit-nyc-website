@@ -1,6 +1,6 @@
 export const PRICING = {
   baseRental: { name: "Daily Printer Rental", price: 95, unit: "day", currency: "USD" },
-  prepaidMediaKit: { name: "Prepaid Media Kit", price: 75, unit: "flat", currency: "USD", note: "up to 400 prints" },
+  prepaidMediaKit: { name: "Prepaid Media Kit", price: 100, unit: "flat", currency: "USD", note: "up to 400 prints" },
   printServer: { name: "WCMPlus Print Server", price: 35, unit: "day", currency: "USD" },
   securityDeposit: { name: "Refundable Security Deposit", price: 200, unit: "refundable", currency: "USD" },
 } as const;
