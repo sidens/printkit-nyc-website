@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { trackGenerateLead, trackFormError } from "@/lib/analytics";
 
 const addons = [
-  { id: "prepaid-media", label: "Prepaid media kit ($75 — up to 400 prints)" },
+  { id: "prepaid-media", label: "Prepaid media kit ($100 — up to 400 prints)" },
   { id: "print-server", label: "WCMPlus Print Server ($35/day)" },
 ];
 

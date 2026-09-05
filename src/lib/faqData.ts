@@ -28,7 +28,7 @@ export const generalFaqs = [
   {
     question: "How do I get print media?",
     answer:
-      "The easiest option is our prepaid media kit: $75 flat for up to 400 prints, with no usage tracking. If you prefer, you're welcome to bring your own DNP DS40-compatible media instead.",
+      "The easiest option is our prepaid media kit: $100 flat for up to 400 prints, with no usage tracking. If you prefer, you're welcome to bring your own DNP DS40-compatible media instead.",
   },
 ];
 
