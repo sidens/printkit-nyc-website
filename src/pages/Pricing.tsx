@@ -16,10 +16,10 @@ const Pricing = () => {
     <div className="min-h-screen flex flex-col">
       <SEO
         title="Pricing | PrintKit NYC - Photo Printer Rental Rates"
-        description="Simple daily pricing for DNP DS40 printer rental. $95/day base rate, optional media kits, and add-ons. No hidden fees. Pickup in Brooklyn."
+        description="Simple daily pricing for DNP DS40 printer rental. $100/day base rate, optional media kits, and add-ons. No hidden fees. Pickup in Brooklyn."
         path="/pricing"
         ogTitle="Photo Printer Rental Pricing | PrintKit NYC"
-        ogDescription="Transparent daily rates for professional photo printer rental in NYC. $95/day plus optional add-ons."
+        ogDescription="Transparent daily rates for professional photo printer rental in NYC. $100/day plus optional add-ons."
       />
       <ServiceSchema />
       <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Pricing", path: "/pricing" }]} />
