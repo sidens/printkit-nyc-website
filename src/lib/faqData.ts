@@ -74,7 +74,7 @@ export const policyFaqs = [
   {
     question: "Where is pickup located?",
     answer:
-      "Pickup is in Clinton Hill, Brooklyn. Evenings and weekends are preferred. The exact address is shared after your booking is confirmed.",
+      "Pickup is in Clinton Hill, Brooklyn. Evenings and weekends are preferred. The exact address is shared after the rental agreement is signed and payment is received.",
   },
   {
     question: "Is there a security deposit?",
