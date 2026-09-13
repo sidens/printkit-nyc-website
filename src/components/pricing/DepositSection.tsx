@@ -19,6 +19,17 @@ const DepositSection = () => {
               A ${PRICING.securityDeposit.price} refundable security deposit is required for all rentals. The deposit 
               is refunded within 48 hours of return, provided the kit is returned in working condition.
             </p>
+            <div className="border-t border-border pt-6 mb-6 space-y-3">
+              <h3 className="font-semibold text-center">Agreement, payment, and tax</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed text-center">
+                After availability is confirmed, we'll send a rental agreement for you to sign.
+                Once it is signed, we'll send your payment total, which must be paid before pickup.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed text-center">
+                Applicable sales tax is added to the rental and optional add-ons. The refundable
+                security deposit is excluded from sales tax.
+              </p>
+            </div>
             <div className="highlight-box rounded-lg p-4">
               <p className="text-sm text-foreground text-center">
                 <strong>Note:</strong> Normal wear is expected. Responsibility for damage is 

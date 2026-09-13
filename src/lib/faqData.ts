@@ -23,12 +23,12 @@ export const generalFaqs = [
   {
     question: "How many prints can I make?",
     answer:
-      "A standard media kit produces approximately 400 4×6 prints. You can add our prepaid media kit to your rental, or bring your own DNP DS40 media.",
+      "The optional prepaid media kit provides supplies for up to 400 4×6 prints. You may also bring your own DNP DS40-compatible media.",
   },
   {
     question: "How do I get print media?",
     answer:
-      "The easiest option is our prepaid media kit: $100 flat for up to 400 prints, with no usage tracking. If you prefer, you're welcome to bring your own DNP DS40-compatible media instead.",
+      "Choose the optional prepaid media kit for $100 flat, which includes supplies for up to 400 prints, or bring your own DNP DS40-compatible media.",
   },
 ];
 
@@ -74,12 +74,17 @@ export const policyFaqs = [
   {
     question: "Where is pickup located?",
     answer:
-      "Pickup is in Clinton Hill, Brooklyn. Evenings and weekends are preferred. The exact address is shared after your booking is confirmed.",
+      "Pickup is in Clinton Hill, Brooklyn. Evenings and weekends are preferred. The exact address is shared after the rental agreement is signed and payment is received.",
   },
   {
     question: "Is there a security deposit?",
     answer:
-      "Yes. A $200 refundable security deposit is required for all rentals. The deposit is refunded within 48 hours of return, provided the kit is returned in working condition.",
+      "Yes. A $200 refundable security deposit is required for all rentals. It is not subject to sales tax and is refunded within 48 hours of return, provided the kit is returned in working condition.",
+  },
+  {
+    question: "When do I sign the agreement and pay?",
+    answer:
+      "After we confirm availability, we'll send you the rental agreement to review and sign. Once it is signed, we'll send your payment total, which must be paid before pickup. Applicable sales tax is added to the rental and optional add-ons, but not to the refundable security deposit.",
   },
   {
     question: "What happens if something breaks or stops working?",

@@ -14,7 +14,8 @@ const CTASection = () => {
             <Link to="/request">Request your dates</Link>
           </Button>
           <p className="text-sm text-muted-foreground mt-6">
-            We'll reply by text message (or email) within 1–2 business days with availability and next steps.
+            We'll reply by text message (or email) within 1–2 business days. If available,
+            we'll send the agreement, followed by payment details.
           </p>
         </div>
       </div>

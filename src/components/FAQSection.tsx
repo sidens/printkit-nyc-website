@@ -12,9 +12,9 @@ const faqs = [
       "No. The DNP DS40 works with any software that can send print jobs to a standard printer driver. This includes photo booth software, Lightroom, Photoshop, and basic image viewers. If your computer can print, it can use the PrintKit.",
   },
   {
-    question: "How many prints per roll?",
+    question: "How do I get print media?",
     answer:
-      "Each media roll produces approximately 400 4×6 prints. If you need more capacity, additional media kits can be rented or purchased separately.",
+      "Add the optional $100 prepaid media kit for up to 400 4×6 prints, or bring your own DNP DS40-compatible media.",
   },
   {
     question: "What happens if something breaks?",
