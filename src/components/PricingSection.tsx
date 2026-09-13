@@ -41,6 +41,10 @@ const PricingSection = () => {
               ))}
             </div>
             <div className="mt-8 pt-6 border-t border-border text-center">
+              <p className="text-sm text-muted-foreground mb-5">
+                Applicable sales tax is added to the rental and optional add-ons. The refundable
+                security deposit is not taxed.
+              </p>
               <Button variant="outline" asChild>
                 <Link
                   to="/pricing"

@@ -15,7 +15,7 @@ const details = [
   },
   {
     icon: CheckCircle,
-    text: "Exact address shared after booking confirmation",
+    text: "Exact address shared after the agreement is signed and payment is received",
   },
 ];
 

@@ -3,19 +3,17 @@ import addonsImage from "@/assets/addons-layout.jpg";
 import { PRICING, formatPrice } from "@/lib/pricingData";
 
 const addonMeta = [
-  { icon: Package, key: "prepaidMediaKit" as const },
-  { icon: Server, key: "printServer" as const },
+  {
+    icon: Package,
+    key: "prepaidMediaKit" as const,
+    description: "Up to 400 prints for one flat price",
+  },
+  {
+    icon: Server,
+    key: "printServer" as const,
+    description: "Wireless printing from any device on the network",
+  },
 ] as const;
-
-const getAddonDescription = (key: typeof addonMeta[number]["key"]) => {
-  if (key === "prepaidMediaKit") {
-    return "Up to 400 prints — no usage tracking needed";
-  }
-  if (key === "printServer") {
-    return "Wireless printing from any device on the network";
-  }
-  return "Billed after return based on usage";
-};
 
 const AddOnsSection = () => {
   return (
@@ -28,7 +26,7 @@ const AddOnsSection = () => {
               Nothing is required. Add only what helps your setup.
             </p>
             <div className="space-y-4">
-              {addonMeta.map(({ icon: Icon, key }, index) => {
+              {addonMeta.map(({ icon: Icon, key, description }, index) => {
                 const addon = PRICING[key];
                 return (
                   <div
@@ -45,7 +43,7 @@ const AddOnsSection = () => {
                           {formatPrice(addon.price, addon.unit)}
                         </span>
                       </div>
-                      <p className="text-sm text-muted-foreground">{getAddonDescription(key)}</p>
+                      <p className="text-sm text-muted-foreground">{description}</p>
                     </div>
                   </div>
                 );
