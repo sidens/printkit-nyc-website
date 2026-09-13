@@ -72,7 +72,7 @@ const RequestForm = () => {
         trackGenerateLead();
         toast({
           title: "Request sent!",
-          description: "We'll reply within 1–2 business days with availability.",
+          description: "We'll confirm availability, then send the agreement and payment details.",
         });
       } else {
         throw new Error("Form submission failed");
@@ -110,7 +110,8 @@ const RequestForm = () => {
             <h1 className="text-3xl md:text-4xl font-semibold mb-4">Request sent!</h1>
             <p className="text-lg text-muted-foreground mb-8">
               Request received! We'll review your dates and reply by text message
-              (or email) within 1–2 business days with availability and next steps.
+              (or email) within 1–2 business days. If available, we'll send the rental
+              agreement, followed by payment details. Payment is due before pickup.
             </p>
             <Button
               variant="outline"
@@ -301,7 +302,8 @@ const RequestForm = () => {
                 )}
               </Button>
               <p className="text-sm text-muted-foreground text-center mt-4">
-                No payment required now. We'll confirm availability first.
+                No payment is collected here. We'll confirm availability, send the agreement,
+                then send payment details. Applicable sales tax excludes the refundable deposit.
               </p>
             </div>
           </form>
