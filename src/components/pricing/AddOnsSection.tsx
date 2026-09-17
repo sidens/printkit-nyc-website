@@ -6,7 +6,7 @@ const addonMeta = [
   {
     icon: Package,
     key: "prepaidMediaKit" as const,
-    description: "Up to 400 prints for one flat price",
+    description: "Up to 400 4×6 prints for one flat price",
   },
   {
     icon: Server,
