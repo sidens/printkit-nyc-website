@@ -46,7 +46,7 @@ const AddOnsSection = () => {
                       <p className="text-sm text-muted-foreground">{description}</p>
                       {key === "prepaidMediaKit" && (
                         <p className="text-xs text-muted-foreground mt-1">
-                          4×6 media. 6×8 and 5×7 available on request — email us for a quote.
+                          6×8 and 5×7 available on request — email us for a quote.
                         </p>
                       )}
                     </div>
