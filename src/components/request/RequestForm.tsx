@@ -33,6 +33,10 @@ const RequestForm = () => {
 
   const isValidPhone = (value: string) => value.replace(/\D/g, "").length >= 10;
 
+  useEffect(() => {
+    if (isSubmitted) successHeadingRef.current?.focus();
+  }, [isSubmitted]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -102,13 +106,19 @@ const RequestForm = () => {
 
   if (isSubmitted) {
     return (
-      <section className="section-padding bg-background">
+      <section className="section-padding bg-background" role="status" aria-live="polite">
         <div className="container-narrow">
           <div className="max-w-xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 text-primary mb-6">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 text-primary mb-6" aria-hidden="true">
               <CheckCircle className="w-10 h-10" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-semibold mb-4">Request sent!</h1>
+            <h1
+              ref={successHeadingRef}
+              tabIndex={-1}
+              className="text-3xl md:text-4xl font-semibold mb-4 focus:outline-none"
+            >
+              Request sent!
+            </h1>
             <p className="text-lg text-muted-foreground mb-8">
               Request received! We'll review your dates and reply by text message
               (or email) within 1–2 business days. If available, we'll send the rental
