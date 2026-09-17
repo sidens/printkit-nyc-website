@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import SkipLink from "@/components/SkipLink";
 import HeroSection from "@/components/HeroSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import KitSection from "@/components/KitSection";
@@ -14,7 +15,7 @@ import ServiceSchema from "@/components/ServiceSchema";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-dvh flex flex-col">
       <SEO
         title="Pro Photo Printer Rental in NYC | PrintKit NYC"
         description="Rent a professional DNP DS40 photo printer in NYC. Pickup in Brooklyn. Simple daily pricing, optional media, no hassle."
@@ -23,8 +24,9 @@ const Index = () => {
         ogDescription="Industrial-grade photo printing for events, projects, and more. Pickup in Clinton Hill, Brooklyn."
       />
       <ServiceSchema />
+      <SkipLink />
       <Header />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <HeroSection />
         <HowItWorksSection />
         <KitSection />

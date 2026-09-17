@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import SkipLink from "@/components/SkipLink";
 import Footer from "@/components/Footer";
 import FAQHero from "@/components/faq/FAQHero";
 import FAQAccordion from "@/components/faq/FAQAccordion";
@@ -9,7 +10,7 @@ import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 
 const FAQ = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-dvh flex flex-col">
       <SEO
         title="FAQ | PrintKit NYC - Photo Printer Rental Questions"
         description="Answers to common questions about renting a professional photo printer in NYC. Learn about equipment, pricing, pickup, and policies."
@@ -19,8 +20,9 @@ const FAQ = () => {
       />
       <FAQPageSchema />
       <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "FAQ", path: "/faq" }]} />
+      <SkipLink />
       <Header />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <FAQHero />
         <FAQAccordion />
         <FAQCTASection />
