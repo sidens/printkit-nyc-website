@@ -25,7 +25,7 @@ const Footer = () => {
             </a>
           </div>
         </div>
-        <nav className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        <nav aria-label="Footer" className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
           <Link to="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Pricing
           </Link>

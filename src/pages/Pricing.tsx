@@ -13,7 +13,7 @@ import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 
 const Pricing = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-dvh flex flex-col">
       <SEO
         title="Pricing | PrintKit NYC - Photo Printer Rental Rates"
         description="Simple daily pricing for DNP DS40 printer rental. $100/day base rate, optional media kits, and add-ons. No hidden fees. Pickup in Brooklyn."
@@ -24,7 +24,7 @@ const Pricing = () => {
       <ServiceSchema />
       <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Pricing", path: "/pricing" }]} />
       <Header />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <PricingHero />
         <DailyRentalSection />
         <AddOnsSection />
