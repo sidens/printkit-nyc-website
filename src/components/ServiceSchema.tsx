@@ -62,7 +62,7 @@ const ServiceSchema = () => {
           itemOffered: {
             "@type": "Product",
             name: "Prepaid Media Kit",
-            description: "DNP DS40-compatible supplies for up to 400 prints at one flat price",
+            description: "DNP DS40-compatible supplies for up to 400 4×6 prints at one flat price",
             url: "https://printkitnyc.com/pricing",
             image: "https://printkitnyc.com/og-image.jpg",
             brand: { "@type": "Brand", name: "PrintKit NYC" },

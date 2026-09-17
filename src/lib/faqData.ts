@@ -28,7 +28,7 @@ export const generalFaqs = [
   {
     question: "How do I get print media?",
     answer:
-      "Choose the optional prepaid media kit for $100 flat, which includes supplies for up to 400 prints, or bring your own DNP DS40-compatible media.",
+      "Choose the optional prepaid media kit for $100 flat, which includes supplies for up to 400 4×6 prints, or bring your own DNP DS40-compatible media. 6×8 and 5×7 media are available on request at a different price and print count — email us and we'll quote it.",
   },
 ];
 
@@ -51,7 +51,7 @@ export const equipmentFaqs = [
   {
     question: "Can I print from an iPad or iPhone?",
     answer:
-      "Yes — when the WCMPlus Print Server is included, the DS40 supports AirPrint from Apple devices, allowing compatible apps to send print jobs without installing drivers or connecting cables.",
+      "Yes — when the WCMPlus Print Server is included, the DS40 supports AirPrint from Apple devices, allowing compatible apps to send print jobs without installing drivers or connecting cables. One setup note: iPhones that save photos in HEIC format can produce prints with white edges over AirPrint. Set Camera → Formats → \"Most Compatible\" on the device before your event and prints will come out full-bleed.",
   },
   {
     question: "Is the WCMPlus required for photo strip printing?",

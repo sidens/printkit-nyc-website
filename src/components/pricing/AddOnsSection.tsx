@@ -6,7 +6,7 @@ const addonMeta = [
   {
     icon: Package,
     key: "prepaidMediaKit" as const,
-    description: "Up to 400 prints for one flat price",
+    description: "Up to 400 4×6 prints for one flat price",
   },
   {
     icon: Server,
@@ -44,6 +44,11 @@ const AddOnsSection = () => {
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">{description}</p>
+                      {key === "prepaidMediaKit" && (
+                        <p className="text-xs text-muted-foreground mt-1">
+                          4×6 media. 6×8 and 5×7 available on request — email us for a quote.
+                        </p>
+                      )}
                     </div>
                   </div>
                 );
