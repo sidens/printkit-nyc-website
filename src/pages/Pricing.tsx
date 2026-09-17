@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import SkipLink from "@/components/SkipLink";
 import Footer from "@/components/Footer";
 import PricingHero from "@/components/pricing/PricingHero";
 import DailyRentalSection from "@/components/pricing/DailyRentalSection";
@@ -23,6 +24,7 @@ const Pricing = () => {
       />
       <ServiceSchema />
       <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Pricing", path: "/pricing" }]} />
+      <SkipLink />
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <PricingHero />

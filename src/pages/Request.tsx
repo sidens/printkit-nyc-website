@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import SkipLink from "@/components/SkipLink";
 import Footer from "@/components/Footer";
 import RequestForm from "@/components/request/RequestForm";
 import SEO from "@/components/SEO";
@@ -15,6 +16,7 @@ const Request = () => {
         ogDescription="Request rental dates for your event or project. We reply within 1–2 business days."
       />
       <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "Request Dates", path: "/request" }]} />
+      <SkipLink />
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <RequestForm />

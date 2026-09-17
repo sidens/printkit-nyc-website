@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import SkipLink from "@/components/SkipLink";
 import HeroSection from "@/components/HeroSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import KitSection from "@/components/KitSection";
@@ -23,6 +24,7 @@ const Index = () => {
         ogDescription="Industrial-grade photo printing for events, projects, and more. Pickup in Clinton Hill, Brooklyn."
       />
       <ServiceSchema />
+      <SkipLink />
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <HeroSection />

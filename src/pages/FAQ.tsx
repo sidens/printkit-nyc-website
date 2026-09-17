@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import SkipLink from "@/components/SkipLink";
 import Footer from "@/components/Footer";
 import FAQHero from "@/components/faq/FAQHero";
 import FAQAccordion from "@/components/faq/FAQAccordion";
@@ -19,6 +20,7 @@ const FAQ = () => {
       />
       <FAQPageSchema />
       <BreadcrumbSchema items={[{ name: "Home", path: "/" }, { name: "FAQ", path: "/faq" }]} />
+      <SkipLink />
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <FAQHero />
