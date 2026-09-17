@@ -9,23 +9,23 @@ const Header = () => {
           <Link to="/" className="text-xl font-semibold tracking-tight">
             PrintKit <span className="text-muted-foreground font-normal">NYC</span>
           </Link>
-          <nav className="flex items-center gap-8">
+          <nav className="flex items-center gap-4 sm:gap-6 md:gap-8">
             <Link
               to="/pricing"
-              className="hidden md:inline text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Pricing
             </Link>
             <Link
               to="/faq"
-              className="hidden md:inline text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               FAQ
             </Link>
             <Link
               to="/request"
               onClick={() => trackCtaClick("header_check_availability", "/request")}
-              className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+              className="text-xs sm:text-sm font-medium text-primary hover:text-primary/80 transition-colors"
             >
               Check availability
             </Link>
