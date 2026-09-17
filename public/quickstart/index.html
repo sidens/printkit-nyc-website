@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PrintKit Quick Start | PrintKit NYC</title>
+<meta name="description" content="Setup, troubleshooting and return steps for a PrintKit NYC DNP DS40 photo printer rental in NYC — USB from a computer and WCM-Plus wireless printing.">
+<link rel="canonical" href="https://printkitnyc.com/quickstart">
+
+<meta property="og:title" content="PrintKit Quick Start | PrintKit NYC">
+<meta property="og:description" content="Setup, troubleshooting and return steps for a PrintKit NYC DNP DS40 photo printer rental in NYC — USB from a computer and WCM-Plus wireless printing.">
+<meta property="og:url" content="https://printkitnyc.com/quickstart">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://printkitnyc.com/og-image.jpg">
+<meta property="og:site_name" content="PrintKit NYC">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PrintKit Quick Start | PrintKit NYC">
+<meta name="twitter:description" content="Setup, troubleshooting and return steps for a PrintKit NYC DNP DS40 photo printer rental in NYC — USB from a computer and WCM-Plus wireless printing.">
+<meta name="twitter:image" content="https://printkitnyc.com/og-image.jpg">
+<meta name="twitter:site" content="@PrintKitNYC">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  /* --- baseline (the hosting page supplies none) --- */
+  html { color-scheme: light dark; }
+  :root {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+
+  :root {
+    --paper:      #f6f7f9;
+    --surface:    #ffffff;
+    --surface-2:  #eef1f5;
+    --ink:        #151d29;
+    --ink-soft:   #5a6577;
+    --ink-faint:  #8b94a3;
+    --navy:       #1d3658;
+    --navy-soft:  #c9d4e2;
+    --rule:       #dde2ea;
+    --rule-hard:  #b9c2cf;
+    --warn-bg:    #fbf1e1;
+    --warn-ink:   #7d5310;
+    --warn-edge:  #d9a441;
+    --stop-ink:   #9c3423;
+    --stop-edge:  #d08373;
+
+    --f-display: Archivo, "Helvetica Neue", Arial, sans-serif;
+    --f-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0f141c;
+      --surface:    #161d28;
+      --surface-2:  #1e2733;
+      --ink:        #e7ecf3;
+      --ink-soft:   #a3aebe;
+      --ink-faint:  #778394;
+      --navy:       #8fb4e0;
+      --navy-soft:  #2b3d55;
+      --rule:       #28323f;
+      --rule-hard:  #3c4857;
+      --warn-bg:    #2a2113;
+      --warn-ink:   #e8bf74;
+      --warn-edge:  #8a6a24;
+      --stop-ink:   #e79a89;
+      --stop-edge:  #7d3b2e;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0f141c;
+    --surface:    #161d28;
+    --surface-2:  #1e2733;
+    --ink:        #e7ecf3;
+    --ink-soft:   #a3aebe;
+    --ink-faint:  #778394;
+    --navy:       #8fb4e0;
+    --navy-soft:  #2b3d55;
+    --rule:       #28323f;
+    --rule-hard:  #3c4857;
+    --warn-bg:    #2a2113;
+    --warn-ink:   #e8bf74;
+    --warn-edge:  #8a6a24;
+    --stop-ink:   #e79a89;
+    --stop-edge:  #7d3b2e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 16px;
+    line-height: 1.55;
+    margin: 0;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 0 56px;
+    overflow-wrap: break-word;
+  }
+
+  /* ---------------- nav ---------------- */
+  nav.jump {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav.jump .inner {
+    max-width: 720px; margin: 0 auto;
+    padding-inline: 20px;
+    display: flex; align-items: center; gap: 4px;
+    height: 46px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav.jump .inner::-webkit-scrollbar { display: none; }
+  nav.jump .brand {
+    font-family: var(--f-display); font-weight: 700; font-size: 14px;
+    letter-spacing: -0.2px; color: var(--navy);
+    margin-right: auto; white-space: nowrap;
+    text-decoration: none;
+  }
+  nav.jump a {
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    color: var(--ink-soft); padding: 5px 9px; border-radius: 5px;
+    white-space: nowrap;
+  }
+  nav.jump a:hover { background: var(--surface-2); color: var(--ink); }
+  nav.jump a:focus-visible { outline: 2px solid var(--navy); outline-offset: 1px; }
+
+  /* ---------------- masthead ---------------- */
+  header.mast { padding-block: 34px 22px; border-bottom: 3px solid var(--navy); }
+  header.mast .kicker {
+    font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 1.4px;
+    text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px;
+  }
+  header.mast h1 {
+    font-family: var(--f-display); font-weight: 700;
+    font-size: clamp(30px, 8vw, 44px); line-height: 1.04;
+    letter-spacing: -1px; margin: 0 0 12px 0; text-wrap: balance;
+  }
+  header.mast p { margin: 0; color: var(--ink-soft); max-width: 46ch; }
+  header.mast p strong { color: var(--ink); font-weight: 600; }
+
+  .specs {
+    display: flex; flex-wrap: wrap; gap: 0;
+    margin-top: 20px; border-top: 1px solid var(--rule);
+  }
+  .specs div {
+    flex: 1 1 128px; padding: 10px 14px 10px 0;
+    border-right: 1px solid var(--rule);
+  }
+  .specs div:last-child { border-right: none; }
+  .specs dt {
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.9px;
+    text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1px;
+  }
+  .specs dd {
+    margin: 0; font-family: var(--f-display); font-weight: 600; font-size: 17px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------------- sections ---------------- */
+  section { padding-block: 34px 6px; scroll-margin-top: 60px; }
+
+  .eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 1.3px;
+    text-transform: uppercase; color: var(--navy); margin-bottom: 8px;
+  }
+  .eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--rule-hard); }
+
+  h2 {
+    font-family: var(--f-display); font-weight: 700;
+    font-size: clamp(23px, 5.5vw, 30px); line-height: 1.12;
+    letter-spacing: -0.6px; margin: 0 0 6px 0; text-wrap: balance;
+  }
+  .lede { color: var(--ink-soft); margin: 0 0 22px 0; max-width: 56ch; font-size: 15.5px; }
+
+  h3 {
+    font-family: var(--f-display); font-weight: 600; font-size: 16px;
+    letter-spacing: -0.1px; margin: 26px 0 8px 0;
+  }
+
+  /* ---------------- checklist ---------------- */
+  .preflight {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-left: 4px solid var(--navy);
+    border-radius: 3px; padding: 16px 18px;
+  }
+  .preflight h3 { margin: 0 0 10px 0; }
+  .preflight ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .preflight li { display: flex; gap: 11px; align-items: flex-start; font-size: 15px; }
+  .preflight input {
+    appearance: none; -webkit-appearance: none;
+    flex: 0 0 auto; width: 17px; height: 17px; margin: 3px 0 0 0;
+    border: 1.5px solid var(--rule-hard); border-radius: 3px;
+    background: var(--paper); cursor: pointer; position: relative;
+  }
+  .preflight input:checked { background: var(--navy); border-color: var(--navy); }
+  .preflight input:checked::after {
+    content: ""; position: absolute; left: 5px; top: 1px;
+    width: 4px; height: 9px; border: solid var(--surface);
+    border-width: 0 2px 2px 0; transform: rotate(42deg);
+  }
+  .preflight input:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+  .preflight label { cursor: pointer; }
+  .preflight input:checked + label { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--rule-hard); }
+  .preflight label b { font-weight: 600; }
+  .preflight .reset {
+    margin-top: 12px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.6px;
+    text-transform: uppercase; background: none; border: none; padding: 0;
+    color: var(--ink-faint); cursor: pointer; text-decoration: underline;
+  }
+
+  /* ---------------- numbered steps ---------------- */
+  ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  ol.steps > li {
+    counter-increment: s;
+    display: grid; grid-template-columns: 30px 1fr; gap: 14px;
+    padding-block: 13px;
+    border-top: 1px solid var(--rule);
+  }
+  ol.steps > li:first-child { border-top: 2px solid var(--rule-hard); }
+  ol.steps > li::before {
+    content: counter(s, decimal-leading-zero);
+    font-family: var(--f-mono); font-size: 12px; font-weight: 500;
+    color: var(--navy); padding-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  ol.steps .t { font-weight: 600; }
+  ol.steps p { margin: 2px 0 0 0; color: var(--ink-soft); font-size: 15px; }
+
+  /* ---------------- callouts ---------------- */
+  .flag {
+    display: grid; grid-template-columns: auto 1fr; gap: 11px;
+    align-items: start;
+    background: var(--warn-bg); border-left: 3px solid var(--warn-edge);
+    padding: 12px 14px; margin: 18px 0; border-radius: 0 3px 3px 0;
+    font-size: 15px;
+  }
+  .flag .tag {
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.9px;
+    text-transform: uppercase; color: var(--warn-ink); font-weight: 500;
+    padding-top: 3px; white-space: nowrap;
+  }
+  .flag.stop { border-left-color: var(--stop-edge); background: color-mix(in srgb, var(--stop-edge) 12%, var(--surface)); }
+  .flag.stop .tag { color: var(--stop-ink); }
+  .flag b { font-weight: 600; }
+
+  /* ---------------- copy chips ---------------- */
+  .chip {
+    font-family: var(--f-mono); font-size: 13.5px;
+    background: var(--surface-2); color: var(--ink);
+    border: 1px solid var(--rule); border-radius: 4px;
+    padding: 1px 6px; cursor: pointer;
+    position: relative; white-space: nowrap;
+  }
+  .chip:hover { border-color: var(--navy); }
+  .chip:focus-visible { outline: 2px solid var(--navy); outline-offset: 1px; }
+  .chip.copied::after {
+    content: "copied";
+    position: absolute; left: 50%; bottom: calc(100% + 5px); transform: translateX(-50%);
+    background: var(--navy); color: var(--paper);
+    font-size: 10px; letter-spacing: 0.6px; text-transform: uppercase;
+    padding: 2px 6px; border-radius: 3px; pointer-events: none;
+  }
+  code { font-family: var(--f-mono); font-size: 13.5px; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+
+  .path {
+    font-family: var(--f-mono); font-size: 13px;
+    color: var(--ink); background: var(--surface-2);
+    padding: 1px 6px; border-radius: 4px;
+    overflow-wrap: anywhere; box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* ---------------- ratios ---------------- */
+  .ratio-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+    gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+    border-radius: 3px; overflow: hidden; margin-top: 12px;
+  }
+  .ratio-grid div { background: var(--surface); padding: 10px 12px; }
+  .ratio-grid .sz { font-family: var(--f-display); font-weight: 700; font-size: 17px; }
+  .ratio-grid .r { font-family: var(--f-mono); font-size: 12px; color: var(--navy); margin-top: 2px; }
+  .ratio-grid .px { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+
+  /* ---------------- troubleshooting ---------------- */
+  .fixes { display: grid; gap: 0; border-top: 2px solid var(--rule-hard); }
+  .fix {
+    display: grid; grid-template-columns: 1fr; gap: 3px;
+    padding-block: 14px; border-bottom: 1px solid var(--rule);
+  }
+  .fix .sym {
+    font-family: var(--f-display); font-weight: 600; font-size: 16.5px;
+    display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap;
+  }
+  .fix .cause {
+    font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--ink-faint);
+    border: 1px solid var(--rule-hard); border-radius: 20px; padding: 1px 8px;
+  }
+  .fix .cause.ok { color: var(--navy); border-color: var(--navy-soft); }
+  .fix p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+  .fix p b { color: var(--ink); font-weight: 600; }
+  .fix .sym a { color: var(--navy); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+
+  /* ---------------- yields ---------------- */
+  table.yield { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 15px; }
+  table.yield th {
+    text-align: left; font-family: var(--f-mono); font-weight: 400;
+    font-size: 10.5px; letter-spacing: 0.9px; text-transform: uppercase;
+    color: var(--ink-faint); padding: 0 8px 5px 0; border-bottom: 1px solid var(--rule-hard);
+  }
+  table.yield td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+  table.yield td:first-child { font-family: var(--f-display); font-weight: 700; width: 5.5em; }
+  table.yield tr:last-child td { border-bottom: none; }
+
+  /* ---------------- return ---------------- */
+  ul.pack { list-style: none; margin: 10px 0 0 0; padding: 0; display: grid; gap: 9px; }
+  ul.pack li { padding-left: 20px; position: relative; font-size: 15.5px; }
+  ul.pack li::before {
+    content: ""; position: absolute; left: 0; top: 8px;
+    width: 8px; height: 8px; border: 1.5px solid var(--navy); border-radius: 1px;
+  }
+  ul.pack li b { font-weight: 600; }
+
+  /* ---------------- footer ---------------- */
+  footer {
+    margin-top: 40px; padding-top: 22px; border-top: 3px solid var(--navy);
+  }
+  footer .big {
+    font-family: var(--f-display); font-weight: 700;
+    font-size: clamp(20px, 5vw, 26px); letter-spacing: -0.5px; margin: 0 0 6px 0;
+  }
+  footer a { color: var(--navy); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+  footer p { color: var(--ink-soft); margin: 0 0 10px 0; max-width: 52ch; font-size: 15px; }
+  footer .colophon {
+    margin-top: 20px; font-family: var(--f-mono); font-size: 11px;
+    letter-spacing: 0.6px; color: var(--ink-faint);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  @media print {
+    nav.jump { display: none; }
+    body { background: #fff; color: #000; font-size: 10.5pt; }
+    .wrap { max-width: none; padding: 0; }
+    section { page-break-inside: auto; padding-block: 18px 0; }
+    .fix, ol.steps > li, .flag, .preflight { page-break-inside: avoid; }
+    .chip { border: none; background: none; padding: 0; }
+    .preflight .reset { display: none; }
+    a { color: #000; text-decoration: none; }
+    header.mast h1 { font-size: 26pt; }
+  }
+</style>
+</head>
+<body>
+<nav class="jump">
+  <div class="inner">
+    <a class="brand" href="/">PrintKit NYC</a>
+    <a href="#usb">USB</a>
+    <a href="#server">Print server</a>
+    <a href="#fixes">Fix it</a>
+    <a href="#return">Return</a>
+    <a href="#links">Downloads</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="kicker">DNP DS40 · Quick Start</div>
+    <h1>Everything prints. Nothing surprises you.</h1>
+    <p>Two ways to drive the printer: straight off a computer over USB, or wirelessly through the WCM-Plus print server. Pick your path below. <strong>Run it once on your buffer day</strong> — rentals are self-serve, so there's no one on site to fix it at 9pm.</p>
+    <dl class="specs">
+      <div><dt>Print time</dt><dd>8–9 sec</dd></div>
+      <div><dt>Weight</dt><dd>24 lb</dd></div>
+      <div><dt>Table</dt><dd>2 × 3 ft</dd></div>
+      <div><dt>Sizes per rental</dt><dd>One</dd></div>
+    </dl>
+  </header>
+
+  <section id="start">
+    <div class="eyebrow">Before you plug anything in</div>
+    <h2>Six things, then power on</h2>
+    <p class="lede">Tick these off as you go — the page remembers on this device.</p>
+
+    <div class="preflight">
+      <h3>Pre-flight</h3>
+      <ul>
+        <li><input type="checkbox" id="pf1"><label for="pf1"><b>Leave the media drawer shut.</b> The roll is loaded and test-printed before the kit leaves Brooklyn. Open it only to clear a jam.</label></li>
+        <li><input type="checkbox" id="pf2"><label for="pf2"><b>Confirm your print size.</b> The size is fixed by the media that's loaded — you can't switch mid-event without physically changing the roll and ribbon.</label></li>
+        <li><input type="checkbox" id="pf3"><label for="pf3"><b>Clear the space.</b> 4 in. behind the printer for the vent, about 10 in. in front for prints to eject. One outlet within reach.</label></li>
+        <li><input type="checkbox" id="pf4"><label for="pf4"><b>Power on and read the LEDs.</b> No steady error light means it's ready. Lights cycling right after a media change is normal.</label></li>
+        <li><input type="checkbox" id="pf5"><label for="pf5"><b>Check the scrap box is seated.</b> The DS40 will not run without it, full stop.</label></li>
+        <li><input type="checkbox" id="pf6"><label for="pf6"><b>Do a full dry run early.</b> Driver, software, one real print — on the machine you'll actually use at the event.</label></li>
+      </ul>
+      <button class="reset" type="button" id="resetPf">Clear all</button>
+    </div>
+  </section>
+
+  <section id="usb">
+    <div class="eyebrow">Path 1</div>
+    <h2>Computer over USB</h2>
+    <p class="lede">For a laptop running photo booth software, Lightroom, tethered capture — anything with a print dialog. If your setup can print, it can print to the DS40.</p>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <span class="t">Install the driver first, on the machine you'll actually use.</span>
+          <p>It comes from DNP: <a href="https://www.dnpphoto.com/downloads?search=1&amp;search_product=2&amp;search_product_type=64" target="_blank" rel="noopener">their download library</a> — filter to <b>DS40</b> and your OS. The current Mac build is v5.2.6. On a recent macOS, install and test the day you pick the kit up; if it won't take, the print server is the workaround.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Power the printer on first, then connect USB.</span>
+          <p>Let it finish settling before you plug into the computer. Straight into a port — hubs and daisy-chained dongles are the usual culprit when a job disappears.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Set the driver's paper size to the media that's loaded.</span>
+          <p>A 4×6 job sent to 6×8 media just sits in the queue with no error. This is the single most common setup failure — check it before you troubleshoot anything else.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Send one test print.</span>
+          <p>Before you trust the whole chain. A 4×6 lands in 8–9 seconds and comes out dry.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Point your software at it.</span>
+          <p>Most photo booth apps want the DS40 as the system default printer, with page size set to the loaded media. Set it inside the app too, not just in the OS — they don't always agree.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Size your images to fill the sheet.</span>
+          <p>Dye-sub prints edge to edge, so anything off-ratio gets cropped or comes back with white bands. Match the ratio in your template, not at the printer.</p>
+        </div>
+      </li>
+    </ol>
+
+    <h3>Ratios and pixel sizes at 300 dpi</h3>
+    <div class="ratio-grid">
+      <div><div class="sz">4×6</div><div class="r">2 : 3</div><div class="px">1200 × 1800</div></div>
+      <div><div class="sz">5×7</div><div class="r">5 : 7</div><div class="px">1500 × 2100</div></div>
+      <div><div class="sz">6×8</div><div class="r">3 : 4</div><div class="px">1800 × 2400</div></div>
+      <div><div class="sz">Strips</div><div class="r">2 × 2×6</div><div class="px">per 4×6 sheet</div></div>
+    </div>
+    <p class="lede" style="margin-top:10px">Photo strips are two 2×6 panels laid out on one 4×6 sheet — your software builds that layout and cuts are on you. The printer sees an ordinary 4×6.</p>
+  </section>
+
+  <section id="server">
+    <div class="eyebrow">Path 2 · only if you rented it</div>
+    <h2>WCM-Plus print server</h2>
+    <p class="lede">Wireless printing from iPhone, iPad, Android, Mac or PC with no drivers installed anywhere. The server makes its own Wi-Fi hotspot; everyone prints to that.</p>
+
+    <ol class="steps">
+      <li>
+        <div>
+          <span class="t">Printer on, media loaded, no error lights.</span>
+          <p>Order matters here. Printer first, server second — the WCM-Plus looks for printers when it boots.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Connect the WCM-Plus to the printer with the supplied USB cable.</span>
+          <p>Any of its three USB ports works.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Power the WCM-Plus from its own 5V/3A USB-C supply.</span>
+          <p>Don't try to run it off the printer — it won't get enough current.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Wait for the welcome print.</span>
+          <p>On boot it prints a page carrying two QR codes — one joins the hotspot, one opens the portal — plus the status of the connected printer. No welcome page means it never saw the printer. Power-cycle the server, not the printer.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Join the hotspot.</span>
+          <p>Scan the first QR code, or pick <button class="chip" data-copy="WCMPlus">WCMPlus-xxx</button> in Wi-Fi settings — the last three characters are unique to this unit. Password <button class="chip" data-copy="dnp12345">dnp12345</button>. Accept the license the first time you connect.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Print with AirPrint.</span>
+          <p>Open the photo, tap Share on iOS or the menu icon on Android, choose Print, pick the printer and size, print. Nothing to install on anyone's phone — this is the path most guests will use without being told.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Keep the portal open for everything else.</span>
+          <p>Any browser, <button class="chip" data-copy="192.168.4.1">192.168.4.1</button> — printer status, remaining prints, settings, and the reprint queue. <b>WCM Print</b> lives there too: use it when you want to crop, straighten, add a border or fix an image before it goes through.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="flag">
+      <span class="tag">Do this first</span>
+      <div><b>Set every iPhone that will print to Most Compatible.</b> <span class="path">Settings → Camera → Formats → Most Compatible</span>. HEIC files hide their true dimensions from the server, so it can't crop to fill and the print comes back with white edges. One setting, one minute, and it's the most common complaint gone.</div>
+    </div>
+
+    <h3>If a sheet comes out blank</h3>
+    <div class="flag">
+      <span class="tag">Fix</span>
+      <div>Crop that photo to the print's aspect ratio in the Photos editor and send it again — it's a quirk of the image, not a fault in the printer. If one image keeps doing it, run that image through <b>WCM Print</b> in the portal instead. Android ultra-HDR shots can show the same white edges as HEIC; those go through WCM Print too.</div>
+    </div>
+
+    <h3>Letting guests print themselves</h3>
+    <ol class="steps">
+      <li>
+        <div>
+          <span class="t">Turn on guest access.</span>
+          <p><span class="path">System Settings → Login &amp; Print Services</span> → tick WCM Print. You get a QR code to <button class="chip" data-copy="192.168.4.1/print">192.168.4.1/print</button> that you can print or put on a table sign.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Know the tradeoff before you switch it on.</span>
+          <p>Guests see thumbnails of <b>every</b> print from the session and can reprint any of them. At a wedding that's charming; at a corporate event it may not be.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="t">Set the caps.</span>
+          <p>Defaults are 10 copies and 50 uploads per session. Adjust under <span class="path">System Settings → Print Settings</span> — anywhere from 1 to 100 copies, 1 to 50 uploads.</p>
+        </div>
+      </li>
+    </ol>
+
+    <h3>Worth knowing</h3>
+    <div class="fixes">
+      <div class="fix">
+        <div class="sym">Venue Wi-Fi <span class="cause ok">optional</span></div>
+        <p>The server only needs internet if guests are pulling photos out of iCloud or Google Photos. Networks with a sign-in or agreement page can't be used — have guests download their photos before they join the hotspot.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">Drag-and-drop from a desktop <span class="cause ok">hot folder</span></div>
+        <p>Windows: <button class="chip" data-copy="\\192.168.4.1">\\192.168.4.1</button>. Mac or iOS: Files → Connect to Server → <button class="chip" data-copy="192.168.4.1">192.168.4.1</button>. User <button class="chip" data-copy="dnpwcm">dnpwcm</button>, password <button class="chip" data-copy="dnp12345">dnp12345</button>. Drop a file into the folder named for your print size and it prints.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">Reprints <span class="cause ok">last ten</span></div>
+        <p>The portal's print queue holds the last ten images. Tap the printer icon on any thumbnail to run it again.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="fixes">
+    <div class="eyebrow">When something goes wrong</div>
+    <h2>Read the symptom, not the manual</h2>
+    <p class="lede">Nearly everything on this list is a two-minute fix if you've seen it once before.</p>
+
+    <div class="fixes">
+      <div class="fix">
+        <div class="sym">Four blank prints after a media change <span class="cause ok">normal</span></div>
+        <p>The printer is aligning the new roll. Let it finish and don't open the drawer.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">Red error light after loading media <span class="cause">seating</span></div>
+        <p>Reseat both the paper <b>and</b> the ribbon cassette, then close the drawer. That clears it almost every time.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">Printer does nothing at all <span class="cause">scrap box</span></div>
+        <p>The DS40 will not operate without the scrap box in place. Pull it and reseat it.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">Paper jam <span class="cause">feed</span></div>
+        <p>Open the media drawer, release the paper compartment lever, remove the scrap box, lift the roll out and pull any paper still inside. <b>Cut the damaged paper off straight across with scissors</b> — a crooked cut jams again immediately. Refeed from the bottom of the compartment until the printer beeps, replace the scrap box, close it up. It cycles its lights and prints four blanks when it's aligned.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">Torn ribbon <span class="cause">snag</span></div>
+        <p>Pull the cassette, cut the ribbon clean, tape the two ends with cellophane tape, wind it on until the tape is out of sight, take up all slack, reinstall with the supply side to the front.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">Runs hot or keeps pausing <span class="cause">vents</span></div>
+        <p>Power down, disconnect the cables, dust the ventilation area on the back, give it 4 in. of clearance. Dye-sub throws real heat at volume.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">Prints have white edges <span class="cause">HEIC / ultra-HDR</span></div>
+        <p>iPhone: <span class="path">Settings → Camera → Formats → Most Compatible</span>. Android ultra-HDR does the same thing. Either way you can also resize the image in WCM Print's edit tool before sending it.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">Blank sheet came out <span class="cause">image, not printer</span></div>
+        <p>Crop that photo to the print's aspect ratio in the Photos editor and resend. If one image keeps doing it, run it through WCM Print in the portal instead.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">No printer listed in the portal <span class="cause">boot order</span></div>
+        <p>The WCM-Plus came up before the printer did. Leave the printer on and power-cycle the server.</p>
+      </div>
+      <div class="fix">
+        <div class="sym">Job sits in the queue, nothing prints <span class="cause">size mismatch</span></div>
+        <p>The driver's paper size doesn't match the loaded media. Change the driver setting, clear the queue, resend.</p>
+      </div>
+    </div>
+
+    <div class="flag">
+      <span class="tag">Media</span>
+      <div><b>Always replace paper and ribbon together.</b> They're engineered to run out at the same time; swapping one without the other causes jams and error lights. If you're supplying your own, it has to be a DS40 media set for the size you're printing.</div>
+    </div>
+
+    <h3>What a kit yields</h3>
+    <table class="yield">
+      <thead><tr><th>Size</th><th>Prints per kit</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>4×6</td><td>400</td><td>Stocked</td></tr>
+        <tr><td>6×8</td><td>200</td><td>Stocked</td></tr>
+        <tr><td>5×7</td><td>200</td><td>Special order, 7 days ahead</td></tr>
+      </tbody>
+    </table>
+    <p class="lede" style="margin-top:10px">Yield is per size, not per rental — a 6×8 kit is 200 prints, not 400. Plan your guest count against the size you actually booked.</p>
+  </section>
+
+  <section id="return">
+    <div class="eyebrow">Wrapping up</div>
+    <h2>Returning the kit</h2>
+    <ul class="pack">
+      <li><b>Leave the media in the printer.</b> Don't unload it.</li>
+      <li>Printer, power cable and USB cable back in the case.</li>
+      <li>WCM-Plus, its USB-C power supply and its printer cable, if you rented the server.</li>
+      <li>Flag anything that went sideways, even if it seems fine now.</li>
+    </ul>
+    <p class="lede" style="margin-top:16px">Your deposit is refunded within 48 hours of return, assuming the kit comes back in working condition. Normal wear is expected.</p>
+  </section>
+
+  <section id="links">
+    <div class="eyebrow">Downloads</div>
+    <h2>Where the files live</h2>
+    <div class="fixes">
+      <div class="fix">
+        <div class="sym"><a href="/manual">Full DS40 manual</a> <span class="cause ok">printkitnyc.com/manual</span></div>
+        <p>DNP's complete user manual for the printer — media loading in detail, every LED pattern, full specs. The card in your case is the short version of this.</p>
+      </div>
+      <div class="fix">
+        <div class="sym"><a href="https://www.dnpphoto.com/downloads?search=1&amp;search_product=2&amp;search_product_type=64" target="_blank" rel="noopener">Drivers &amp; guides at DNP</a> <span class="cause ok">dnpphoto.com</span></div>
+        <p>Drivers for Mac and Windows, ICC profiles, the driver uninstaller, and DNP's own help sheets — clearing the paper path, repairing a torn ribbon, and enabling 2-inch cuts on Windows if you're printing photo strips. <b>Filter to DS40 and your OS</b>; the library covers every DNP printer.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="big">Stuck mid-rental? Text <a href="sms:+16464703363">(646) 470-3363</a></p>
+    <p>Or email <a href="mailto:hello@printkitnyc.com">hello@printkitnyc.com</a>. Support runs for the length of your rental. There's no on-site tech, which is the whole reason for the dry run.</p>
+    <div class="colophon">PrintKit NYC · Clinton Hill, Brooklyn · printkitnyc.com</div>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  // tap-to-copy chips
+  document.querySelectorAll('.chip[data-copy]').forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      var text = chip.getAttribute('data-copy');
+      var done = function () {
+        chip.classList.add('copied');
+        setTimeout(function () { chip.classList.remove('copied'); }, 1200);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () {});
+      }
+    });
+  });
+
+  // pre-flight checklist, remembered per device
+  var KEY = 'printkit.preflight.v1';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.preflight input[type=checkbox]'));
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      var saved = JSON.parse(raw);
+      boxes.forEach(function (b) { if (saved[b.id]) b.checked = true; });
+    } catch (e) { /* storage unavailable — checklist still works, just not remembered */ }
+  }
+  function save() {
+    try {
+      var state = {};
+      boxes.forEach(function (b) { if (b.checked) state[b.id] = 1; });
+      localStorage.setItem(KEY, JSON.stringify(state));
+    } catch (e) {}
+  }
+
+  boxes.forEach(function (b) { b.addEventListener('change', save); });
+  document.getElementById('resetPf').addEventListener('click', function () {
+    boxes.forEach(function (b) { b.checked = false; });
+    save();
+  });
+  load();
+})();
+</script>
+</body>
+</html>
