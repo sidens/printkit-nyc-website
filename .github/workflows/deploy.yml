@@ -30,6 +30,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Writes public/availability.json. Exits non-zero on any error, which stops the
+      # job before deploy and leaves the currently live site untouched.
+      - name: Refresh availability from Google Calendar
+        env:
+          GOOGLE_CALENDAR_API_KEY: ${{ secrets.GOOGLE_CALENDAR_API_KEY }}
+        run: node scripts/fetch-availability.mjs
+
       - name: Build
         run: npm run build
 
