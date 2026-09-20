@@ -198,6 +198,7 @@ const RequestForm = () => {
       notes: "",
       printSize: "4x6",
       mediaKits: 0,
+      mediaKitOptIn: false,
       printServer: false,
     });
   };
