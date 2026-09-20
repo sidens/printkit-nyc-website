@@ -1,0 +1,9 @@
+{
+  "generated": "1970-01-01T00:00:00.000Z",
+  "source": "seed",
+  "timezone": "America/New_York",
+  "horizonDays": 88,
+  "horizonEnd": "1970-01-01",
+  "blocked": [],
+  "_note": "Placeholder so local dev and the type checker have something to read. Every deploy overwrites this with real data before the build runs. Do not trust it: source is 'seed' and the site treats that as unknown availability."
+}
