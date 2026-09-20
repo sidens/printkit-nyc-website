@@ -65,6 +65,7 @@ const RequestForm = () => {
     notes: "",
     printSize: "4x6" as PrintSize,
     mediaKits: 0,
+    mediaKitOptIn: false,
     printServer: false,
   });
 
