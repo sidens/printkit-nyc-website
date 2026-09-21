@@ -46,6 +46,25 @@ const money = new Intl.NumberFormat("en-US", {
 
 const sizeLabel = (size: PrintSize) => size.replace("x", "×");
 
+type ContactPreference = "email" | "text" | "call";
+
+const CONTACT_OPTIONS: { value: ContactPreference; label: string }[] = [
+  { value: "email", label: "Email" },
+  { value: "text", label: "Text" },
+  { value: "call", label: "Call" },
+];
+
+const PRINT_METHODS = [
+  { value: "computer", label: "From a computer (USB)" },
+  { value: "devices", label: "From devices (wireless/ethernet)" },
+  { value: "unsure", label: "Not sure yet" },
+];
+
+const rangeLabel = (from: Date, to: Date) =>
+  from.getMonth() === to.getMonth()
+    ? `${format(from, "MMM d")}–${format(to, "d")}`
+    : `${format(from, "MMM d")}–${format(to, "MMM d")}`;
+
 const RequestForm = () => {
   const { toast } = useToast();
   const availability = useAvailability();
@@ -59,7 +78,9 @@ const RequestForm = () => {
     name: "",
     email: "",
     phone: "",
-    smsOk: false,
+    contactPreference: "email" as ContactPreference,
+    bestTimeToCall: "",
+    printMethod: "",
     pickupDate: "",
     returnDate: "",
     eventType: "",
@@ -69,6 +90,8 @@ const RequestForm = () => {
     mediaKitOptIn: false,
     printServer: false,
   });
+
+  const phoneRequired = formData.contactPreference !== "email";
 
   const blockedDates = useMemo(() => new Set(availability.blocked), [availability.blocked]);
   const quote = calculateQuote({
@@ -118,6 +141,29 @@ const RequestForm = () => {
     setFormData((current) => ({ ...current, pickupDate, returnDate }));
   };
 
+  const printMethodLabel = PRINT_METHODS.find((option) => option.value === formData.printMethod)?.label ?? "";
+
+  const preferenceTag =
+    formData.contactPreference === "text" ? "Text" : formData.contactPreference === "call" ? "Call" : "Email";
+
+  const subjectLine =
+    selectedRange?.from && selectedRange.to
+      ? `[${preferenceTag}] ${rangeLabel(selectedRange.from, selectedRange.to)} · ${quote.days} ${quote.days === 1 ? "day" : "days"} · ${money.format(quote.dueAtPickup)} · ${formData.name}`
+      : `[${preferenceTag}] New PrintKit request · ${formData.name}`;
+
+  const successCopy = () => {
+    if (formData.contactPreference === "text") {
+      return `We'll text you at ${formData.phone} within 24 hours. Your itemized quote will come by email to ${formData.email}.`;
+    }
+    if (formData.contactPreference === "call") {
+      const when = formData.bestTimeToCall ? `, around ${formData.bestTimeToCall}` : "";
+      return `We'll call you at ${formData.phone} within 24 hours${when}. Your itemized quote will come by email to ${formData.email}.`;
+    }
+    return `We'll email you at ${formData.email} within 24 hours with availability and your itemized quote.`;
+  };
+
+
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -126,7 +172,7 @@ const RequestForm = () => {
       setDateError("Please choose both a pickup and return date.");
       hasError = true;
     }
-    if (!isValidPhone(formData.phone)) {
+    if (phoneRequired && !isValidPhone(formData.phone)) {
       setPhoneError("Please enter a valid phone number with at least 10 digits.");
       hasError = true;
     }
@@ -142,11 +188,13 @@ const RequestForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           _replyto: formData.email,
-          _subject: `New PrintKit request — ${formData.name}`,
+          _subject: subjectLine,
           Name: formData.name,
           Email: formData.email,
           Phone: formData.phone,
-          "OK to text": formData.smsOk ? "Yes" : "No",
+          contactPreference: formData.contactPreference,
+          bestTimeToCall: formData.bestTimeToCall || "Not specified",
+          printMethod: printMethodLabel || "Not specified",
           "Pickup date": formData.pickupDate,
           "Return date": formData.returnDate,
           "Event type": formData.eventType || "Not specified",
@@ -192,7 +240,9 @@ const RequestForm = () => {
       name: "",
       email: "",
       phone: "",
-      smsOk: false,
+      contactPreference: "email",
+      bestTimeToCall: "",
+      printMethod: "",
       pickupDate: "",
       returnDate: "",
       eventType: "",
@@ -213,11 +263,9 @@ const RequestForm = () => {
               <CheckCircle className="w-10 h-10" />
             </div>
             <h1 ref={successHeadingRef} tabIndex={-1} className="text-3xl md:text-4xl font-semibold mb-4 focus:outline-none">
-              Request sent!
+              Request sent
             </h1>
-            <p className="text-lg text-muted-foreground mb-8">
-              Request received! We'll review your dates and reply by text message (or email) within 1–2 business days. If available, we'll send the rental agreement, followed by payment details. Payment is due before pickup.
-            </p>
+            <p className="text-lg text-muted-foreground mb-8">{successCopy()}</p>
             <Button variant="outline" onClick={resetForm}>Submit another request</Button>
           </div>
         </div>
@@ -255,38 +303,6 @@ const RequestForm = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="card-elevated p-6 md:p-10 space-y-8">
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="name">Full name *</Label>
-                <Input id="name" required value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} placeholder="Your name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email *</Label>
-                <Input id="email" type="email" required value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} placeholder="you@example.com" />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone number *</Label>
-              <Input
-                id="phone"
-                type="tel"
-                required
-                aria-invalid={phoneError ? true : undefined}
-                aria-describedby={phoneError ? "phone-error" : undefined}
-                value={formData.phone}
-                onChange={(event) => {
-                  setFormData({ ...formData, phone: event.target.value });
-                  if (phoneError) setPhoneError("");
-                }}
-                placeholder="(555) 123-4567"
-              />
-              {phoneError && <p id="phone-error" className="text-sm text-destructive">{phoneError}</p>}
-              <div className="flex items-center space-x-3 pt-1">
-                <Checkbox id="smsOk" checked={formData.smsOk} onCheckedChange={(checked) => setFormData({ ...formData, smsOk: checked === true })} />
-                <Label htmlFor="smsOk" className="text-sm font-normal cursor-pointer">It's okay to text me at this number about my rental</Label>
-              </div>
-            </div>
 
             <fieldset className="space-y-4">
               <legend className="text-sm font-medium">Pickup and return dates *</legend>
@@ -347,6 +363,25 @@ const RequestForm = () => {
                 </div>
               </div>
               {dateError && <p className="text-sm text-destructive" role="alert">{dateError}</p>}
+            </fieldset>
+
+            <fieldset className="space-y-3">
+              <legend className="text-base font-semibold">How will you print? (optional)</legend>
+              <RadioGroup
+                value={formData.printMethod}
+                onValueChange={(value) => setFormData({ ...formData, printMethod: value })}
+                className="grid gap-3 sm:grid-cols-3"
+              >
+                {PRINT_METHODS.map((option) => (
+                  <Label key={option.value} htmlFor={`method-${option.value}`} className="flex cursor-pointer items-start gap-3 rounded-lg border border-border p-3 font-normal">
+                    <RadioGroupItem id={`method-${option.value}`} value={option.value} className="mt-0.5" />
+                    <span>{option.label}</span>
+                  </Label>
+                ))}
+              </RadioGroup>
+              {formData.printMethod === "devices" && !formData.printServer && (
+                <p className="text-sm text-muted-foreground">Printing from devices needs the WCMPlus print server — add it below.</p>
+              )}
             </fieldset>
 
             <fieldset className="space-y-4">
@@ -440,20 +475,94 @@ const RequestForm = () => {
               )}
             </section>
 
-            <div className="space-y-2">
-              <Label htmlFor="eventType">What's this for?</Label>
-              <Input id="eventType" value={formData.eventType} onChange={(event) => setFormData({ ...formData, eventType: event.target.value })} placeholder="e.g., Birthday party, corporate event, photo booth..." />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="notes">Anything else we should know?</Label>
-              <Textarea id="notes" value={formData.notes} onChange={(event) => setFormData({ ...formData, notes: event.target.value })} placeholder="Questions, special requests, or setup details..." rows={4} />
-            </div>
-
             <blockquote className="border-l-2 border-primary/40 pl-4 my-6">
               <p className="text-sm text-foreground">{testimonials[0].pullQuote}</p>
               <p className="text-xs text-muted-foreground mt-2">Sam K., Admiration</p>
             </blockquote>
+
+            <div className="space-y-6">
+              <h2 className="text-base font-semibold">Your details</h2>
+
+              <div className="grid gap-6 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Full name *</Label>
+                  <Input id="name" required value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} placeholder="Your name" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email *</Label>
+                  <Input id="email" type="email" required value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} placeholder="you@example.com" />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <p className="text-sm font-medium" id="contact-preference-label">How should we reach you?</p>
+                <div role="radiogroup" aria-labelledby="contact-preference-label" className="grid grid-cols-3 gap-2 rounded-lg border border-border p-1">
+                  {CONTACT_OPTIONS.map((option) => {
+                    const active = formData.contactPreference === option.value;
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        role="radio"
+                        aria-checked={active}
+                        onClick={() => {
+                          setPhoneError("");
+                          setFormData({ ...formData, contactPreference: option.value });
+                        }}
+                        className={`rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted"}`}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="text-xs text-muted-foreground">Your itemized quote always comes by email. This is for clarifying next steps and coordinating logistics.</p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phone">
+                  {formData.contactPreference === "text"
+                    ? "Mobile number for texts *"
+                    : formData.contactPreference === "call"
+                      ? "Best number to call *"
+                      : "Phone (optional)"}
+                </Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  required={phoneRequired}
+                  aria-invalid={phoneError ? true : undefined}
+                  aria-describedby={phoneError ? "phone-error" : undefined}
+                  value={formData.phone}
+                  onChange={(event) => {
+                    setFormData({ ...formData, phone: event.target.value });
+                    if (phoneError) setPhoneError("");
+                  }}
+                  placeholder="(555) 123-4567"
+                />
+                {formData.contactPreference === "text" && (
+                  <p className="text-xs text-muted-foreground">We'll only text about this rental.</p>
+                )}
+                {phoneError && <p id="phone-error" className="text-sm text-destructive">{phoneError}</p>}
+              </div>
+
+              {formData.contactPreference === "call" && (
+                <div className="space-y-2">
+                  <Label htmlFor="bestTimeToCall">Best time to call</Label>
+                  <Input id="bestTimeToCall" value={formData.bestTimeToCall} onChange={(event) => setFormData({ ...formData, bestTimeToCall: event.target.value })} placeholder="e.g. weekday evenings" />
+                </div>
+              )}
+
+              <div className="space-y-2">
+                <Label htmlFor="eventType">What's this for?</Label>
+                <Input id="eventType" value={formData.eventType} onChange={(event) => setFormData({ ...formData, eventType: event.target.value })} placeholder="e.g., Birthday party, corporate event, photo booth..." />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="notes">Anything else we should know?</Label>
+                <Textarea id="notes" value={formData.notes} onChange={(event) => setFormData({ ...formData, notes: event.target.value })} placeholder="Questions, special requests, or setup details..." rows={4} />
+              </div>
+            </div>
 
             <div className="pt-2">
               <Button type="submit" variant="hero" size="xl" className="w-full" disabled={isSubmitting}>
