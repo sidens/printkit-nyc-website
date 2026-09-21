@@ -141,6 +141,29 @@ const RequestForm = () => {
     setFormData((current) => ({ ...current, pickupDate, returnDate }));
   };
 
+  const printMethodLabel = PRINT_METHODS.find((option) => option.value === formData.printMethod)?.label ?? "";
+
+  const preferenceTag =
+    formData.contactPreference === "text" ? "Text" : formData.contactPreference === "call" ? "Call" : "Email";
+
+  const subjectLine =
+    selectedRange?.from && selectedRange.to
+      ? `[${preferenceTag}] ${rangeLabel(selectedRange.from, selectedRange.to)} · ${quote.days} ${quote.days === 1 ? "day" : "days"} · ${money.format(quote.dueAtPickup)} · ${formData.name}`
+      : `[${preferenceTag}] New PrintKit request · ${formData.name}`;
+
+  const successCopy = () => {
+    if (formData.contactPreference === "text") {
+      return `We'll text you at ${formData.phone} within 24 hours. Your itemized quote will come by email to ${formData.email}.`;
+    }
+    if (formData.contactPreference === "call") {
+      const when = formData.bestTimeToCall ? `, around ${formData.bestTimeToCall}` : "";
+      return `We'll call you at ${formData.phone} within 24 hours${when}. Your itemized quote will come by email to ${formData.email}.`;
+    }
+    return `We'll email you at ${formData.email} within 24 hours with availability and your itemized quote.`;
+  };
+
+
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
