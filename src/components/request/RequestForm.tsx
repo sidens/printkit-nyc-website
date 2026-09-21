@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { CalendarDays, CheckCircle, Minus, Plus, Send } from "lucide-react";
+import { CalendarDays, CheckCircle, Minus, Plus, RefreshCw, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { trackGenerateLead, trackFormError } from "@/lib/analytics";
 import { useAvailability } from "@/lib/availability";
