@@ -73,6 +73,7 @@ const RequestForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phoneError, setPhoneError] = useState("");
   const [dateError, setDateError] = useState("");
+  const [printMethodError, setPrintMethodError] = useState("");
   const [selectedRange, setSelectedRange] = useState<DateRange>();
   const [formData, setFormData] = useState({
     name: "",
@@ -86,12 +87,21 @@ const RequestForm = () => {
     eventType: "",
     notes: "",
     printSize: "4x6" as PrintSize,
-    mediaKits: 0,
-    mediaKitOptIn: false,
+    mediaKits: 1,
+    mediaChoice: "kit" as MediaChoice,
     printServer: false,
   });
 
   const phoneRequired = formData.contactPreference !== "email";
+
+  const handlePrintMethodChange = (value: string) => {
+    setPrintMethodError("");
+    setFormData((current) => ({
+      ...current,
+      printMethod: value,
+      printServer: value === "devices" && current.printMethod !== "devices" ? true : current.printServer,
+    }));
+  };
 
   const blockedDates = useMemo(() => new Set(availability.blocked), [availability.blocked]);
   const quote = calculateQuote({
@@ -99,7 +109,7 @@ const RequestForm = () => {
     returnDate: formData.returnDate,
     withServer: formData.printServer,
     size: formData.printSize,
-    kits: formData.mediaKits,
+    kits: formData.mediaChoice === "kit" ? formData.mediaKits : 0,
   });
 
   const isValidPhone = (value: string) => value.replace(/\D/g, "").length >= 10;
