@@ -263,11 +263,9 @@ const RequestForm = () => {
               <CheckCircle className="w-10 h-10" />
             </div>
             <h1 ref={successHeadingRef} tabIndex={-1} className="text-3xl md:text-4xl font-semibold mb-4 focus:outline-none">
-              Request sent!
+              Request sent
             </h1>
-            <p className="text-lg text-muted-foreground mb-8">
-              Request received! We'll review your dates and reply by text message (or email) within 1–2 business days. If available, we'll send the rental agreement, followed by payment details. Payment is due before pickup.
-            </p>
+            <p className="text-lg text-muted-foreground mb-8">{successCopy()}</p>
             <Button variant="outline" onClick={resetForm}>Submit another request</Button>
           </div>
         </div>
