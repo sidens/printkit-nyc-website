@@ -475,11 +475,6 @@ const RequestForm = () => {
               )}
             </section>
 
-            <blockquote className="border-l-2 border-primary/40 pl-4 my-6">
-              <p className="text-sm text-foreground">{testimonials[0].pullQuote}</p>
-              <p className="text-xs text-muted-foreground mt-2">Sam K., Admiration</p>
-            </blockquote>
-
             <div className="space-y-6">
               <h2 className="text-base font-semibold">Your details</h2>
 
@@ -563,6 +558,11 @@ const RequestForm = () => {
                 <Textarea id="notes" value={formData.notes} onChange={(event) => setFormData({ ...formData, notes: event.target.value })} placeholder="Questions, special requests, or setup details..." rows={4} />
               </div>
             </div>
+
+            <blockquote className="border-l-2 border-primary/40 pl-4 my-6">
+              <p className="text-sm text-foreground">{testimonials[0].pullQuote}</p>
+              <p className="text-xs text-muted-foreground mt-2">Sam K., Admiration</p>
+            </blockquote>
 
             <div className="pt-2">
               <Button type="submit" variant="hero" size="xl" className="w-full" disabled={isSubmitting}>
