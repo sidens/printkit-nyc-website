@@ -303,38 +303,6 @@ const RequestForm = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="card-elevated p-6 md:p-10 space-y-8">
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="name">Full name *</Label>
-                <Input id="name" required value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} placeholder="Your name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email *</Label>
-                <Input id="email" type="email" required value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} placeholder="you@example.com" />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone number *</Label>
-              <Input
-                id="phone"
-                type="tel"
-                required
-                aria-invalid={phoneError ? true : undefined}
-                aria-describedby={phoneError ? "phone-error" : undefined}
-                value={formData.phone}
-                onChange={(event) => {
-                  setFormData({ ...formData, phone: event.target.value });
-                  if (phoneError) setPhoneError("");
-                }}
-                placeholder="(555) 123-4567"
-              />
-              {phoneError && <p id="phone-error" className="text-sm text-destructive">{phoneError}</p>}
-              <div className="flex items-center space-x-3 pt-1">
-                <Checkbox id="smsOk" checked={formData.smsOk} onCheckedChange={(checked) => setFormData({ ...formData, smsOk: checked === true })} />
-                <Label htmlFor="smsOk" className="text-sm font-normal cursor-pointer">It's okay to text me at this number about my rental</Label>
-              </div>
-            </div>
 
             <fieldset className="space-y-4">
               <legend className="text-sm font-medium">Pickup and return dates *</legend>
