@@ -23,6 +23,7 @@ export const testimonials: Testimonial[] = [
       "PrintKit's turnkey kit made it seamless. The setup worked flawlessly from start to finish.",
     name: "Sam K.",
     company: "Admiration",
+    companyUrl: "https://admiration.co",
     context: "Fashion week collection studio · Week-long rental · DS40 + print server",
   },
 ];
