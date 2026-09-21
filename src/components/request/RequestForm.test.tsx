@@ -67,15 +67,16 @@ describe("RequestForm", () => {
 
     expect(screen.getByText("4×6")).toBeInTheDocument();
     expect(screen.getByText("6×8")).toBeInTheDocument();
-    const output = screen.getByText("1");
-    expect(output.tagName.toLowerCase()).toBe("output");
+    const counter = screen.getByRole("status");
+    expect(counter.tagName.toLowerCase()).toBe("output");
+    expect(counter).toHaveTextContent("1");
 
     const add = screen.getByLabelText("Add one media kit");
     await user.click(add);
     await user.click(add);
     await user.click(add);
     expect(add).toBeDisabled();
-    expect(screen.getByText("4").tagName.toLowerCase()).toBe("output");
+    expect(counter).toHaveTextContent("4");
   });
 
   it("hints at the print server for device printing without checking it", async () => {
