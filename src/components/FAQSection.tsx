@@ -14,7 +14,7 @@ const faqs = [
   {
     question: "How do I get print media?",
     answer:
-      "Add the optional $100 prepaid media kit for up to 400 4×6 prints, or bring your own DNP DS40-compatible media.",
+      "Add a media kit when you request dates: one roll, loaded and test-printed before pickup. 4×6 is $100 for 400 prints; 6×8 and 5×7 are available too. You can bring your own DNP DS40 media instead.",
   },
   {
     question: "What happens if something breaks?",

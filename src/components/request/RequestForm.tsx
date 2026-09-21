@@ -47,6 +47,7 @@ const money = new Intl.NumberFormat("en-US", {
 const sizeLabel = (size: PrintSize) => size.replace("x", "×");
 
 type ContactPreference = "email" | "text" | "call";
+type MediaChoice = "kit" | "byo";
 
 const CONTACT_OPTIONS: { value: ContactPreference; label: string }[] = [
   { value: "email", label: "Email" },
@@ -73,6 +74,7 @@ const RequestForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phoneError, setPhoneError] = useState("");
   const [dateError, setDateError] = useState("");
+  const [printMethodError, setPrintMethodError] = useState("");
   const [selectedRange, setSelectedRange] = useState<DateRange>();
   const [formData, setFormData] = useState({
     name: "",
@@ -86,12 +88,21 @@ const RequestForm = () => {
     eventType: "",
     notes: "",
     printSize: "4x6" as PrintSize,
-    mediaKits: 0,
-    mediaKitOptIn: false,
+    mediaKits: 1,
+    mediaChoice: "kit" as MediaChoice,
     printServer: false,
   });
 
   const phoneRequired = formData.contactPreference !== "email";
+
+  const handlePrintMethodChange = (value: string) => {
+    setPrintMethodError("");
+    setFormData((current) => ({
+      ...current,
+      printMethod: value,
+      printServer: value === "devices" && current.printMethod !== "devices" ? true : current.printServer,
+    }));
+  };
 
   const blockedDates = useMemo(() => new Set(availability.blocked), [availability.blocked]);
   const quote = calculateQuote({
@@ -99,7 +110,7 @@ const RequestForm = () => {
     returnDate: formData.returnDate,
     withServer: formData.printServer,
     size: formData.printSize,
-    kits: formData.mediaKits,
+    kits: formData.mediaChoice === "kit" ? formData.mediaKits : 0,
   });
 
   const isValidPhone = (value: string) => value.replace(/\D/g, "").length >= 10;
@@ -146,10 +157,17 @@ const RequestForm = () => {
   const preferenceTag =
     formData.contactPreference === "text" ? "Text" : formData.contactPreference === "call" ? "Call" : "Email";
 
+  const setupTag =
+    formData.printMethod === "computer"
+      ? " · Setup: computer"
+      : formData.printMethod === "devices"
+        ? " · Setup: devices"
+        : " · Setup: not sure";
+
   const subjectLine =
-    selectedRange?.from && selectedRange.to
+    (selectedRange?.from && selectedRange.to
       ? `[${preferenceTag}] ${rangeLabel(selectedRange.from, selectedRange.to)} · ${quote.days} ${quote.days === 1 ? "day" : "days"} · ${money.format(quote.dueAtPickup)} · ${formData.name}`
-      : `[${preferenceTag}] New PrintKit request · ${formData.name}`;
+      : `[${preferenceTag}] New PrintKit request · ${formData.name}`) + setupTag;
 
   const successCopy = () => {
     if (formData.contactPreference === "text") {
@@ -172,6 +190,10 @@ const RequestForm = () => {
       setDateError("Please choose both a pickup and return date.");
       hasError = true;
     }
+    if (!formData.printMethod) {
+      setPrintMethodError("Pick one. 'Not sure yet' is fine.");
+      hasError = true;
+    }
     if (phoneRequired && !isValidPhone(formData.phone)) {
       setPhoneError("Please enter a valid phone number with at least 10 digits.");
       hasError = true;
@@ -180,6 +202,7 @@ const RequestForm = () => {
 
     setDateError("");
     setPhoneError("");
+    setPrintMethodError("");
     setIsSubmitting(true);
 
     try {
@@ -194,14 +217,15 @@ const RequestForm = () => {
           Phone: formData.phone,
           contactPreference: formData.contactPreference,
           bestTimeToCall: formData.bestTimeToCall || "Not specified",
-          printMethod: printMethodLabel || "Not specified",
+          printMethod: printMethodLabel,
           "Pickup date": formData.pickupDate,
           "Return date": formData.returnDate,
           "Event type": formData.eventType || "Not specified",
           Notes: formData.notes || "None",
           days: quote.days,
-          printSize: formData.printSize,
-          mediaKits: formData.mediaKits,
+          mediaChoice: formData.mediaChoice,
+          mediaSize: formData.mediaChoice === "kit" ? formData.printSize : "N/A",
+          mediaKits: formData.mediaChoice === "kit" ? formData.mediaKits : 0,
           printServer: formData.printServer,
           subtotal: quote.subtotal,
           tax: quote.tax,
@@ -234,6 +258,7 @@ const RequestForm = () => {
   const resetForm = () => {
     setIsSubmitted(false);
     setPhoneError("");
+    setPrintMethodError("");
     setDateError("");
     setSelectedRange(undefined);
     setFormData({
@@ -248,8 +273,8 @@ const RequestForm = () => {
       eventType: "",
       notes: "",
       printSize: "4x6",
-      mediaKits: 0,
-      mediaKitOptIn: false,
+      mediaKits: 1,
+      mediaChoice: "kit",
       printServer: false,
     });
   };
@@ -265,7 +290,11 @@ const RequestForm = () => {
             <h1 ref={successHeadingRef} tabIndex={-1} className="text-3xl md:text-4xl font-semibold mb-4 focus:outline-none">
               Request sent
             </h1>
-            <p className="text-lg text-muted-foreground mb-8">{successCopy()}</p>
+            <p className="text-lg text-muted-foreground mb-4">{successCopy()}</p>
+            {formData.printMethod === "unsure" && (
+              <p className="text-lg text-muted-foreground mb-8">Not sure how you'll print? No problem. We'll walk through the options with you when we reply.</p>
+            )}
+            {formData.printMethod !== "unsure" && <div className="mb-4" />}
             <Button variant="outline" onClick={resetForm}>Submit another request</Button>
           </div>
         </div>
@@ -366,10 +395,10 @@ const RequestForm = () => {
             </fieldset>
 
             <fieldset className="space-y-3">
-              <legend className="text-base font-semibold">How will you print?</legend>
+              <legend className="text-base font-semibold">How will you print? *</legend>
               <RadioGroup
                 value={formData.printMethod}
-                onValueChange={(value) => setFormData({ ...formData, printMethod: value })}
+                onValueChange={handlePrintMethodChange}
                 className="grid gap-3 sm:grid-cols-3"
               >
                 {PRINT_METHODS.map((option) => (
@@ -379,70 +408,83 @@ const RequestForm = () => {
                   </Label>
                 ))}
               </RadioGroup>
-              {formData.printMethod === "devices" && !formData.printServer && (
-                <p className="text-sm text-muted-foreground">Printing from devices needs the WCMPlus print server — add it below.</p>
-              )}
+              {printMethodError && <p className="text-sm text-destructive" role="alert">{printMethodError}</p>}
             </fieldset>
 
             <fieldset className="space-y-4">
-              <legend className="text-base font-semibold">Add-ons</legend>
-              <p className="text-sm text-muted-foreground">Both are optional. Bring your own DNP DS40-compatible media and skip the print server, or add either below.</p>
+              <legend className="text-base font-semibold">Print media</legend>
+              <p className="text-sm text-muted-foreground">Every rental needs one roll of DS40 media. Ours comes loaded in the printer and test-printed before pickup.</p>
 
-              <div className="flex items-center space-x-3">
-                <Checkbox
-                  id="mediaKitOptIn"
-                  checked={formData.mediaKitOptIn}
-                  onCheckedChange={(checked) => {
-                    const optingIn = checked === true;
-                    setFormData({
-                      ...formData,
-                      mediaKitOptIn: optingIn,
-                      mediaKits: optingIn ? Math.max(1, formData.mediaKits) : 0,
-                    });
-                  }}
-                />
-                <Label htmlFor="mediaKitOptIn" className="font-normal cursor-pointer">Add a prepaid media kit</Label>
-              </div>
+              <RadioGroup
+                value={formData.mediaChoice}
+                onValueChange={(value) => setFormData({ ...formData, mediaChoice: value as MediaChoice })}
+                className="grid gap-3"
+              >
+                <div className="rounded-lg border border-border p-3 space-y-4">
+                  <Label htmlFor="media-kit" className="flex cursor-pointer items-start gap-3 font-normal">
+                    <RadioGroupItem id="media-kit" value="kit" className="mt-0.5" />
+                    <span className="flex-1 font-medium">PrintKit media kit</span>
+                    <span className="tabular-nums font-medium">{money.format(selectedMedia.price * formData.mediaKits)}</span>
+                  </Label>
 
-              {formData.mediaKitOptIn && (
-                <div className="space-y-4 border-l-2 border-border pl-4 ml-6">
-                  <RadioGroup
-                    value={formData.printSize}
-                    onValueChange={(value) => setFormData({ ...formData, printSize: value as PrintSize })}
-                    className="grid gap-3 sm:grid-cols-3"
-                  >
-                    {(Object.keys(MEDIA) as PrintSize[]).map((size) => (
-                      <Label key={size} htmlFor={`size-${size}`} className="flex cursor-pointer items-start gap-3 rounded-lg border border-border p-3 font-normal">
-                        <RadioGroupItem id={`size-${size}`} value={size} className="mt-0.5" />
-                        <span><span className="block font-medium">{sizeLabel(size)}</span><span className="text-sm text-muted-foreground">{MEDIA[size].prints} prints, ${MEDIA[size].price}</span></span>
-                      </Label>
-                    ))}
-                  </RadioGroup>
-                  <p className="text-sm text-muted-foreground">One size per rental. The print size is set by the media loaded in the printer, so it can't be changed mid-event.</p>
-                  {formData.printSize === "5x7" && (
-                    <div className="highlight-box rounded-lg p-4 text-sm">
-                      5x7 is a special order. It's prepaid, non-refundable, and has to be confirmed at least 7 days before pickup. 6x8 gives you the same 200 prints for $40 less on a larger print — the reason to choose 5x7 is that it fits a standard off-the-shelf frame.
+                  {formData.mediaChoice === "kit" && (
+                    <div className="space-y-4 pl-7">
+                      <RadioGroup
+                        value={formData.printSize}
+                        onValueChange={(value) => setFormData({ ...formData, printSize: value as PrintSize })}
+                        className="grid gap-3 sm:grid-cols-3"
+                      >
+                        {(Object.keys(MEDIA) as PrintSize[]).map((size) => (
+                          <Label key={size} htmlFor={`size-${size}`} className="flex cursor-pointer items-start gap-3 rounded-lg border border-border p-3 font-normal">
+                            <RadioGroupItem id={`size-${size}`} value={size} className="mt-0.5" />
+                            <span><span className="block font-medium">{sizeLabel(size)}</span><span className="text-sm text-muted-foreground">{MEDIA[size].prints} prints · ${MEDIA[size].price}</span></span>
+                          </Label>
+                        ))}
+                      </RadioGroup>
+                      <p className="text-sm text-muted-foreground">One size per rental. The print size is set by the media loaded in the printer, so it can't be changed mid-event.</p>
+                      {formData.printSize === "5x7" && (
+                        <div className="highlight-box rounded-lg p-4 text-sm">
+                          5x7 is a special order. It's prepaid, non-refundable, and has to be confirmed at least 7 days before pickup. 6x8 gives you the same 200 prints for $40 less on a larger print — the reason to choose 5x7 is that it fits a standard off-the-shelf frame.
+                        </div>
+                      )}
+
+                      <div className="flex flex-wrap items-center justify-between gap-4">
+                        <div>
+                          <Label htmlFor="media-kits">Kits ({selectedMedia.prints} prints each)</Label>
+                          <p className="text-sm text-muted-foreground">${selectedMedia.price} per kit</p>
+                        </div>
+                        <div className="flex h-10 items-center gap-1" id="media-kits">
+                          <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.max(1, formData.mediaKits - 1) })} disabled={formData.mediaKits === 1} aria-label="Remove one media kit"><Minus /></Button>
+                          <output className="w-10 text-center font-medium" aria-live="polite">{formData.mediaKits}</output>
+                          <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.min(4, formData.mediaKits + 1) })} disabled={formData.mediaKits === 4} aria-label="Add one media kit"><Plus /></Button>
+                        </div>
+                      </div>
                     </div>
                   )}
-
-                  <div className="flex flex-wrap items-center justify-between gap-4">
-                    <div>
-                      <Label htmlFor="media-kits">Media kits ({selectedMedia.prints} prints each)</Label>
-                      <p className="text-sm text-muted-foreground">${selectedMedia.price} per prepaid kit</p>
-                    </div>
-                    <div className="flex h-10 items-center gap-1" id="media-kits">
-                      <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.max(0, formData.mediaKits - 1) })} disabled={formData.mediaKits === 0} aria-label="Remove one media kit"><Minus /></Button>
-                      <output className="w-10 text-center font-medium" aria-live="polite">{formData.mediaKits}</output>
-                      <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.min(4, formData.mediaKits + 1) })} disabled={formData.mediaKits === 4} aria-label="Add one media kit"><Plus /></Button>
-                    </div>
-                  </div>
                 </div>
-              )}
 
-              <div className="flex items-center space-x-3 border-t border-border pt-4">
+                <div className="rounded-lg border border-border p-3 space-y-2">
+                  <Label htmlFor="media-byo" className="flex cursor-pointer items-start gap-3 font-normal">
+                    <RadioGroupItem id="media-byo" value="byo" className="mt-0.5" />
+                    <span className="flex-1 font-medium">I'll bring my own DS40 media</span>
+                    <span className="tabular-nums font-medium">—</span>
+                  </Label>
+                  {formData.mediaChoice === "byo" && (
+                    <p className="text-xs text-muted-foreground pl-7">Must be DNP DS40 media, one size for the whole rental. You'll load it yourself before your event.</p>
+                  )}
+                </div>
+              </RadioGroup>
+            </fieldset>
+
+            <fieldset className="space-y-3">
+              <legend className="text-base font-semibold">Add-on</legend>
+              <div className="flex items-center space-x-3">
                 <Checkbox id="printServer" checked={formData.printServer} onCheckedChange={(checked) => setFormData({ ...formData, printServer: checked === true })} />
                 <Label htmlFor="printServer" className="font-normal cursor-pointer">WCMPlus print server ($35/day)</Label>
               </div>
+              {formData.printMethod === "devices" && !formData.printServer && (
+                <p className="text-xs text-muted-foreground">Without the print server, you'll need your own computer connected by USB to receive and print photos.</p>
+              )}
             </fieldset>
 
             <section className="card-elevated p-5 md:p-6 space-y-4" aria-labelledby="estimate-heading">

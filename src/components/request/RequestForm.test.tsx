@@ -58,18 +58,18 @@ describe("RequestForm", () => {
     expect(screen.getByText("Refundable deposit")).toBeInTheDocument();
   });
 
-  it("keeps the media kit opt-in off until checked, then reveals sizes and the counter", async () => {
+  it("defaults to the PrintKit media kit with sizes and a 1-4 stepper", async () => {
     const user = userEvent.setup();
     render(<RequestForm />);
 
-    expect(screen.queryByLabelText("Add one media kit")).not.toBeInTheDocument();
-    await user.click(screen.getByLabelText("Add a prepaid media kit"));
-
+    expect(screen.getByRole("radio", { name: /PrintKit media kit/ })).toBeChecked();
     expect(screen.getByText("4×6")).toBeInTheDocument();
     expect(screen.getByText("6×8")).toBeInTheDocument();
+
     const counter = screen.getByRole("status");
     expect(counter.tagName.toLowerCase()).toBe("output");
     expect(counter).toHaveTextContent("1");
+    expect(screen.getByLabelText("Remove one media kit")).toBeDisabled();
 
     const add = screen.getByLabelText("Add one media kit");
     await user.click(add);
@@ -79,15 +79,49 @@ describe("RequestForm", () => {
     expect(counter).toHaveTextContent("4");
   });
 
-  it("hints at the print server for device printing without checking it", async () => {
+  it("drops the media controls when bringing your own media", async () => {
     const user = userEvent.setup();
     render(<RequestForm />);
 
-    await user.click(screen.getByLabelText("From devices (wireless/ethernet)"));
+    await user.click(screen.getByRole("radio", { name: /bring my own DS40 media/ }));
+    expect(screen.queryByLabelText("Add one media kit")).not.toBeInTheDocument();
     expect(
-      screen.getByText("Printing from devices needs the WCMPlus print server — add it below."),
+      screen.getByText(
+        "Must be DNP DS40 media, one size for the whole rental. You'll load it yourself before your event.",
+      ),
     ).toBeInTheDocument();
-    expect(screen.getByLabelText("WCMPlus print server ($35/day)")).not.toBeChecked();
+  });
+
+  it("auto-checks the print server for device printing but respects unchecking", async () => {
+    const user = userEvent.setup();
+    render(<RequestForm />);
+
+    const server = screen.getByLabelText("WCMPlus print server ($35/day)");
+    expect(server).not.toBeChecked();
+
+    await user.click(screen.getByLabelText("From devices (wireless/ethernet)"));
+    expect(server).toBeChecked();
+
+    await user.click(server);
+    expect(server).not.toBeChecked();
+    expect(
+      screen.getByText(
+        "Without the print server, you'll need your own computer connected by USB to receive and print photos.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("requires a print method before submitting", async () => {
+    const user = userEvent.setup();
+    render(<RequestForm />);
+
+    await pickRange(user);
+    await user.type(screen.getByLabelText("Full name *"), "Sam K.");
+    await user.type(screen.getByLabelText("Email *"), "sam@example.com");
+    await user.click(screen.getByRole("button", { name: /Request these dates/ }));
+
+    expect(await screen.findByText("Pick one. 'Not sure yet' is fine.")).toBeInTheDocument();
+    expect(submitCalls()).toHaveLength(0);
   });
 
   it("switches the phone label with the contact preference", async () => {
@@ -110,6 +144,7 @@ describe("RequestForm", () => {
     await pickRange(user);
     await user.type(screen.getByLabelText("Full name *"), "Sam K.");
     await user.type(screen.getByLabelText("Email *"), "sam@example.com");
+    await user.click(screen.getByLabelText("Not sure yet"));
     await user.click(screen.getByRole("radio", { name: "Text" }));
     await user.type(screen.getByLabelText("Mobile number for texts *"), "555123");
     await user.click(screen.getByRole("button", { name: /Request these dates/ }));
@@ -139,6 +174,7 @@ describe("RequestForm", () => {
     await pickRange(user);
     await user.type(screen.getByLabelText("Full name *"), "Sam K.");
     await user.type(screen.getByLabelText("Email *"), "sam@example.com");
+    await user.click(screen.getByLabelText("From a computer (USB)"));
     await user.click(screen.getByLabelText("WCMPlus print server ($35/day)"));
     await user.click(screen.getByRole("button", { name: /Request these dates/ }));
 
@@ -160,7 +196,8 @@ describe("RequestForm", () => {
         "Event type",
         "Notes",
         "days",
-        "printSize",
+        "mediaChoice",
+        "mediaSize",
         "mediaKits",
         "printServer",
         "subtotal",
@@ -173,8 +210,11 @@ describe("RequestForm", () => {
     expect(body.contactPreference).toBe("email");
     expect(body.days).toBe(3);
     expect(body.printServer).toBe(true);
-    expect(body.mediaKits).toBe(0);
+    expect(body.mediaChoice).toBe("kit");
+    expect(body.mediaSize).toBe("4x6");
+    expect(body.mediaKits).toBe(1);
     expect(body._subject).toContain("[Email]");
+    expect(body._subject).toContain(" · Setup: computer");
 
     expect(await screen.findByRole("heading", { name: "Request sent" })).toBeInTheDocument();
     expect(

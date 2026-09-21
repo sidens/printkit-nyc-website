@@ -26,7 +26,7 @@ Two layers of checking:
 These must match everywhere they appear (home, pricing, FAQ, request form, `llms.txt`, structured data):
 
 - Printer: **$100 per day**
-- Prepaid media kit: **$100 flat, up to 400 4×6 prints** (6×8 and 5×7 on request)
+- Media kit: **$100 for 400 4×6 prints** (6×8 $120 / 200 prints, 5×7 $160 / 200 prints)
 - WCMPlus print server: **$35 per day**
 - Refundable deposit: **$200**
 - Sales tax applies to the rental and add-ons, **never to the deposit**
@@ -62,13 +62,15 @@ Search the project for `$95`, `$75`, `$0.40` and bare "400 prints" — there sho
 
 | Check | Expect |
 | --- | --- |
-| Add-ons on load | Media kit checkbox unchecked, no size choices visible |
-| Check "Add a prepaid media kit" | Size options (4×6, 6×8, 5×7) and a counter starting at 1 appear |
-| Counter | Cannot go below 0 or above 4; buttons disable at the limits |
+| Print media on load | "PrintKit media kit" selected, size options (4×6, 6×8, 5×7) and a counter at 1 visible |
+| Counter | Cannot go below 1 or above 4; buttons disable at the limits |
 | Choose 5×7 | Special-order note appears |
-| Uncheck the media kit | Size choices disappear and kits go back to 0 |
-| Choose "From devices (wireless/ethernet)" | Muted line about the WCMPlus print server appears; the add-on is **not** auto-checked |
-| Check the print server | That muted line goes away |
+| Choose "I'll bring my own DS40 media" | Kit controls disappear, price shows "—", estimate drops the media line |
+| Switch back to the kit | Previous size and kit count return |
+| "How will you print?" on load | Nothing selected; submitting shows "Pick one. 'Not sure yet' is fine." |
+| Choose "From devices (wireless/ethernet)" | Print server auto-checks |
+| Uncheck the print server after that | Stays unchecked, muted USB note appears under it |
+| Choose "From a computer (USB)" or "Not sure yet" | Print server checkbox is left as-is |
 
 ## 6. Request form — contact and submit
 
@@ -108,6 +110,6 @@ Search the project for `$95`, `$75`, `$0.40` and bare "400 prints" — there sho
 | `src/lib/quote.test.ts` | Day counting, printer/server/media pricing, tax rounding, untaxed deposit, invalid dates |
 | `src/lib/availability.test.ts` | Parsing blocked dates and horizon; missing, malformed, seed and failed fetches fall back to "unknown" |
 | `src/lib/pricingData.test.ts` | Published prices and the 4×6 media note stay put |
-| `src/components/request/RequestForm.test.tsx` | Empty estimate state, itemized estimate, media kit opt-in and limits, print method hint, conditional phone rules, submit payload and success screen |
+| `src/components/request/RequestForm.test.tsx` | Empty estimate state, itemized estimate, media kit default and limits, bring-your-own media, required print method, print server auto-check, conditional phone rules, submit payload and success screen |
 
 Playwright is used ad hoc for visual and end-to-end spot checks; it is not part of the build.
