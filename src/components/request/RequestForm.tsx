@@ -288,35 +288,51 @@ const RequestForm = () => {
 
             <fieldset className="space-y-4">
               <legend className="text-sm font-medium">Pickup and return dates *</legend>
+              <p className="text-sm text-muted-foreground">Choose a pickup date, then a return date.</p>
               {availability.status === "unknown" && (
                 <div className="highlight-box rounded-lg p-4 text-sm">
                   Can't load the live calendar right now. Pick your dates anyway and we'll confirm availability by email.
                 </div>
               )}
-              <div className="flex justify-center overflow-x-auto rounded-lg border border-border bg-card">
-                <Calendar
-                  mode="range"
-                  selected={selectedRange}
-                  onSelect={handleRangeSelect}
-                  disabled={isDisabledDate}
-                  numberOfMonths={1}
-                  className="p-3 pointer-events-auto"
-                  modifiers={{ booked: availability.status === "ready" ? availability.blocked.map((date) => {
-                    const [year, month, day] = date.split("-").map(Number);
-                    return new Date(year, month - 1, day);
-                  }) : [] }}
-                  modifiersClassNames={{ booked: "line-through" }}
-                />
+              <div className="rounded-lg border border-border bg-card overflow-hidden">
+                <div className="flex justify-center overflow-x-auto">
+                  <Calendar
+                    mode="range"
+                    selected={selectedRange}
+                    onSelect={handleRangeSelect}
+                    disabled={isDisabledDate}
+                    numberOfMonths={1}
+                    className="p-3 pointer-events-auto"
+                    modifiers={{ booked: availability.status === "ready" ? availability.blocked.map((date) => {
+                      const [year, month, day] = date.split("-").map(Number);
+                      return new Date(year, month - 1, day);
+                    }) : [] }}
+                    modifiersClassNames={{ booked: "line-through" }}
+                  />
+                </div>
+                <div className="border-t border-border pt-3 mt-2 px-3 pb-3 flex justify-between items-center text-xs text-muted-foreground gap-2 max-[399px]:flex-col max-[399px]:items-start">
+                  <div className="inline-flex items-center gap-3" aria-label="Availability legend">
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="inline-flex items-center justify-center h-9 w-9 rounded-md text-sm font-normal" aria-hidden="true">23</span>
+                      Available
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="inline-flex items-center justify-center h-9 w-9 rounded-md text-sm font-normal text-muted-foreground opacity-50 line-through" aria-hidden="true">23</span>
+                      Booked
+                    </span>
+                  </div>
+                  {availability.status === "ready" && (
+                    <span className="inline-flex items-center gap-1.5" title={syncedTitle}>
+                      <RefreshCw className="w-3 h-3" aria-hidden="true" />
+                      {isStale ? `${syncedText} · we'll confirm by email` : syncedText}
+                    </span>
+                  )}
+                </div>
               </div>
-              <p className="text-sm font-medium" aria-live="polite">{selectedRangeText}</p>
-              {dateError && <p className="text-sm text-destructive" role="alert">{dateError}</p>}
-              <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground" aria-label="Availability legend">
-                <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full border border-border bg-background" aria-hidden="true" />Available</span>
-                <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-muted-foreground" aria-hidden="true" />Already booked</span>
-              </div>
-              {availability.status === "ready" && (
-                <p className="text-sm text-muted-foreground">Availability updated {relativeTime(availability.generated)}</p>
+              {selectedRange?.from && selectedRange.to && (
+                <p className="text-sm font-medium" aria-live="polite">{selectedRangeText}</p>
               )}
+              {dateError && <p className="text-sm text-destructive" role="alert">{dateError}</p>}
             </fieldset>
 
             <fieldset className="space-y-4">
