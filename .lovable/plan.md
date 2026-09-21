@@ -22,7 +22,7 @@ If someone picks the wireless/ethernet option and has not added the print server
 
 - Full name (required)
 - Email (required)
-- "How should we reach you?" — three equal buttons: Email · Text · Call, with Email chosen by default. Under them, small muted text: "Your itemized quote always comes by email. This is for quick questions and pickup day."
+- "How should we reach you?" — three equal buttons: Email · Text · Call, with Email chosen by default. Under them, small muted text: "Your itemized quote always comes by email. This is for clarifying next steps and coordinating logistics."
 - Phone changes with the choice:
   - Email: "Phone (optional)" — no validation
   - Text: "Mobile number for texts *" — required, plus "We'll only text about this rental."
