@@ -5,7 +5,7 @@ import { trackCtaClick } from "@/lib/analytics";
 
 const pricingItems = [
   { label: PRICING.baseRental.name, value: `$${PRICING.baseRental.price}`, unit: "/ day" },
-  { label: `${PRICING.prepaidMediaKit.name} (optional)`, value: `$${PRICING.prepaidMediaKit.price}`, unit: "flat", note: "(up to 400 4×6 prints)" },
+  { label: "Media kit", value: `$${PRICING.prepaidMediaKit.price}`, unit: "flat", note: "(up to 400 4×6 prints)" },
   { label: PRICING.securityDeposit.name, value: `$${PRICING.securityDeposit.price}`, unit: "refundable" },
 ];
 
