@@ -70,6 +70,14 @@ const RequestForm = () => {
   });
 
   const blockedDates = useMemo(() => new Set(availability.blocked), [availability.blocked]);
+  const syncedTitle = availability.generated
+    ? new Date(availability.generated).toLocaleString()
+    : "";
+  const syncedText = availability.generated ? `Synced ${relativeTime(availability.generated)}` : "";
+  const isStale =
+    availability.status === "ready" &&
+    !!availability.generated &&
+    Date.now() - new Date(availability.generated).getTime() > 24 * 60 * 60 * 1000;
   const quote = calculateQuote({
     pickupDate: formData.pickupDate,
     returnDate: formData.returnDate,
