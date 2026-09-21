@@ -2,7 +2,7 @@ import { MapPin } from "lucide-react";
 
 const PickupSection = () => {
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding section-alt">
       <div className="container-narrow">
         <div className="max-w-2xl mx-auto text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-6">

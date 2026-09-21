@@ -10,7 +10,7 @@ const compatItems = [
 
 const CompatibilitySection = () => {
   return (
-    <section className="section-padding section-alt">
+    <section className="section-padding bg-background">
       <div className="container-narrow">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           <div className="order-2 lg:order-1">

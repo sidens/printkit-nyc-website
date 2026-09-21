@@ -21,7 +21,7 @@ const features = [
 
 const PrintQualitySection = () => {
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding section-alt">
       <div className="container-narrow">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           <div className="space-y-8">
