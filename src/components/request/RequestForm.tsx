@@ -475,11 +475,6 @@ const RequestForm = () => {
               )}
             </section>
 
-            <blockquote className="border-l-2 border-primary/40 pl-4 my-6">
-              <p className="text-sm text-foreground">{testimonials[0].pullQuote}</p>
-              <p className="text-xs text-muted-foreground mt-2">Sam K., Admiration</p>
-            </blockquote>
-
             <div className="space-y-6">
               <h2 className="text-base font-semibold">Your details</h2>
 
