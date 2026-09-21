@@ -366,7 +366,7 @@ const RequestForm = () => {
             </fieldset>
 
             <fieldset className="space-y-3">
-              <legend className="text-base font-semibold">How will you print? (optional)</legend>
+              <legend className="text-base font-semibold">How will you print?</legend>
               <RadioGroup
                 value={formData.printMethod}
                 onValueChange={(value) => setFormData({ ...formData, printMethod: value })}
