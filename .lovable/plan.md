@@ -1,43 +1,54 @@
-# Restructure media and add-ons on the request page
+# Uncheck the print server when leaving "From devices"
 
-Pricing math stays exactly as it is today. No price values change anywhere.
+Single-line behavior tweak in `src/components/request/RequestForm.tsx`. No pricing, availability, estimate, copy, payload, or layout changes.
 
-## 1. Request form: new "Print media" section
+## What changes
 
-In `src/components/request/RequestForm.tsx`, after "How will you print?" and before the add-on section:
+`handlePrintMethodChange` currently auto-checks the print server only when transitioning into "devices", and leaves it untouched when moving away:
 
-- Heading: **Print media**
-- Subtext: "Every rental needs one roll of DS40 media. Ours comes loaded in the printer and test-printed before pickup."
-- Two stacked option cards (same card styling as "How will you print?") in one radio group:
-  - **PrintKit media kit** — selected by default. Price shown on the right, updating live with size x kits.
-    - Expands when selected: size toggle ("4x6 · 400 prints · $100", "6x8 · 200 prints · $120", "5x7 · 200 prints · $160", default 4x6), kits stepper (min 1, max 4, default 1) labeled with the selected size's yield, e.g. "Kits (400 prints each)".
-    - The existing one-size-per-rental line and the existing 5x7 special-order box stay exactly as written today.
-  - **I'll bring my own DS40 media** — right side shows "—". When selected, a small muted note: "Must be DNP DS40 media, one size for the whole rental. You'll load it yourself before your event."
+```ts
+const handlePrintMethodChange = (value: string) => {
+  setPrintMethodError("");
+  setFormData((current) => ({
+    ...current,
+    printMethod: value,
+    printServer: value === "devices" && current.printMethod !== "devices" ? true : current.printServer,
+  }));
+};
+```
 
-The old paragraph "Both are optional. Bring your own DNP DS40-compatible media and skip the print server, or add either below." and the "Add a prepaid media kit" checkbox are removed.
+New rule:
 
-The estimate card shows the media line only when the PrintKit kit is selected; choosing "bring my own" drops that line and its cost, using the same quote function as today (kits counted as 0).
+- Selecting "From devices (wireless/ethernet)" still auto-checks the print server (only at the moment of selection, as today).
+- Selecting "From a computer (USB)" or "Not sure yet" **unchecks the print server** if it was checked.
 
-## 2. Add-on section
+This keeps the existing "user can manually uncheck after auto-check" behavior intact: the auto-uncheck only fires on the print-method change, not while staying on devices. A user who manually re-checks the server while on computer/unsure is not affected unless they switch print methods again.
 
-Heading becomes **Add-on** (singular) with only the WCMPlus print server checkbox, unchanged, including the existing hint tied to "How will you print?".
+## Implementation
 
-## 3. Request email fields
+Replace the `printServer` line in `handlePrintMethodChange` so the value is derived from the transition:
 
-The submitted request replaces the old media add-on value with three fields: `mediaChoice` ("kit" or "byo"), `mediaSize`, and `mediaKits`.
+- `value === "devices"` → `true` (entering devices, auto-check)
+- `value !== "devices"` → `false` (leaving devices, auto-uncheck)
 
-## 4. Copy elsewhere
+```ts
+const handlePrintMethodChange = (value: string) => {
+  setPrintMethodError("");
+  setFormData((current) => ({
+    ...current,
+    printMethod: value,
+    printServer: value === "devices",
+  }));
+};
+```
 
-- Home pricing block (`src/components/PricingSection.tsx`): "Prepaid Media Kit (optional)" becomes "Media kit", keeping its $100 price and the existing "(up to 400 4×6 prints)" count.
-- FAQ answer to "How do I get print media?" becomes, verbatim: "Add a media kit when you request dates: one roll, loaded and test-printed before pickup. 4×6 is $100 for 400 prints; 6×8 and 5×7 are available too. You can bring your own DNP DS40 media instead."
-  This question appears both on the FAQ page (`src/lib/faqData.ts`) and in the homepage FAQ block (`src/components/FAQSection.tsx`); both get the same replacement so they stay in sync. No other FAQ answer or price changes.
+Note: this intentionally does not preserve a user's manual re-check across a print-method switch — switching methods resets the server to match the method's default. This matches the requested behavior ("if 'from devices' is selected and then moved off to the other options, the print server checkbox un-selects").
 
-Nothing on the site mentions DNP box sizes, rolls per box, retailers, or other sellers' media prices.
+## Files touched
 
-## Technical notes
+- `src/components/request/RequestForm.tsx` — `handlePrintMethodChange` only.
 
-- Form state: replace `mediaKitOptIn` with `mediaChoice: "kit" | "byo"` defaulting to `"kit"`, and `mediaKits` defaulting to `1`. Switching to `byo` passes `kits: 0` into `calculateQuote` without mutating the user's stored size/kit choices; switching back restores them.
-- Stepper bounds become 1–4 while the kit is selected.
-- `src/lib/quote.ts`, `src/lib/pricingData.ts`, availability logic, the Formspree endpoint, route, SEO props, Header and Footer are untouched.
-- Existing tests that assert the old opt-in checkbox and `mediaKits: 0` payload (`src/components/request/RequestForm.test.tsx`) are updated to the new default-on kit behaviour, plus a case for selecting "bring my own". `docs/TEST-PLAN.md` gets the matching checklist edits.
-- Verification: run the Vitest suite and the build, and spot-check /request in the browser for both media choices.
+## Verification
+
+- Run the Vitest suite; the existing "auto-checks the print server for device printing but respects unchecking" test should still pass (it clicks devices → server checked; clicks server → unchecked; no move-off step is asserted there).
+- Spot-check `/request` in the browser: select "From devices" (server auto-checks), select "From a computer (USB)" (server auto-unchecks), select "From devices" again (server auto-checks), manually uncheck, select "Not sure yet" (server stays unchecked).
