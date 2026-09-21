@@ -555,7 +555,7 @@ const RequestForm = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="eventType">What's this for?</Label>
-                <Input id="eventType" value={formData.eventType} onChange={(event) => setFormData({ ...formData, eventType: event.target.value })} placeholder="e.g., Birthday party, corporate event, photo booth..." />
+                <Input id="eventType" value={formData.eventType} onChange={(event) => setFormData({ ...formData, eventType: event.target.value })} placeholder="School fundraiser, ~150 guests, souvenir prints to take home" />
               </div>
 
               <div className="space-y-2">
