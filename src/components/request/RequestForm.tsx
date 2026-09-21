@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { testimonials } from "@/data/testimonials";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { Button } from "@/components/ui/button";
@@ -448,6 +449,11 @@ const RequestForm = () => {
               <Label htmlFor="notes">Anything else we should know?</Label>
               <Textarea id="notes" value={formData.notes} onChange={(event) => setFormData({ ...formData, notes: event.target.value })} placeholder="Questions, special requests, or setup details..." rows={4} />
             </div>
+
+            <blockquote className="border-l-2 border-primary/40 pl-4 my-6">
+              <p className="text-sm text-foreground">{testimonials[0].pullQuote}</p>
+              <p className="text-xs text-muted-foreground mt-2">Sam K., Admiration</p>
+            </blockquote>
 
             <div className="pt-2">
               <Button type="submit" variant="hero" size="xl" className="w-full" disabled={isSubmitting}>
