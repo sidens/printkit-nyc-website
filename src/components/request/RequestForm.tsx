@@ -189,6 +189,10 @@ const RequestForm = () => {
       setDateError("Please choose both a pickup and return date.");
       hasError = true;
     }
+    if (!formData.printMethod) {
+      setPrintMethodError("Pick one. 'Not sure yet' is fine.");
+      hasError = true;
+    }
     if (phoneRequired && !isValidPhone(formData.phone)) {
       setPhoneError("Please enter a valid phone number with at least 10 digits.");
       hasError = true;
@@ -197,6 +201,7 @@ const RequestForm = () => {
 
     setDateError("");
     setPhoneError("");
+    setPrintMethodError("");
     setIsSubmitting(true);
 
     try {
