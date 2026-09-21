@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { CalendarDays, CheckCircle, Minus, Plus, RefreshCw, Send } from "lucide-react";
+import { ArrowRight, CalendarDays, CheckCircle, Minus, Plus, RefreshCw, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { trackGenerateLead, trackFormError } from "@/lib/analytics";
 import { useAvailability } from "@/lib/availability";
@@ -70,14 +70,6 @@ const RequestForm = () => {
   });
 
   const blockedDates = useMemo(() => new Set(availability.blocked), [availability.blocked]);
-  const syncedTitle = availability.generated
-    ? new Date(availability.generated).toLocaleString()
-    : "";
-  const syncedText = availability.generated ? `Synced ${relativeTime(availability.generated)}` : "";
-  const isStale =
-    availability.status === "ready" &&
-    !!availability.generated &&
-    Date.now() - new Date(availability.generated).getTime() > 24 * 60 * 60 * 1000;
   const quote = calculateQuote({
     pickupDate: formData.pickupDate,
     returnDate: formData.returnDate,
@@ -232,9 +224,18 @@ const RequestForm = () => {
     );
   }
 
-  const selectedRangeText = selectedRange?.from && selectedRange.to
-    ? `${format(selectedRange.from, "EEE MMM d")} to ${format(selectedRange.to, "EEE MMM d")} · ${quote.days} ${quote.days === 1 ? "day" : "days"}`
-    : "Choose a pickup date, then a return date.";
+  const hasFullRange = !!(selectedRange?.from && selectedRange.to);
+  const pickupActive = !selectedRange?.from;
+  const returnActive = !!selectedRange?.from && !selectedRange?.to;
+  const pickupText = selectedRange?.from ? format(selectedRange.from, "EEE, MMM d") : "Select date";
+  const returnText = selectedRange?.to ? format(selectedRange.to, "EEE, MMM d") : "Select date";
+
+  const syncedTitle = availability.generated ? new Date(availability.generated).toLocaleString() : "";
+  const syncedText = availability.generated ? `Synced ${relativeTime(availability.generated)}` : "";
+  const isStale =
+    availability.status === "ready" &&
+    !!availability.generated &&
+    Date.now() - new Date(availability.generated).getTime() > 24 * 60 * 60 * 1000;
 
   const selectedMedia = MEDIA[formData.printSize];
 
@@ -288,14 +289,29 @@ const RequestForm = () => {
 
             <fieldset className="space-y-4">
               <legend className="text-sm font-medium">Pickup and return dates *</legend>
-              <p className="text-sm text-muted-foreground">Choose a pickup date, then a return date.</p>
               {availability.status === "unknown" && (
                 <div className="highlight-box rounded-lg p-4 text-sm">
                   Can't load the live calendar right now. Pick your dates anyway and we'll confirm availability by email.
                 </div>
               )}
               <div className="rounded-lg border border-border bg-card overflow-hidden">
-                <div className="flex justify-center overflow-x-auto">
+                <div className="flex items-center gap-3 px-3 pt-3 max-[399px]:flex-col max-[399px]:items-start">
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className={`flex-1 ${pickupActive ? "border-b-2 border-primary" : ""}`}>
+                      <p className="text-xs tracking-wide text-muted-foreground uppercase">Pickup</p>
+                      <p className={`text-base font-medium ${selectedRange?.from ? "" : "text-muted-foreground"}`}>{pickupText}</p>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0" aria-hidden="true" />
+                    <div className={`flex-1 ${returnActive ? "border-b-2 border-primary" : ""}`}>
+                      <p className="text-xs tracking-wide text-muted-foreground uppercase">Return</p>
+                      <p className={`text-base font-medium ${selectedRange?.to ? "" : "text-muted-foreground"}`}>{returnText}</p>
+                    </div>
+                  </div>
+                  {hasFullRange && (
+                    <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{quote.days} {quote.days === 1 ? "day" : "days"}</span>
+                  )}
+                </div>
+                <div className="border-t border-border flex justify-center overflow-x-auto">
                   <Calendar
                     mode="range"
                     selected={selectedRange}
@@ -329,9 +345,6 @@ const RequestForm = () => {
                   )}
                 </div>
               </div>
-              {selectedRange?.from && selectedRange.to && (
-                <p className="text-sm font-medium" aria-live="polite">{selectedRangeText}</p>
-              )}
               {dateError && <p className="text-sm text-destructive" role="alert">{dateError}</p>}
             </fieldset>
 
@@ -399,23 +412,31 @@ const RequestForm = () => {
             <section className="card-elevated p-5 md:p-6 space-y-4" aria-labelledby="estimate-heading">
               <div>
                 <h2 id="estimate-heading" className="text-xl font-semibold">Estimate</h2>
-                {!quote.days && <p className="text-sm text-muted-foreground mt-1">Choose your dates to calculate the rental.</p>}
+                {!quote.days && <p className="text-sm text-muted-foreground mt-1">Pick your dates to see an estimate.</p>}
               </div>
-              <div className="space-y-3 text-sm">
-                {quote.printer > 0 && <div className="grid grid-cols-[1fr_auto] gap-4"><span>Printer rental <span className="text-muted-foreground">· {quote.days} days × $100</span></span><span className="tabular-nums">{money.format(quote.printer)}</span></div>}
-                {quote.server > 0 && <div className="grid grid-cols-[1fr_auto] gap-4"><span>Print server <span className="text-muted-foreground">· {quote.days} days × $35</span></span><span className="tabular-nums">{money.format(quote.server)}</span></div>}
-                {quote.media > 0 && <div className="grid grid-cols-[1fr_auto] gap-4"><span>Media kit <span className="text-muted-foreground">· {formData.mediaKits} × {sizeLabel(formData.printSize)}</span></span><span className="tabular-nums">{money.format(quote.media)}</span></div>}
-                <div className="border-t border-border pt-3 space-y-3">
-                  <div className="flex justify-between gap-4"><span>Subtotal</span><span className="tabular-nums">{money.format(quote.subtotal)}</span></div>
-                  <div className="flex justify-between gap-4"><span>NY sales tax (8.875%)</span><span className="tabular-nums">{money.format(quote.tax)}</span></div>
-                </div>
-                <div className="border-t border-border pt-3 space-y-3 font-medium">
-                  <div className="flex justify-between gap-4"><span>Total</span><span className="tabular-nums">{money.format(quote.total)}</span></div>
-                  <div className="flex justify-between gap-4 font-normal"><span>Refundable deposit</span><span className="tabular-nums">{money.format(quote.deposit)}</span></div>
-                  <div className="flex justify-between gap-4 text-base"><span>Due before pickup</span><span className="tabular-nums">{money.format(quote.dueAtPickup)}</span></div>
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground">An estimate, not a confirmed booking. We'll confirm your dates and send a final quote within 1–2 business days. The $200 deposit comes back to you after return. No card or processing fees — the total is what you pay, whichever way you pay.</p>
+              {quote.days > 0 && (
+                <>
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium">{format(selectedRange!.from!, "EEE MMM d")} → {format(selectedRange!.to!, "EEE MMM d")} · {quote.days} {quote.days === 1 ? "day" : "days"}</p>
+                    <p className="text-xs text-muted-foreground">Pickup and return days both count.</p>
+                  </div>
+                  <div className="space-y-3 text-sm">
+                    {quote.printer > 0 && <div className="grid grid-cols-[1fr_auto] gap-4"><span>Printer rental <span className="text-muted-foreground">· {quote.days} days × $100</span></span><span className="tabular-nums">{money.format(quote.printer)}</span></div>}
+                    {quote.server > 0 && <div className="grid grid-cols-[1fr_auto] gap-4"><span>Print server <span className="text-muted-foreground">· {quote.days} days × $35</span></span><span className="tabular-nums">{money.format(quote.server)}</span></div>}
+                    {quote.media > 0 && <div className="grid grid-cols-[1fr_auto] gap-4"><span>Media kit <span className="text-muted-foreground">· {formData.mediaKits} × {sizeLabel(formData.printSize)}</span></span><span className="tabular-nums">{money.format(quote.media)}</span></div>}
+                    <div className="border-t border-border pt-3 space-y-3">
+                      <div className="flex justify-between gap-4"><span>Subtotal</span><span className="tabular-nums">{money.format(quote.subtotal)}</span></div>
+                      <div className="flex justify-between gap-4"><span>NY sales tax (8.875%)</span><span className="tabular-nums">{money.format(quote.tax)}</span></div>
+                    </div>
+                    <div className="border-t border-border pt-3 space-y-3 font-medium">
+                      <div className="flex justify-between gap-4"><span>Total</span><span className="tabular-nums">{money.format(quote.total)}</span></div>
+                      <div className="flex justify-between gap-4 font-normal"><span>Refundable deposit</span><span className="tabular-nums">{money.format(quote.deposit)}</span></div>
+                      <div className="flex justify-between gap-4 text-base"><span>Due before pickup</span><span className="tabular-nums">{money.format(quote.dueAtPickup)}</span></div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground">An estimate, not a confirmed booking. We'll confirm your dates and send a final quote within 1–2 business days. The $200 deposit comes back to you after return. No card or processing fees — the total is what you pay, whichever way you pay.</p>
+                </>
+              )}
             </section>
 
             <div className="space-y-2">
