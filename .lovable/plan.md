@@ -2,7 +2,7 @@
 
 ## Data
 
-Create `src/data/testimonials.ts` exporting a `testimonials` array. One entry, verbatim from the brief. **No `companyUrl`** (link not approved) — "Admiration" renders as plain muted text in both placements.
+Create `src/data/testimonials.ts` exporting a `testimonials` array. One entry, verbatim from the brief. **`companyUrl` kept** ("https://admiration.co") — "Admiration" links out on the home page (link approved). The /request pull-quote uses plain "Sam K., Admiration" text with no link.
 
 ```ts
 export interface Testimonial {
