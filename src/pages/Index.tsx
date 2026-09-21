@@ -3,6 +3,7 @@ import SkipLink from "@/components/SkipLink";
 import HeroSection from "@/components/HeroSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import KitSection from "@/components/KitSection";
+import TestimonialSection from "@/components/TestimonialSection";
 import PricingSection from "@/components/PricingSection";
 import PrintQualitySection from "@/components/PrintQualitySection";
 import CompatibilitySection from "@/components/CompatibilitySection";
@@ -30,6 +31,7 @@ const Index = () => {
         <HeroSection />
         <HowItWorksSection />
         <KitSection />
+        <TestimonialSection />
         <PricingSection />
         <PrintQualitySection />
         <CompatibilitySection />
