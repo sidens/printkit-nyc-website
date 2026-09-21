@@ -413,7 +413,7 @@ const RequestForm = () => {
 
             <fieldset className="space-y-4">
               <legend className="text-base font-semibold">Print media</legend>
-              <p className="text-sm text-muted-foreground">Every rental needs one roll of DS40 media. Ours comes loaded in the printer and test-printed before pickup.</p>
+              <p className="text-sm text-muted-foreground">Ribbon and paper, loaded and test-printed before pickup.</p>
 
               <RadioGroup
                 value={formData.mediaChoice}
