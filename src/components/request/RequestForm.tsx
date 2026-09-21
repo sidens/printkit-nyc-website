@@ -271,8 +271,8 @@ const RequestForm = () => {
       eventType: "",
       notes: "",
       printSize: "4x6",
-      mediaKits: 0,
-      mediaKitOptIn: false,
+      mediaKits: 1,
+      mediaChoice: "kit",
       printServer: false,
     });
   };
