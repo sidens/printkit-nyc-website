@@ -366,10 +366,10 @@ const RequestForm = () => {
             </fieldset>
 
             <fieldset className="space-y-3">
-              <legend className="text-base font-semibold">How will you print?</legend>
+              <legend className="text-base font-semibold">How will you print? *</legend>
               <RadioGroup
                 value={formData.printMethod}
-                onValueChange={(value) => setFormData({ ...formData, printMethod: value })}
+                onValueChange={handlePrintMethodChange}
                 className="grid gap-3 sm:grid-cols-3"
               >
                 {PRINT_METHODS.map((option) => (
@@ -379,70 +379,83 @@ const RequestForm = () => {
                   </Label>
                 ))}
               </RadioGroup>
-              {formData.printMethod === "devices" && !formData.printServer && (
-                <p className="text-sm text-muted-foreground">Printing from devices needs the WCMPlus print server — add it below.</p>
-              )}
+              {printMethodError && <p className="text-sm text-destructive" role="alert">{printMethodError}</p>}
             </fieldset>
 
             <fieldset className="space-y-4">
-              <legend className="text-base font-semibold">Add-ons</legend>
-              <p className="text-sm text-muted-foreground">Both are optional. Bring your own DNP DS40-compatible media and skip the print server, or add either below.</p>
+              <legend className="text-base font-semibold">Print media</legend>
+              <p className="text-sm text-muted-foreground">Every rental needs one roll of DS40 media. Ours comes loaded in the printer and test-printed before pickup.</p>
 
-              <div className="flex items-center space-x-3">
-                <Checkbox
-                  id="mediaKitOptIn"
-                  checked={formData.mediaKitOptIn}
-                  onCheckedChange={(checked) => {
-                    const optingIn = checked === true;
-                    setFormData({
-                      ...formData,
-                      mediaKitOptIn: optingIn,
-                      mediaKits: optingIn ? Math.max(1, formData.mediaKits) : 0,
-                    });
-                  }}
-                />
-                <Label htmlFor="mediaKitOptIn" className="font-normal cursor-pointer">Add a prepaid media kit</Label>
-              </div>
+              <RadioGroup
+                value={formData.mediaChoice}
+                onValueChange={(value) => setFormData({ ...formData, mediaChoice: value as MediaChoice })}
+                className="grid gap-3"
+              >
+                <div className="rounded-lg border border-border p-3 space-y-4">
+                  <Label htmlFor="media-kit" className="flex cursor-pointer items-start gap-3 font-normal">
+                    <RadioGroupItem id="media-kit" value="kit" className="mt-0.5" />
+                    <span className="flex-1 font-medium">PrintKit media kit</span>
+                    <span className="tabular-nums font-medium">{money.format(selectedMedia.price * formData.mediaKits)}</span>
+                  </Label>
 
-              {formData.mediaKitOptIn && (
-                <div className="space-y-4 border-l-2 border-border pl-4 ml-6">
-                  <RadioGroup
-                    value={formData.printSize}
-                    onValueChange={(value) => setFormData({ ...formData, printSize: value as PrintSize })}
-                    className="grid gap-3 sm:grid-cols-3"
-                  >
-                    {(Object.keys(MEDIA) as PrintSize[]).map((size) => (
-                      <Label key={size} htmlFor={`size-${size}`} className="flex cursor-pointer items-start gap-3 rounded-lg border border-border p-3 font-normal">
-                        <RadioGroupItem id={`size-${size}`} value={size} className="mt-0.5" />
-                        <span><span className="block font-medium">{sizeLabel(size)}</span><span className="text-sm text-muted-foreground">{MEDIA[size].prints} prints, ${MEDIA[size].price}</span></span>
-                      </Label>
-                    ))}
-                  </RadioGroup>
-                  <p className="text-sm text-muted-foreground">One size per rental. The print size is set by the media loaded in the printer, so it can't be changed mid-event.</p>
-                  {formData.printSize === "5x7" && (
-                    <div className="highlight-box rounded-lg p-4 text-sm">
-                      5x7 is a special order. It's prepaid, non-refundable, and has to be confirmed at least 7 days before pickup. 6x8 gives you the same 200 prints for $40 less on a larger print — the reason to choose 5x7 is that it fits a standard off-the-shelf frame.
+                  {formData.mediaChoice === "kit" && (
+                    <div className="space-y-4 pl-7">
+                      <RadioGroup
+                        value={formData.printSize}
+                        onValueChange={(value) => setFormData({ ...formData, printSize: value as PrintSize })}
+                        className="grid gap-3 sm:grid-cols-3"
+                      >
+                        {(Object.keys(MEDIA) as PrintSize[]).map((size) => (
+                          <Label key={size} htmlFor={`size-${size}`} className="flex cursor-pointer items-start gap-3 rounded-lg border border-border p-3 font-normal">
+                            <RadioGroupItem id={`size-${size}`} value={size} className="mt-0.5" />
+                            <span><span className="block font-medium">{sizeLabel(size)}</span><span className="text-sm text-muted-foreground">{MEDIA[size].prints} prints · ${MEDIA[size].price}</span></span>
+                          </Label>
+                        ))}
+                      </RadioGroup>
+                      <p className="text-sm text-muted-foreground">One size per rental. The print size is set by the media loaded in the printer, so it can't be changed mid-event.</p>
+                      {formData.printSize === "5x7" && (
+                        <div className="highlight-box rounded-lg p-4 text-sm">
+                          5x7 is a special order. It's prepaid, non-refundable, and has to be confirmed at least 7 days before pickup. 6x8 gives you the same 200 prints for $40 less on a larger print — the reason to choose 5x7 is that it fits a standard off-the-shelf frame.
+                        </div>
+                      )}
+
+                      <div className="flex flex-wrap items-center justify-between gap-4">
+                        <div>
+                          <Label htmlFor="media-kits">Kits ({selectedMedia.prints} prints each)</Label>
+                          <p className="text-sm text-muted-foreground">${selectedMedia.price} per kit</p>
+                        </div>
+                        <div className="flex h-10 items-center gap-1" id="media-kits">
+                          <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.max(1, formData.mediaKits - 1) })} disabled={formData.mediaKits === 1} aria-label="Remove one media kit"><Minus /></Button>
+                          <output className="w-10 text-center font-medium" aria-live="polite">{formData.mediaKits}</output>
+                          <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.min(4, formData.mediaKits + 1) })} disabled={formData.mediaKits === 4} aria-label="Add one media kit"><Plus /></Button>
+                        </div>
+                      </div>
                     </div>
                   )}
-
-                  <div className="flex flex-wrap items-center justify-between gap-4">
-                    <div>
-                      <Label htmlFor="media-kits">Media kits ({selectedMedia.prints} prints each)</Label>
-                      <p className="text-sm text-muted-foreground">${selectedMedia.price} per prepaid kit</p>
-                    </div>
-                    <div className="flex h-10 items-center gap-1" id="media-kits">
-                      <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.max(0, formData.mediaKits - 1) })} disabled={formData.mediaKits === 0} aria-label="Remove one media kit"><Minus /></Button>
-                      <output className="w-10 text-center font-medium" aria-live="polite">{formData.mediaKits}</output>
-                      <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.min(4, formData.mediaKits + 1) })} disabled={formData.mediaKits === 4} aria-label="Add one media kit"><Plus /></Button>
-                    </div>
-                  </div>
                 </div>
-              )}
 
-              <div className="flex items-center space-x-3 border-t border-border pt-4">
+                <div className="rounded-lg border border-border p-3 space-y-2">
+                  <Label htmlFor="media-byo" className="flex cursor-pointer items-start gap-3 font-normal">
+                    <RadioGroupItem id="media-byo" value="byo" className="mt-0.5" />
+                    <span className="flex-1 font-medium">I'll bring my own DS40 media</span>
+                    <span className="tabular-nums font-medium">—</span>
+                  </Label>
+                  {formData.mediaChoice === "byo" && (
+                    <p className="text-xs text-muted-foreground pl-7">Must be DNP DS40 media, one size for the whole rental. You'll load it yourself before your event.</p>
+                  )}
+                </div>
+              </RadioGroup>
+            </fieldset>
+
+            <fieldset className="space-y-3">
+              <legend className="text-base font-semibold">Add-on</legend>
+              <div className="flex items-center space-x-3">
                 <Checkbox id="printServer" checked={formData.printServer} onCheckedChange={(checked) => setFormData({ ...formData, printServer: checked === true })} />
                 <Label htmlFor="printServer" className="font-normal cursor-pointer">WCMPlus print server ($35/day)</Label>
               </div>
+              {formData.printMethod === "devices" && !formData.printServer && (
+                <p className="text-xs text-muted-foreground">Without the print server, you'll need your own computer connected by USB to receive and print photos.</p>
+              )}
             </fieldset>
 
             <section className="card-elevated p-5 md:p-6 space-y-4" aria-labelledby="estimate-heading">
