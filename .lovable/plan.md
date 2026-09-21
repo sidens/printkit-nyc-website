@@ -1,64 +1,67 @@
-# Simplify the contact-method section of the request form
+# Codify contact preferences: email default + opt-in text/call
 
-## Problem
+## The model you're describing
 
-The request form collects a **required** phone number and then shows a single checkbox: "It's okay to text me at this number about my rental." That reads ambiguous — a "No" doesn't say whether the renter wants a call or just email, and it doesn't let anyone state a preference.
+- **Email is the baseline.** You always reply by email.
+- **Texting is an added permission**, not a replacement — the original checkbox let you do *both* email and text, and you want to keep that.
+- **Calling is also an added permission** — you won't call someone out of the blue unless they've said it's okay.
 
-The fix doesn't need three options. Email is your default channel; the only real question worth asking is whether they'd rather get a text instead.
+So this isn't an either/or radio choice. It's: *email always, plus opt-in permission to text and/or call.* That preserves the original checkbox behavior while making email the clear default and giving an explicit call opt-in.
 
-## The simple change
+## The change
 
-Replace the "OK to text" checkbox with one two-option question:
+Keep the required phone field, then replace the single ambiguous checkbox with a short expectation line and two opt-in checkboxes:
 
 ```text
-Phone number *          [required tel input — unchanged]
+Phone number *        [required tel input — unchanged]
 
-How should we reply?
-( ● Email   ○ Text me instead )
+We'll reply by email. Also okay to:
+[ ] Text me at this number
+[ ] Call me at this number
 ```
 
-- Two radio options: **Email** (pre-selected, the default) and **Text me instead**.
-- Phone number stays **required** — you need it on file regardless, and it's what a text reply uses.
-- No "call" option. No extra helper text. One line, one choice.
-
-This matches the spirit of the feedback ("prefer a call or a text") without adding a full contact-method picker.
+- "We'll reply by email." sets the expectation up front (email is the default).
+- Both checkboxes default **unchecked**. Checking either grants that permission *in addition to* email.
+- Phone stays **required** — it's what a text or call uses, and you want one on file regardless.
+- No radio group, no forced single choice.
 
 ## Implementation — `src/components/request/RequestForm.tsx`
 
-- Replace `smsOk: boolean` state with `preferredContact: "email" | "text"`, default `"email"`.
-- Swap the checkbox for a two-option `RadioGroup` (Email / Text me instead), Email pre-selected.
-- Phone field, label, and 10-digit validation all stay exactly as-is.
-- `resetForm()` resets `preferredContact` to `"email"`.
+- Keep `smsOk: boolean` (rename is optional; behavior unchanged) and add `callOk: boolean`, both default `false`.
+- Replace the existing checkbox block with the "We'll reply by email." line plus the two checkboxes above.
+- Phone field, label, and 10-digit validation stay exactly as-is.
+- `resetForm()` resets both checkboxes to `false`.
 
 ### Formspree payload
 
-Replace `"OK to text": "Yes" | "No"` with:
+Keep the existing `"OK to text"` key and add one new key:
 
 ```text
-"Preferred reply": "Email" | "Text"
+"OK to text": "Yes" | "No"     (unchanged)
+"OK to call": "Yes" | "No"     (new)
 ```
 
 No other payload keys change.
 
 ### Confirmation copy (this file only)
 
-The success message leads with email now: "reply by text message (or email)" → "reply by email — or by text if you chose that — within 1–2 business days."
+The success message can now lead with email: "reply by text message (or email)" → "reply by email — and by text or call if you checked those — within 1–2 business days."
 
 ## Out of scope
 
-- No "call" option, no three-way picker.
+- No radio group / contact-method picker.
 - Phone stays required for everyone.
-- No changes to `CTASection.tsx`, `llms.txt`, or any other page — those still say "text message or email," which remains true (you offer both).
+- No changes to `CTASection.tsx`, `llms.txt`, or any other page — "text message or email" there remains accurate.
 - No changes to dates, add-ons, estimate, or any other form section.
 
 ## Technical notes
 
 - Single file: `src/components/request/RequestForm.tsx`.
-- Reuses the already-imported `RadioGroup` / `RadioGroupItem`.
+- Reuses the existing `Checkbox` component (already imported).
 - No new dependencies, no logic changes elsewhere.
 
 ## Verification
 
 1. Build passes.
-2. Playwright: Email pre-selected on load; selecting "Text me instead" works; phone still required; a valid submit sends `"Preferred reply"` with the right value.
-3. Grep confirms no `smsOk` / `"OK to text"` references remain.
+2. Playwright: both checkboxes render unchecked under "We'll reply by email."; each toggles independently; phone still required; a valid submit sends `"OK to text"` and `"OK to call"` with the right Yes/No values.
+3. Grep confirms the old single "It's okay to text me…" label is gone and replaced by the new block.
