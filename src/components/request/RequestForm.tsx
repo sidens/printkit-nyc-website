@@ -365,6 +365,25 @@ const RequestForm = () => {
               {dateError && <p className="text-sm text-destructive" role="alert">{dateError}</p>}
             </fieldset>
 
+            <fieldset className="space-y-3">
+              <legend className="text-base font-semibold">How will you print? (optional)</legend>
+              <RadioGroup
+                value={formData.printMethod}
+                onValueChange={(value) => setFormData({ ...formData, printMethod: value })}
+                className="grid gap-3 sm:grid-cols-3"
+              >
+                {PRINT_METHODS.map((option) => (
+                  <Label key={option.value} htmlFor={`method-${option.value}`} className="flex cursor-pointer items-start gap-3 rounded-lg border border-border p-3 font-normal">
+                    <RadioGroupItem id={`method-${option.value}`} value={option.value} className="mt-0.5" />
+                    <span>{option.label}</span>
+                  </Label>
+                ))}
+              </RadioGroup>
+              {formData.printMethod === "devices" && !formData.printServer && (
+                <p className="text-sm text-muted-foreground">Printing from devices needs the WCMPlus print server — add it below.</p>
+              )}
+            </fieldset>
+
             <fieldset className="space-y-4">
               <legend className="text-base font-semibold">Add-ons (optional)</legend>
               <p className="text-sm text-muted-foreground">Both are optional. Bring your own DNP DS40-compatible media and skip the print server, or add either below.</p>
