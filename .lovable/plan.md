@@ -11,6 +11,7 @@ export interface Testimonial {
   pullQuote: string;
   name: string;
   company: string;
+  companyUrl?: string;
   context: string;
 }
 
