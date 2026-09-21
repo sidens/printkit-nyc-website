@@ -47,6 +47,7 @@ const money = new Intl.NumberFormat("en-US", {
 const sizeLabel = (size: PrintSize) => size.replace("x", "×");
 
 type ContactPreference = "email" | "text" | "call";
+type MediaChoice = "kit" | "byo";
 
 const CONTACT_OPTIONS: { value: ContactPreference; label: string }[] = [
   { value: "email", label: "Email" },
@@ -216,7 +217,7 @@ const RequestForm = () => {
           Phone: formData.phone,
           contactPreference: formData.contactPreference,
           bestTimeToCall: formData.bestTimeToCall || "Not specified",
-          printMethod: printMethodLabel || "Not specified",
+          printMethod: printMethodLabel,
           "Pickup date": formData.pickupDate,
           "Return date": formData.returnDate,
           "Event type": formData.eventType || "Not specified",
@@ -257,6 +258,7 @@ const RequestForm = () => {
   const resetForm = () => {
     setIsSubmitted(false);
     setPhoneError("");
+    setPrintMethodError("");
     setDateError("");
     setSelectedRange(undefined);
     setFormData({
@@ -288,7 +290,11 @@ const RequestForm = () => {
             <h1 ref={successHeadingRef} tabIndex={-1} className="text-3xl md:text-4xl font-semibold mb-4 focus:outline-none">
               Request sent
             </h1>
-            <p className="text-lg text-muted-foreground mb-8">{successCopy()}</p>
+            <p className="text-lg text-muted-foreground mb-4">{successCopy()}</p>
+            {formData.printMethod === "unsure" && (
+              <p className="text-lg text-muted-foreground mb-8">Not sure how you'll print? No problem. We'll walk through the options with you when we reply.</p>
+            )}
+            {formData.printMethod !== "unsure" && <div className="mb-4" />}
             <Button variant="outline" onClick={resetForm}>Submit another request</Button>
           </div>
         </div>
