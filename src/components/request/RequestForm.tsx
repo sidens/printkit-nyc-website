@@ -525,7 +525,7 @@ const RequestForm = () => {
                     ? "Mobile number for texts *"
                     : formData.contactPreference === "call"
                       ? "Best number to call *"
-                      : "Phone (optional)"}
+                      : "Phone"}
                 </Label>
                 <Input
                   id="phone"
