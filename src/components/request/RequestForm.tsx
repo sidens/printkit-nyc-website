@@ -100,7 +100,7 @@ const RequestForm = () => {
     setFormData((current) => ({
       ...current,
       printMethod: value,
-      printServer: value === "devices" && current.printMethod !== "devices" ? true : current.printServer,
+      printServer: value === "devices",
     }));
   };
 
