@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { testimonials } from "@/data/testimonials";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { Button } from "@/components/ui/button";
