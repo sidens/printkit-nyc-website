@@ -385,7 +385,7 @@ const RequestForm = () => {
             </fieldset>
 
             <fieldset className="space-y-4">
-              <legend className="text-base font-semibold">Add-ons (optional)</legend>
+              <legend className="text-base font-semibold">Add-ons</legend>
               <p className="text-sm text-muted-foreground">Both are optional. Bring your own DNP DS40-compatible media and skip the print server, or add either below.</p>
 
               <div className="flex items-center space-x-3">
