@@ -232,9 +232,18 @@ const RequestForm = () => {
     );
   }
 
-  const selectedRangeText = selectedRange?.from && selectedRange.to
-    ? `${format(selectedRange.from, "EEE MMM d")} to ${format(selectedRange.to, "EEE MMM d")} · ${quote.days} ${quote.days === 1 ? "day" : "days"}`
-    : "Choose a pickup date, then a return date.";
+  const hasFullRange = !!(selectedRange?.from && selectedRange.to);
+  const pickupActive = !selectedRange?.from;
+  const returnActive = !!selectedRange?.from && !selectedRange?.to;
+  const pickupText = selectedRange?.from ? format(selectedRange.from, "EEE, MMM d") : "Select date";
+  const returnText = selectedRange?.to ? format(selectedRange.to, "EEE, MMM d") : "Select date";
+
+  const syncedTitle = availability.generated ? new Date(availability.generated).toLocaleString() : "";
+  const syncedText = availability.generated ? `Synced ${relativeTime(availability.generated)}` : "";
+  const isStale =
+    availability.status === "ready" &&
+    !!availability.generated &&
+    Date.now() - new Date(availability.generated).getTime() > 24 * 60 * 60 * 1000;
 
   const selectedMedia = MEDIA[formData.printSize];
 
