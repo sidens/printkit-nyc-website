@@ -156,10 +156,17 @@ const RequestForm = () => {
   const preferenceTag =
     formData.contactPreference === "text" ? "Text" : formData.contactPreference === "call" ? "Call" : "Email";
 
+  const setupTag =
+    formData.printMethod === "computer"
+      ? " · Setup: computer"
+      : formData.printMethod === "devices"
+        ? " · Setup: devices"
+        : " · Setup: not sure";
+
   const subjectLine =
-    selectedRange?.from && selectedRange.to
+    (selectedRange?.from && selectedRange.to
       ? `[${preferenceTag}] ${rangeLabel(selectedRange.from, selectedRange.to)} · ${quote.days} ${quote.days === 1 ? "day" : "days"} · ${money.format(quote.dueAtPickup)} · ${formData.name}`
-      : `[${preferenceTag}] New PrintKit request · ${formData.name}`;
+      : `[${preferenceTag}] New PrintKit request · ${formData.name}`) + setupTag;
 
   const successCopy = () => {
     if (formData.contactPreference === "text") {
