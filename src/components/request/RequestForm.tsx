@@ -46,6 +46,25 @@ const money = new Intl.NumberFormat("en-US", {
 
 const sizeLabel = (size: PrintSize) => size.replace("x", "×");
 
+type ContactPreference = "email" | "text" | "call";
+
+const CONTACT_OPTIONS: { value: ContactPreference; label: string }[] = [
+  { value: "email", label: "Email" },
+  { value: "text", label: "Text" },
+  { value: "call", label: "Call" },
+];
+
+const PRINT_METHODS = [
+  { value: "computer", label: "From a computer (USB)" },
+  { value: "devices", label: "From devices (wireless/ethernet)" },
+  { value: "unsure", label: "Not sure yet" },
+];
+
+const rangeLabel = (from: Date, to: Date) =>
+  from.getMonth() === to.getMonth()
+    ? `${format(from, "MMM d")}–${format(to, "d")}`
+    : `${format(from, "MMM d")}–${format(to, "MMM d")}`;
+
 const RequestForm = () => {
   const { toast } = useToast();
   const availability = useAvailability();
@@ -59,7 +78,9 @@ const RequestForm = () => {
     name: "",
     email: "",
     phone: "",
-    smsOk: false,
+    contactPreference: "email" as ContactPreference,
+    bestTimeToCall: "",
+    printMethod: "",
     pickupDate: "",
     returnDate: "",
     eventType: "",
@@ -69,6 +90,8 @@ const RequestForm = () => {
     mediaKitOptIn: false,
     printServer: false,
   });
+
+  const phoneRequired = formData.contactPreference !== "email";
 
   const blockedDates = useMemo(() => new Set(availability.blocked), [availability.blocked]);
   const quote = calculateQuote({
