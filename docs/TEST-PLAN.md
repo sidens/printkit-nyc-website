@@ -26,7 +26,7 @@ Two layers of checking:
 These must match everywhere they appear (home, pricing, FAQ, request form, `llms.txt`, structured data):
 
 - Printer: **$100 per day**
-- Prepaid media kit: **$100 flat, up to 400 4×6 prints** (6×8 and 5×7 on request)
+- Media kit: **$100 for 400 4×6 prints** (6×8 $120 / 200 prints, 5×7 $160 / 200 prints)
 - WCMPlus print server: **$35 per day**
 - Refundable deposit: **$200**
 - Sales tax applies to the rental and add-ons, **never to the deposit**
@@ -110,6 +110,6 @@ Search the project for `$95`, `$75`, `$0.40` and bare "400 prints" — there sho
 | `src/lib/quote.test.ts` | Day counting, printer/server/media pricing, tax rounding, untaxed deposit, invalid dates |
 | `src/lib/availability.test.ts` | Parsing blocked dates and horizon; missing, malformed, seed and failed fetches fall back to "unknown" |
 | `src/lib/pricingData.test.ts` | Published prices and the 4×6 media note stay put |
-| `src/components/request/RequestForm.test.tsx` | Empty estimate state, itemized estimate, media kit opt-in and limits, print method hint, conditional phone rules, submit payload and success screen |
+| `src/components/request/RequestForm.test.tsx` | Empty estimate state, itemized estimate, media kit default and limits, bring-your-own media, required print method, print server auto-check, conditional phone rules, submit payload and success screen |
 
 Playwright is used ad hoc for visual and end-to-end spot checks; it is not part of the build.
