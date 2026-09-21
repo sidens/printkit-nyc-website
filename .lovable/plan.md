@@ -1,75 +1,60 @@
-# Codify contact preferences: email default + opt-in text/call
+# Rework the contact section on the request page
 
-## The contradiction you raised
+All changes stay in the request form. Dates, availability and the cost estimate keep working exactly as they do today.
 
-Requiring a phone number *and* separately asking "is it okay to use it?" is contradictory — from the renter's side, why hand over a phone number if they haven't granted permission? The clean fix is to tie the two together: **the phone number is only required once they've opted into text or call.**
+## New order of the form
 
-## The model
+1. Pickup and return dates (calendar card)
+2. How will you print?
+3. Add-ons
+4. Estimate
+5. Customer quote
+6. Your details (contact)
+7. Send button
 
-- **Email is the baseline reply.** You always reply by email, so email + name are the only always-required fields.
-- **Text and call are opt-in permissions**, added on top of email. The renter checks whichever they're comfortable with (either, both, or neither).
-- **Phone becomes conditionally required** — only when at least one of "Text me" or "Call me" is checked. If they check neither, the phone field is optional and can be left blank. That makes the phone requirement coherent: you only ask for it when they've granted a use for it.
+## How will you print? (optional)
 
-This preserves what you liked about the original checkbox (email *plus* text when approved) and adds an explicit call opt-in, since you won't call someone unless they want it.
+Three choices: From a laptop (USB) · From phones (wireless) · Not sure yet.
 
-## The change
+If someone picks wireless and has not added the print server, a single muted line appears underneath: "Wireless printing needs the WCMPlus print server — add it below." Nothing is checked automatically.
 
-```text
-We'll reply by email. Want a faster option? You can also:
-[ ] Text me at this number          [ phone input appears/becomes required ]
-[ ] Call me at this number
-```
+## Your details
 
-Details:
-- "We'll reply by email." sets the expectation up front.
-- Two checkboxes, both default unchecked, toggle independently.
-- Name and Email stay always-required (unchanged).
-- Phone field sits with the checkboxes. It's **optional** until at least one checkbox is checked, then it becomes **required** + keeps its 10-digit validation and error message.
-- If the renter unchecks both, phone returns to optional and any existing phone error clears.
-- No radio group, no forced single choice.
+- Full name (required)
+- Email (required)
+- "How should we reach you?" — three equal buttons: Email · Text · Call, with Email chosen by default. Under them, small muted text: "Your itemized quote always comes by email. This is for quick questions and pickup day."
+- Phone changes with the choice:
+  - Email: "Phone (optional)" — no validation
+  - Text: "Mobile number for texts *" — required, plus "We'll only text about this rental."
+  - Call: "Best number to call *" — required, plus an optional "Best time to call" box with placeholder "e.g. weekday evenings"
+- "What's this for?" and "Anything else we should know?" follow the phone field.
 
-## Implementation — `src/components/request/RequestForm.tsx`
+The old "It's okay to text me" checkbox goes away, replaced by the Email/Text/Call choice. No marketing or newsletter opt-ins.
 
-- State: keep `smsOk: boolean`, add `callOk: boolean`, both default `false`.
-- Phone `required` is now dynamic: `required={smsOk || callOk}`.
-- In `handleSubmit`, only run phone validation when `smsOk || callOk`. If both unchecked, skip phone validation entirely (allow empty).
-- Replace the existing checkbox block with the "We'll reply by email." line plus the two checkboxes and the phone input grouped together.
-- Phone field label: "Phone number" (drop the `*` when optional; show `*` only when `smsOk || callOk`).
-- `resetForm()` resets both checkboxes to `false` (phone goes back to optional).
+## What you receive by email
 
-### Formspree payload
-
-Keep `"OK to text"` and add `"OK to call"`:
+The request email keeps the same destination and gains the contact preference, best time to call, and print method. The subject line becomes scannable, for example:
 
 ```text
-"OK to text": "Yes" | "No"     (unchanged)
-"OK to call": "Yes" | "No"     (new)
+[Text] Sep 23–25 · 3 days · $526.63 · Sam K.
 ```
 
-Phone still sends whatever was entered (empty string if blank). No other payload keys change.
+## Confirmation screen
 
-### Confirmation copy (this file only)
+Heading becomes "Request sent". The message matches their choice:
 
-Lead with email: "reply by text message (or email)" → "reply by email — and by text or call if you checked those — within 1–2 business days."
+- Email: "We'll email you at {email} within 24 hours with availability and your itemized quote."
+- Text: "We'll text you at {phone} within 24 hours. Your itemized quote will come by email to {email}."
+- Call: "We'll call you at {phone} within 24 hours, around {best time}. Your itemized quote will come by email to {email}."
 
-## Out of scope
-
-- No radio group / contact-method picker.
-- No changes to `CTASection.tsx`, `llms.txt`, or any other page — "text message or email" there remains accurate.
-- No changes to dates, add-ons, estimate, or any other form section.
+Any "check your email client" wording is removed.
 
 ## Technical notes
 
 - Single file: `src/components/request/RequestForm.tsx`.
-- Reuses the existing `Checkbox` and `Input` components (already imported).
-- No new dependencies, no logic changes elsewhere.
-
-## Verification
-
-1. Build passes.
-2. Playwright:
-   - Load form: both checkboxes unchecked, phone optional, submit works with empty phone.
-   - Check "Text me": phone becomes required; submit with empty phone shows the error; submit with valid phone succeeds.
-   - Check only "Call me": phone required; submit succeeds with valid phone.
-   - Uncheck both: phone optional again, error clears.
-3. Grep confirms the old single "It's okay to text me…" label is gone and replaced by the new block.
+- State: replace `smsOk` with `contactPreference: "email" | "text" | "call"` (default `email`), add `bestTimeToCall` and `printMethod` (optional, empty default).
+- Phone validation (10+ digits) runs only when preference is `text` or `call`; the input's `required` attribute follows the same rule.
+- Segmented toggle built from existing UI primitives with `role="radiogroup"` semantics and visible focus rings; equal-width grid of three.
+- Formspree payload (same endpoint `mqeezrqr`) keeps all current keys except "OK to text"; adds `contactPreference`, `bestTimeToCall`, `printMethod`, and a computed `_subject` using `date-fns` short month formatting of the selected range and `dueAtPickup` money formatting.
+- Success view reads from a small helper that returns the copy for the active preference; `resetForm` resets the new fields.
+- No pricing, quote, availability, or add-on logic is touched.
