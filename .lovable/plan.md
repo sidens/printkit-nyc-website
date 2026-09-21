@@ -2,7 +2,7 @@
 
 ## Data
 
-Create `src/data/testimonials.ts` exporting a `testimonials` array. One entry, verbatim from the brief. **No `companyUrl`** (link not approved) — "Admiration" renders as plain muted text in both placements.
+Create `src/data/testimonials.ts` exporting a `testimonials` array. One entry, verbatim from the brief. **`companyUrl` kept** ("https://admiration.co") — "Admiration" links out on the home page (link approved). The /request pull-quote uses plain "Sam K., Admiration" text with no link.
 
 ```ts
 export interface Testimonial {
@@ -11,6 +11,7 @@ export interface Testimonial {
   pullQuote: string;
   name: string;
   company: string;
+  companyUrl?: string;
   context: string;
 }
 
@@ -23,6 +24,7 @@ export const testimonials: Testimonial[] = [
       "PrintKit's turnkey kit made it seamless. The setup worked flawlessly from start to finish.",
     name: "Sam K.",
     company: "Admiration",
+    companyUrl: "https://admiration.co",
     context: "Fashion week collection studio · Week-long rental · DS40 + print server",
   },
 ];
@@ -39,7 +41,7 @@ Structure:
 - Eyebrow: `context` line, `text-xs uppercase tracking-wide text-muted-foreground`.
 - lucide `Quote` icon centered above the quote: `w-8 h-8 text-primary/30`.
 - `<blockquote>` with full `quote`: `text-lg md:text-2xl leading-relaxed text-balance`, normal weight, not italic.
-- Attribution in a `<figcaption>`: "Sam K." in `font-medium`, then " · Admiration" in muted text (plain text, no link).
+- Attribution in a `<figcaption>`: "Sam K." in `font-medium`, then " · " then "Admiration" as a link (`target="_blank"`, `rel="noopener noreferrer"`, underline on hover only) in muted text.
 - One featured quote only. No carousel, slider dots, plural heading, stars, avatar, or placeholder photo.
 
 ## 2. /request
