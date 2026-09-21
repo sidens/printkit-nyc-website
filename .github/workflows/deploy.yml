@@ -30,7 +30,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       # Writes public/availability.json. Exits non-zero on any error, which stops the
       # job before deploy and leaves the currently live site untouched.
