@@ -1,67 +1,75 @@
 # Codify contact preferences: email default + opt-in text/call
 
-## The model you're describing
+## The contradiction you raised
 
-- **Email is the baseline.** You always reply by email.
-- **Texting is an added permission**, not a replacement — the original checkbox let you do *both* email and text, and you want to keep that.
-- **Calling is also an added permission** — you won't call someone out of the blue unless they've said it's okay.
+Requiring a phone number *and* separately asking "is it okay to use it?" is contradictory — from the renter's side, why hand over a phone number if they haven't granted permission? The clean fix is to tie the two together: **the phone number is only required once they've opted into text or call.**
 
-So this isn't an either/or radio choice. It's: *email always, plus opt-in permission to text and/or call.* That preserves the original checkbox behavior while making email the clear default and giving an explicit call opt-in.
+## The model
+
+- **Email is the baseline reply.** You always reply by email, so email + name are the only always-required fields.
+- **Text and call are opt-in permissions**, added on top of email. The renter checks whichever they're comfortable with (either, both, or neither).
+- **Phone becomes conditionally required** — only when at least one of "Text me" or "Call me" is checked. If they check neither, the phone field is optional and can be left blank. That makes the phone requirement coherent: you only ask for it when they've granted a use for it.
+
+This preserves what you liked about the original checkbox (email *plus* text when approved) and adds an explicit call opt-in, since you won't call someone unless they want it.
 
 ## The change
 
-Keep the required phone field, then replace the single ambiguous checkbox with a short expectation line and two opt-in checkboxes:
-
 ```text
-Phone number *        [required tel input — unchanged]
-
-We'll reply by email. Also okay to:
-[ ] Text me at this number
+We'll reply by email. Want a faster option? You can also:
+[ ] Text me at this number          [ phone input appears/becomes required ]
 [ ] Call me at this number
 ```
 
-- "We'll reply by email." sets the expectation up front (email is the default).
-- Both checkboxes default **unchecked**. Checking either grants that permission *in addition to* email.
-- Phone stays **required** — it's what a text or call uses, and you want one on file regardless.
+Details:
+- "We'll reply by email." sets the expectation up front.
+- Two checkboxes, both default unchecked, toggle independently.
+- Name and Email stay always-required (unchanged).
+- Phone field sits with the checkboxes. It's **optional** until at least one checkbox is checked, then it becomes **required** + keeps its 10-digit validation and error message.
+- If the renter unchecks both, phone returns to optional and any existing phone error clears.
 - No radio group, no forced single choice.
 
 ## Implementation — `src/components/request/RequestForm.tsx`
 
-- Keep `smsOk: boolean` (rename is optional; behavior unchanged) and add `callOk: boolean`, both default `false`.
-- Replace the existing checkbox block with the "We'll reply by email." line plus the two checkboxes above.
-- Phone field, label, and 10-digit validation stay exactly as-is.
-- `resetForm()` resets both checkboxes to `false`.
+- State: keep `smsOk: boolean`, add `callOk: boolean`, both default `false`.
+- Phone `required` is now dynamic: `required={smsOk || callOk}`.
+- In `handleSubmit`, only run phone validation when `smsOk || callOk`. If both unchecked, skip phone validation entirely (allow empty).
+- Replace the existing checkbox block with the "We'll reply by email." line plus the two checkboxes and the phone input grouped together.
+- Phone field label: "Phone number" (drop the `*` when optional; show `*` only when `smsOk || callOk`).
+- `resetForm()` resets both checkboxes to `false` (phone goes back to optional).
 
 ### Formspree payload
 
-Keep the existing `"OK to text"` key and add one new key:
+Keep `"OK to text"` and add `"OK to call"`:
 
 ```text
 "OK to text": "Yes" | "No"     (unchanged)
 "OK to call": "Yes" | "No"     (new)
 ```
 
-No other payload keys change.
+Phone still sends whatever was entered (empty string if blank). No other payload keys change.
 
 ### Confirmation copy (this file only)
 
-The success message can now lead with email: "reply by text message (or email)" → "reply by email — and by text or call if you checked those — within 1–2 business days."
+Lead with email: "reply by text message (or email)" → "reply by email — and by text or call if you checked those — within 1–2 business days."
 
 ## Out of scope
 
 - No radio group / contact-method picker.
-- Phone stays required for everyone.
 - No changes to `CTASection.tsx`, `llms.txt`, or any other page — "text message or email" there remains accurate.
 - No changes to dates, add-ons, estimate, or any other form section.
 
 ## Technical notes
 
 - Single file: `src/components/request/RequestForm.tsx`.
-- Reuses the existing `Checkbox` component (already imported).
+- Reuses the existing `Checkbox` and `Input` components (already imported).
 - No new dependencies, no logic changes elsewhere.
 
 ## Verification
 
 1. Build passes.
-2. Playwright: both checkboxes render unchecked under "We'll reply by email."; each toggles independently; phone still required; a valid submit sends `"OK to text"` and `"OK to call"` with the right Yes/No values.
+2. Playwright:
+   - Load form: both checkboxes unchecked, phone optional, submit works with empty phone.
+   - Check "Text me": phone becomes required; submit with empty phone shows the error; submit with valid phone succeeds.
+   - Check only "Call me": phone required; submit succeeds with valid phone.
+   - Uncheck both: phone optional again, error clears.
 3. Grep confirms the old single "It's okay to text me…" label is gone and replaced by the new block.
