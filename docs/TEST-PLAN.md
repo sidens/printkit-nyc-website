@@ -62,13 +62,15 @@ Search the project for `$95`, `$75`, `$0.40` and bare "400 prints" — there sho
 
 | Check | Expect |
 | --- | --- |
-| Add-ons on load | Media kit checkbox unchecked, no size choices visible |
-| Check "Add a prepaid media kit" | Size options (4×6, 6×8, 5×7) and a counter starting at 1 appear |
-| Counter | Cannot go below 0 or above 4; buttons disable at the limits |
+| Print media on load | "PrintKit media kit" selected, size options (4×6, 6×8, 5×7) and a counter at 1 visible |
+| Counter | Cannot go below 1 or above 4; buttons disable at the limits |
 | Choose 5×7 | Special-order note appears |
-| Uncheck the media kit | Size choices disappear and kits go back to 0 |
-| Choose "From devices (wireless/ethernet)" | Muted line about the WCMPlus print server appears; the add-on is **not** auto-checked |
-| Check the print server | That muted line goes away |
+| Choose "I'll bring my own DS40 media" | Kit controls disappear, price shows "—", estimate drops the media line |
+| Switch back to the kit | Previous size and kit count return |
+| "How will you print?" on load | Nothing selected; submitting shows "Pick one. 'Not sure yet' is fine." |
+| Choose "From devices (wireless/ethernet)" | Print server auto-checks |
+| Uncheck the print server after that | Stays unchecked, muted USB note appears under it |
+| Choose "From a computer (USB)" or "Not sure yet" | Print server checkbox is left as-is |
 
 ## 6. Request form — contact and submit
 
