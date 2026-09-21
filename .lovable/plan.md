@@ -14,9 +14,9 @@ All changes stay in the request form. Dates, availability and the cost estimate 
 
 ## How will you print? (optional)
 
-Three choices: From a laptop (USB) · From phones (wireless) · Not sure yet.
+Three choices: From a laptop (USB) · From devices (wireless/ethernet) · Not sure yet.
 
-If someone picks wireless and has not added the print server, a single muted line appears underneath: "Wireless printing needs the WCMPlus print server — add it below." Nothing is checked automatically.
+If someone picks the wireless/ethernet option and has not added the print server, a single muted line appears underneath: "Wireless printing needs the WCMPlus print server — add it below." Nothing is checked automatically.
 
 ## Your details
 
