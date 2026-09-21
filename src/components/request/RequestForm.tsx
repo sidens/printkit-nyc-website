@@ -366,7 +366,7 @@ const RequestForm = () => {
             </fieldset>
 
             <fieldset className="space-y-3">
-              <legend className="text-base font-semibold">How will you print? (optional)</legend>
+              <legend className="text-base font-semibold">How will you print?</legend>
               <RadioGroup
                 value={formData.printMethod}
                 onValueChange={(value) => setFormData({ ...formData, printMethod: value })}
@@ -385,7 +385,7 @@ const RequestForm = () => {
             </fieldset>
 
             <fieldset className="space-y-4">
-              <legend className="text-base font-semibold">Add-ons (optional)</legend>
+              <legend className="text-base font-semibold">Add-ons</legend>
               <p className="text-sm text-muted-foreground">Both are optional. Bring your own DNP DS40-compatible media and skip the print server, or add either below.</p>
 
               <div className="flex items-center space-x-3">
@@ -525,7 +525,7 @@ const RequestForm = () => {
                     ? "Mobile number for texts *"
                     : formData.contactPreference === "call"
                       ? "Best number to call *"
-                      : "Phone (optional)"}
+                      : "Phone"}
                 </Label>
                 <Input
                   id="phone"
