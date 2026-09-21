@@ -149,7 +149,7 @@ const RequestForm = () => {
       setDateError("Please choose both a pickup and return date.");
       hasError = true;
     }
-    if (!isValidPhone(formData.phone)) {
+    if (phoneRequired && !isValidPhone(formData.phone)) {
       setPhoneError("Please enter a valid phone number with at least 10 digits.");
       hasError = true;
     }
@@ -165,11 +165,13 @@ const RequestForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           _replyto: formData.email,
-          _subject: `New PrintKit request — ${formData.name}`,
+          _subject: subjectLine,
           Name: formData.name,
           Email: formData.email,
           Phone: formData.phone,
-          "OK to text": formData.smsOk ? "Yes" : "No",
+          contactPreference: formData.contactPreference,
+          bestTimeToCall: formData.bestTimeToCall || "Not specified",
+          printMethod: printMethodLabel || "Not specified",
           "Pickup date": formData.pickupDate,
           "Return date": formData.returnDate,
           "Event type": formData.eventType || "Not specified",
@@ -215,7 +217,9 @@ const RequestForm = () => {
       name: "",
       email: "",
       phone: "",
-      smsOk: false,
+      contactPreference: "email",
+      bestTimeToCall: "",
+      printMethod: "",
       pickupDate: "",
       returnDate: "",
       eventType: "",
