@@ -128,9 +128,10 @@ const RequestForm = () => {
   }, [isSubmitted]);
 
   const isDisabledDate = (date: Date) => {
-    if (availability.status !== "ready") return false;
     const value = toYmd(date);
-    return value < todayYmd() || value > availability.horizonEnd || blockedDates.has(value);
+    if (value < todayYmd()) return true;
+    if (availability.status !== "ready") return false;
+    return value > availability.horizonEnd || blockedDates.has(value);
   };
 
   const rangeCrossesBlockedDate = (from: string, to: string) =>
@@ -303,7 +304,6 @@ const RequestForm = () => {
             {formData.printMethod === "unsure" && (
               <p className="text-lg text-muted-foreground mb-8">Not sure how you'll print? No problem. We'll walk through the options with you when we reply.</p>
             )}
-            {formData.printMethod !== "unsure" && <div className="mb-4" />}
             <Button variant="outline" onClick={resetForm}>Submit another request</Button>
           </div>
         </div>
@@ -459,10 +459,10 @@ const RequestForm = () => {
 
                       <div className="flex flex-wrap items-center justify-between gap-4">
                         <div>
-                          <Label htmlFor="media-kits">Kits ({selectedMedia.prints} prints each)</Label>
+                          <Label>Kits ({selectedMedia.prints} prints each)</Label>
                           <p className="text-sm text-muted-foreground">${selectedMedia.price} per kit</p>
                         </div>
-                        <div className="flex h-10 items-center gap-1" id="media-kits">
+                        <div className="flex h-10 items-center gap-1" aria-label="Media kits">
                           <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.max(1, formData.mediaKits - 1) })} disabled={formData.mediaKits === 1} aria-label="Remove one media kit"><Minus /></Button>
                           <output className="w-10 text-center font-medium" aria-live="polite">{formData.mediaKits}</output>
                           <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.min(4, formData.mediaKits + 1) })} disabled={formData.mediaKits === 4} aria-label="Add one media kit"><Plus /></Button>
@@ -610,13 +610,19 @@ const RequestForm = () => {
               </div>
             </div>
 
-            <blockquote className="border-l-2 border-primary/40 pl-4 my-6">
-              <p className="text-sm text-foreground">{testimonials[1].pullQuote}</p>
-              <p className="text-xs text-muted-foreground mt-2">
-                {testimonials[1].name}
-                {testimonials[1].company ? `, ${testimonials[1].company}` : ""}
-              </p>
-            </blockquote>
+            {(() => {
+              const testimonial = testimonials.find((t) => t.id === "admiration-2026-09");
+              if (!testimonial) return null;
+              return (
+                <blockquote className="border-l-2 border-primary/40 pl-4 my-6">
+                  <p className="text-sm text-foreground">{testimonial.pullQuote}</p>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    {testimonial.name}
+                    {testimonial.company ? `, ${testimonial.company}` : ""}
+                  </p>
+                </blockquote>
+              );
+            })()}
 
             <div className="pt-2">
               <Button type="submit" variant="hero" size="xl" className="w-full" disabled={isSubmitting}>
