@@ -208,7 +208,7 @@ const RequestForm = () => {
     try {
       const response = await fetch("https://formspree.io/f/mqeezrqr", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           _replyto: formData.email,
           _subject: subjectLine,
@@ -243,7 +243,8 @@ const RequestForm = () => {
         title: "Request sent!",
         description: "We'll confirm availability, then send the agreement and payment details.",
       });
-    } catch {
+    } catch (error) {
+      console.error(error);
       trackFormError();
       toast({
         title: "Something went wrong",
