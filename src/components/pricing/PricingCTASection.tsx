@@ -4,7 +4,7 @@ import { testimonials } from "@/data/testimonials";
 
 const PricingCTASection = () => {
   const navigate = useNavigate();
-  const testimonial = testimonials.find((t) => t.id === "admiration-2026-09");
+  const testimonial = testimonials.find((t) => t.id === "eastview-2026-09");
 
   const handleRequestClick = () => {
     navigate("/request");
@@ -20,7 +20,7 @@ const PricingCTASection = () => {
               <blockquote className="text-base text-foreground">
                 {testimonial.pullQuote}
               </blockquote>
-              <p className="text-xs text-muted-foreground mt-3">Sam K., Admiration</p>
+              <p className="text-xs text-muted-foreground mt-3">{testimonial.name}{testimonial.company ? `, ${testimonial.company}` : ""}</p>
             </div>
           )}
           <h2 className="text-3xl md:text-4xl font-semibold mb-4">Check availability</h2>

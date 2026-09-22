@@ -95,13 +95,21 @@ const RequestForm = () => {
 
   const phoneRequired = formData.contactPreference !== "email";
 
+  const [serverAutoChecked, setServerAutoChecked] = useState(false);
+
   const handlePrintMethodChange = (value: string) => {
     setPrintMethodError("");
-    setFormData((current) => ({
-      ...current,
-      printMethod: value,
-      printServer: value === "devices",
-    }));
+    if (value === "devices") {
+      setServerAutoChecked(true);
+      setFormData((current) => ({ ...current, printMethod: value, printServer: true }));
+    } else {
+      setFormData((current) => ({
+        ...current,
+        printMethod: value,
+        printServer: serverAutoChecked ? false : current.printServer,
+      }));
+      setServerAutoChecked(false);
+    }
   };
 
   const blockedDates = useMemo(() => new Set(availability.blocked), [availability.blocked]);
@@ -120,9 +128,10 @@ const RequestForm = () => {
   }, [isSubmitted]);
 
   const isDisabledDate = (date: Date) => {
-    if (availability.status !== "ready") return false;
     const value = toYmd(date);
-    return value < todayYmd() || value > availability.horizonEnd || blockedDates.has(value);
+    if (value < todayYmd()) return true;
+    if (availability.status !== "ready") return false;
+    return value > availability.horizonEnd || blockedDates.has(value);
   };
 
   const rangeCrossesBlockedDate = (from: string, to: string) =>
@@ -208,7 +217,7 @@ const RequestForm = () => {
     try {
       const response = await fetch("https://formspree.io/f/mqeezrqr", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           _replyto: formData.email,
           _subject: subjectLine,
@@ -243,7 +252,8 @@ const RequestForm = () => {
         title: "Request sent!",
         description: "We'll confirm availability, then send the agreement and payment details.",
       });
-    } catch {
+    } catch (error) {
+      console.error(error);
       trackFormError();
       toast({
         title: "Something went wrong",
@@ -294,7 +304,6 @@ const RequestForm = () => {
             {formData.printMethod === "unsure" && (
               <p className="text-lg text-muted-foreground mb-8">Not sure how you'll print? No problem. We'll walk through the options with you when we reply.</p>
             )}
-            {formData.printMethod !== "unsure" && <div className="mb-4" />}
             <Button variant="outline" onClick={resetForm}>Submit another request</Button>
           </div>
         </div>
@@ -450,10 +459,10 @@ const RequestForm = () => {
 
                       <div className="flex flex-wrap items-center justify-between gap-4">
                         <div>
-                          <Label htmlFor="media-kits">Kits ({selectedMedia.prints} prints each)</Label>
+                          <Label>Kits ({selectedMedia.prints} prints each)</Label>
                           <p className="text-sm text-muted-foreground">${selectedMedia.price} per kit</p>
                         </div>
-                        <div className="flex h-10 items-center gap-1" id="media-kits">
+                        <div className="flex h-10 items-center gap-1" aria-label="Media kits">
                           <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.max(1, formData.mediaKits - 1) })} disabled={formData.mediaKits === 1} aria-label="Remove one media kit"><Minus /></Button>
                           <output className="w-10 text-center font-medium" aria-live="polite">{formData.mediaKits}</output>
                           <Button type="button" variant="outline" size="icon" onClick={() => setFormData({ ...formData, mediaKits: Math.min(4, formData.mediaKits + 1) })} disabled={formData.mediaKits === 4} aria-label="Add one media kit"><Plus /></Button>
@@ -479,7 +488,7 @@ const RequestForm = () => {
             <fieldset className="space-y-3">
               <legend className="text-base font-semibold">Add-on</legend>
               <div className="flex items-center space-x-3">
-                <Checkbox id="printServer" checked={formData.printServer} onCheckedChange={(checked) => setFormData({ ...formData, printServer: checked === true })} />
+                <Checkbox id="printServer" checked={formData.printServer} onCheckedChange={(checked) => { setServerAutoChecked(false); setFormData({ ...formData, printServer: checked === true }); }} />
                 <Label htmlFor="printServer" className="font-normal cursor-pointer">WCMPlus print server ($35/day)</Label>
               </div>
               {formData.printMethod === "devices" && !formData.printServer && (
@@ -601,13 +610,19 @@ const RequestForm = () => {
               </div>
             </div>
 
-            <blockquote className="border-l-2 border-primary/40 pl-4 my-6">
-              <p className="text-sm text-foreground">{testimonials[1].pullQuote}</p>
-              <p className="text-xs text-muted-foreground mt-2">
-                {testimonials[1].name}
-                {testimonials[1].company ? `, ${testimonials[1].company}` : ""}
-              </p>
-            </blockquote>
+            {(() => {
+              const testimonial = testimonials.find((t) => t.id === "admiration-2026-09");
+              if (!testimonial) return null;
+              return (
+                <blockquote className="border-l-2 border-primary/40 pl-4 my-6">
+                  <p className="text-sm text-foreground">{testimonial.pullQuote}</p>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    {testimonial.name}
+                    {testimonial.company ? `, ${testimonial.company}` : ""}
+                  </p>
+                </blockquote>
+              );
+            })()}
 
             <div className="pt-2">
               <Button type="submit" variant="hero" size="xl" className="w-full" disabled={isSubmitting}>
