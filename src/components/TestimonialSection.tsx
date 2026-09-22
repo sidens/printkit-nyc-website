@@ -20,7 +20,7 @@ const TestimonialSection = () => {
               <blockquote className="text-base md:text-lg leading-relaxed text-foreground">
                 {testimonial.quote}
               </blockquote>
-              <figcaption className="mt-6">
+              <figcaption className="mt-auto">
                 <span className="font-medium">{testimonial.name}</span>
                 {testimonial.company && (
                   <span className="text-muted-foreground">
@@ -39,8 +39,8 @@ const TestimonialSection = () => {
                     )}
                   </span>
                 )}
+                <p className="text-xs text-muted-foreground mt-1">{testimonial.context}</p>
               </figcaption>
-              <p className="text-xs text-muted-foreground mt-1">{testimonial.context}</p>
             </figure>
           ))}
         </div>
