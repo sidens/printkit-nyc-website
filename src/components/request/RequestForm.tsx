@@ -95,13 +95,21 @@ const RequestForm = () => {
 
   const phoneRequired = formData.contactPreference !== "email";
 
+  const [serverAutoChecked, setServerAutoChecked] = useState(false);
+
   const handlePrintMethodChange = (value: string) => {
     setPrintMethodError("");
-    setFormData((current) => ({
-      ...current,
-      printMethod: value,
-      printServer: value === "devices",
-    }));
+    if (value === "devices") {
+      setServerAutoChecked(true);
+      setFormData((current) => ({ ...current, printMethod: value, printServer: true }));
+    } else {
+      setFormData((current) => ({
+        ...current,
+        printMethod: value,
+        printServer: serverAutoChecked ? false : current.printServer,
+      }));
+      setServerAutoChecked(false);
+    }
   };
 
   const blockedDates = useMemo(() => new Set(availability.blocked), [availability.blocked]);
@@ -480,7 +488,7 @@ const RequestForm = () => {
             <fieldset className="space-y-3">
               <legend className="text-base font-semibold">Add-on</legend>
               <div className="flex items-center space-x-3">
-                <Checkbox id="printServer" checked={formData.printServer} onCheckedChange={(checked) => setFormData({ ...formData, printServer: checked === true })} />
+                <Checkbox id="printServer" checked={formData.printServer} onCheckedChange={(checked) => { setServerAutoChecked(false); setFormData({ ...formData, printServer: checked === true }); }} />
                 <Label htmlFor="printServer" className="font-normal cursor-pointer">WCMPlus print server ($35/day)</Label>
               </div>
               {formData.printMethod === "devices" && !formData.printServer && (
