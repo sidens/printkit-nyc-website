@@ -10,15 +10,12 @@ const TestimonialSection = () => {
         <h2 id="testimonial-heading" className="text-3xl md:text-4xl font-semibold mb-10">
           What renters say
         </h2>
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {testimonials.map((testimonial) => (
             <figure
               key={testimonial.id}
-              className="flex flex-col text-left"
+              className="card-elevated p-8 h-full bg-card flex flex-col text-left"
             >
-              <p className="text-xs uppercase tracking-wide text-muted-foreground mb-4">
-                {testimonial.context}
-              </p>
               <Quote className="w-6 h-6 text-primary/30 mb-4" aria-hidden="true" />
               <blockquote className="text-base md:text-lg leading-relaxed text-foreground">
                 {testimonial.quote}
@@ -43,6 +40,7 @@ const TestimonialSection = () => {
                   </span>
                 )}
               </figcaption>
+              <p className="text-xs text-muted-foreground mt-1">{testimonial.context}</p>
             </figure>
           ))}
         </div>
