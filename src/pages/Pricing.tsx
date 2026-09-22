@@ -8,7 +8,6 @@ import DepositSection from "@/components/pricing/DepositSection";
 import CancellationSection from "@/components/pricing/CancellationSection";
 import PickupDetailsSection from "@/components/pricing/PickupDetailsSection";
 import PricingCTASection from "@/components/pricing/PricingCTASection";
-import PricingTestimonialQuote from "@/components/pricing/PricingTestimonialQuote";
 import SEO from "@/components/SEO";
 import ServiceSchema from "@/components/ServiceSchema";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
@@ -34,7 +33,6 @@ const Pricing = () => {
         <DepositSection />
         <CancellationSection />
         <PickupDetailsSection />
-        <PricingTestimonialQuote />
         <PricingCTASection />
       </main>
       <Footer />
