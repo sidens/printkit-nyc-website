@@ -18,7 +18,7 @@ export const testimonials: Testimonial[] = [
     name: "Sam K.",
     company: "Admiration",
     companyUrl: "https://admiration.co",
-    context: "Fashion week collection studio · Week-long rental · DS40 + print server",
+    context: "Fashion week studio · Week-long rental",
   },
   {
     id: "eastview-2026-09",
@@ -27,6 +27,6 @@ export const testimonials: Testimonial[] = [
     pullQuote:
       "Getting the prints in donors' hands early helped them exceed their fundraising target.",
     name: "East View Photography",
-    context: "Charity golf fundraiser · 3-day rental · DS40 + 4×6 media kit",
+    context: "Charity golf fundraiser · 3-day rental",
   },
 ];
