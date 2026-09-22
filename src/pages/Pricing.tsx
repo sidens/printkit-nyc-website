@@ -34,6 +34,7 @@ const Pricing = () => {
         <DepositSection />
         <CancellationSection />
         <PickupDetailsSection />
+        <PricingTestimonialQuote />
         <PricingCTASection />
       </main>
       <Footer />
