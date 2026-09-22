@@ -32,9 +32,14 @@ const submitCalls = () => fetchMock.mock.calls.filter(([url]) => String(url) ===
 
 const pickRange = async (user: ReturnType<typeof userEvent.setup>) => {
   const grid = screen.getByRole("grid");
-  const days = within(grid).getAllByRole("gridcell").filter((cell) => !!cell.textContent?.trim());
-  await user.click(days[9]);
-  await user.click(days[11]);
+  const days = within(grid).getAllByRole("gridcell").filter((cell) => {
+    if (!cell.textContent?.trim()) return false;
+    const btn = cell.querySelector("button");
+    const isDisabled = btn ? btn.disabled : (cell as HTMLButtonElement).disabled;
+    return !isDisabled;
+  });
+  await user.click(days[0]);
+  await user.click(days[2]);
 };
 
 describe("RequestForm", () => {
