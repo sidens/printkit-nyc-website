@@ -602,8 +602,11 @@ const RequestForm = () => {
             </div>
 
             <blockquote className="border-l-2 border-primary/40 pl-4 my-6">
-              <p className="text-sm text-foreground">{testimonials[0].pullQuote}</p>
-              <p className="text-xs text-muted-foreground mt-2">Sam K., Admiration</p>
+              <p className="text-sm text-foreground">{testimonials[1].pullQuote}</p>
+              <p className="text-xs text-muted-foreground mt-2">
+                {testimonials[1].name}
+                {testimonials[1].company ? `, ${testimonials[1].company}` : ""}
+              </p>
             </blockquote>
 
             <div className="pt-2">
