@@ -3,7 +3,7 @@ export interface Testimonial {
   quote: string;
   pullQuote: string;
   name: string;
-  company: string;
+  company?: string;
   companyUrl?: string;
   context: string;
 }
@@ -19,5 +19,14 @@ export const testimonials: Testimonial[] = [
     company: "Admiration",
     companyUrl: "https://admiration.co",
     context: "Fashion week collection studio · Week-long rental · DS40 + print server",
+  },
+  {
+    id: "eastview-2026-09",
+    quote:
+      "PrintKit NYC provided us with exactly what we needed: a high-speed, high-quality printer for souvenir photos at a charity golf outing fundraiser. Getting the prints in the donors' hands early helped them exceed their target donations. Everyone was thrilled with the results!",
+    pullQuote:
+      "Getting the prints in donors' hands early helped them exceed their fundraising target.",
+    name: "East View Photography",
+    context: "Charity golf fundraiser · 3-day rental · DS40 + 4×6 media kit",
   },
 ];
