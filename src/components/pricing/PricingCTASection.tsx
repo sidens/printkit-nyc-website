@@ -1,3 +1,4 @@
+import { Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { testimonials } from "@/data/testimonials";
@@ -16,8 +17,9 @@ const PricingCTASection = () => {
       <div className="container-narrow">
         <div className="max-w-2xl mx-auto text-center">
           {testimonial && (
-            <div className="mb-10">
-              <blockquote className="text-base text-foreground">
+            <div className="mb-10 max-w-xl mx-auto card-elevated p-6 md:p-8 text-left">
+              <Quote className="w-5 h-5 text-primary/30 mb-3" aria-hidden="true" />
+              <blockquote className="text-base md:text-lg leading-relaxed text-foreground">
                 {testimonial.pullQuote}
               </blockquote>
               <p className="text-xs text-muted-foreground mt-3">{testimonial.name}{testimonial.company ? `, ${testimonial.company}` : ""}</p>
