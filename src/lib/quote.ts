@@ -5,7 +5,7 @@ export const TAX_RATE = 0.08875;
 
 export const MEDIA = {
   "4x6": { price: 100, prints: 400, stocked: true },
-  "6x8": { price: 120, prints: 200, stocked: true },
+  "6x8": { price: 120, prints: 200, stocked: false },
   "5x7": { price: 160, prints: 200, stocked: false },
 } as const;
 

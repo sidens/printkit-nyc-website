@@ -4,34 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-const faqs = [
-  {
-    question: "Do I need special software?",
-    answer:
-      "No. The DNP DS40 works with any software that can send print jobs to a standard printer driver. This includes photo booth software, Lightroom, Photoshop, and basic image viewers. If your computer can print, it can use the PrintKit.",
-  },
-  {
-    question: "How do I get print media?",
-    answer:
-      "Add a media kit when you request dates: one roll, loaded and test-printed before pickup. 4×6 is $100 for 400 prints; 6×8 and 5×7 are available too. You can bring your own DNP DS40 media instead.",
-  },
-  {
-    question: "What happens if something breaks?",
-    answer:
-      "Email us at hello@printkitnyc.com as soon as you notice an issue. We'll troubleshoot with you and help figure out the best path forward. The refundable deposit covers accidental damage, and responsibility is capped at the cost of repair or replacement — whichever is lower.",
-  },
-  {
-    question: "What size table do I need?",
-    answer:
-      "The printer is compact—about the size of a small microwave. A standard 2-foot by 3-foot table works well. Make sure you have access to a power outlet nearby.",
-  },
-  {
-    question: "Why is PrintKit pickup-only?",
-    answer:
-      "Pickup keeps our pricing fair and straightforward. It eliminates delivery fees, avoids scheduling complications, and lets us personally walk you through the kit. Plus, it makes returns simple—just drop it back off when you're done.",
-  },
-];
+import { homepageFaqs } from "@/lib/faqData";
 
 const FAQSection = () => {
   return (
@@ -45,7 +18,7 @@ const FAQSection = () => {
         </div>
         <div className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
+            {homepageFaqs.map((faq, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}

@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { PRICING } from "@/lib/pricingData";
+import { PRICING, TAX_RATE_LABEL } from "@/lib/pricingData";
 import { trackCtaClick } from "@/lib/analytics";
 
 const pricingItems = [
   { label: PRICING.baseRental.name, value: `$${PRICING.baseRental.price}`, unit: "/ day" },
-  { label: "Media kit", value: `$${PRICING.prepaidMediaKit.price}`, unit: "flat", note: "(up to 400 4×6 prints)" },
+  { label: "Media kit", value: `$${PRICING.prepaidMediaKit.price}`, unit: "flat", note: `(${PRICING.prepaidMediaKit.note})` },
   { label: PRICING.securityDeposit.name, value: `$${PRICING.securityDeposit.price}`, unit: "refundable" },
 ];
 
@@ -42,7 +42,7 @@ const PricingSection = () => {
             </div>
             <div className="mt-8 pt-6 border-t border-border text-center">
               <p className="text-sm text-muted-foreground mb-5">
-                Applicable sales tax is added to the rental and optional add-ons. The refundable
+                NYC sales tax ({TAX_RATE_LABEL}) is added to the rental and optional add-ons. The refundable
                 security deposit is not taxed.
               </p>
               <Button variant="outline" asChild>

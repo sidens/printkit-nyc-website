@@ -5,8 +5,9 @@ const kitItems = [
   "DNP DS40 professional photo printer",
   "Protective travel case",
   "Power and USB cables",
+  "Print catcher tray",
   "Quick-start setup guide",
-  "Setup help and troubleshooting by email during your rental",
+  "Setup help and troubleshooting by text and email during your rental",
 ];
 
 const KitSection = () => {

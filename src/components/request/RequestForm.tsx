@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { trackGenerateLead, trackFormError } from "@/lib/analytics";
 import { useAvailability } from "@/lib/availability";
 import { calculateQuote, MEDIA, type PrintSize } from "@/lib/quote";
+import { SPECIAL_ORDER_LEAD_DAYS } from "@/lib/pricingData";
 
 const toYmd = (date: Date) => {
   const year = date.getFullYear();
@@ -451,6 +452,11 @@ const RequestForm = () => {
                         ))}
                       </RadioGroup>
                       <p className="text-sm text-muted-foreground">One size per rental. The print size is set by the media loaded in the printer, so it can't be changed mid-event.</p>
+                      {formData.printSize === "6x8" && (
+                        <div className="highlight-box rounded-lg p-4 text-sm">
+                          6×8 is ordered in for your rental, so request it at least {SPECIAL_ORDER_LEAD_DAYS} days before pickup.
+                        </div>
+                      )}
                       {formData.printSize === "5x7" && (
                         <div className="highlight-box rounded-lg p-4 text-sm">
                           5x7 is a special order. It's prepaid, non-refundable, and has to be confirmed at least 7 days before pickup. 6x8 gives you the same 200 prints for $40 less on a larger print — the reason to choose 5x7 is that it fits a standard off-the-shelf frame.

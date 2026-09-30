@@ -128,7 +128,7 @@ const ServiceSchema = () => {
           itemOffered: {
             "@type": "Service",
             name: "Refundable Security Deposit",
-            description: "Required for all rentals; refunded within 48 hours of return in working condition",
+            description: "Required for all rentals; refunded within five business days of return, minus anything owed",
           },
           price: deposit.price.toFixed(2),
           priceCurrency: deposit.currency,
