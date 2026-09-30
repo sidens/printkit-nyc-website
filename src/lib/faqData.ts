@@ -6,7 +6,7 @@ export const generalFaqs = [
       "Each PrintKit includes a DNP DS40 professional photo printer, a protective travel case, power and USB cables, and a quick-start setup guide. Nothing extra is required to get started.",
   },
   {
-    question: "How bigheavy is the printer?",
+    question: "How big / heavy is the printer?",
     answer:
       "The DNP DS40 is 12.7\"Wx14.4\"Dx6.7\"H and weighs approximately 30 lbs (14 kg). The rest of the kit in the protective travel case adds a few more inches and pounds, so plan accordingly if you're carrying it up stairs or transporting it by hand. Most renters find it manageable, but it's worth being prepared.",
   },
@@ -19,6 +19,11 @@ export const generalFaqs = [
     question: "How fast does the printer print?",
     answer:
       "The DNP DS40 produces a 4×6 photo in approximately 8–9 seconds, making it well-suited for events and higher-volume use.",
+  },
+  {
+    question: "Does it need ink?",
+    answer:
+      "No. The DNP DS40 is a dye-sublimation printer: a heated ribbon transfers color onto the photo paper, then seals it with a clear protective coat. The ribbon and paper come matched as one media kit and run out at the same time, so there are no cartridges to buy, top up, or clog mid-event. A 4×6 kit makes 400 prints for $100, and every print comes out dry and ready to hand out. Need more than 400? Add a second kit. Swapping only takes a few minutes.",
   },
   {
     question: "How many prints can I make?",
