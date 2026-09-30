@@ -8,7 +8,7 @@ export const generalFaqs = [
   {
     question: "How big / heavy is the printer?",
     answer:
-      "The DNP DS40 is 12.7\"Wx14.4\"Dx6.7\"H and weighs approximately 30 lbs (14 kg). The rest of the kit in the protective travel case adds a few more inches and pounds, so plan accordingly if you're carrying it up stairs or transporting it by hand. Most renters find it manageable, but it's worth being prepared.",
+      "The DNP DS40 is 12.7\"W x 14.4\"D x 6.7\"H and weighs approximately 30 lbs (14 kg). The rest of the kit in the protective travel case adds a few more inches and pounds, so plan accordingly if you're carrying it up stairs or transporting it by hand. Most renters find it manageable, but it's worth being prepared.",
   },
   {
     question: "Do I need special software to use the printer?",
