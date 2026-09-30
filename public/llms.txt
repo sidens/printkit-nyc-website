@@ -7,27 +7,29 @@ PrintKit NYC rents professional DNP DS40 photo printers in New York City. The ki
 - DNP DS40 professional dye-sub photo printer
 - Protective travel case
 - Power and USB cables
+- Print catcher tray
 - Quick-start setup guide
 
 ## Pricing
 
-- Daily printer rental: $100 per day
-- Media kit: one roll, loaded and test-printed before pickup. 4×6 is $100 for 400 prints; 6×8 and 5×7 are available too. Customers may bring their own DNP DS40 media instead
-- WCMPlus Print Server: $35 per day for wireless printing from any device on the network
-- Refundable security deposit: $200 required for all rentals; refunded within 48 hours of return in working condition
-- Applicable sales tax is added to the rental and optional add-ons; the refundable security deposit is not taxed
+- Daily printer rental: $100 per day. Every calendar date the printer is out counts, including pickup day and return day
+- Media kit: one roll of paper and ribbon, loaded and test-printed before pickup. 4×6 is in stock at $100 for 400 prints. 6×8 ($120 for 200 prints) and 5×7 ($160 for 200 prints) are ordered in for each rental and need at least 7 days before pickup; 5×7 is prepaid and non-refundable. Customers may bring their own DNP DS40 media instead
+- WCMPlus Print Server: $35 per day for wireless printing, including AirPrint from iPhone and iPad
+- Refundable security deposit: $200 required for all rentals; refunded within five business days of return, minus anything owed
+- NYC sales tax (8.875%) is added to the rental and optional add-ons; the refundable security deposit is not taxed
+- Late returns bill at the daily rate for each extra day
 
 ## Service area
 
-Pickup is in Clinton Hill, Brooklyn, New York. Rentals are available to customers in NYC and the surrounding area.
+Pickup is in Clinton Hill, Brooklyn, New York. Rentals are available to customers in NYC and the surrounding area; taking the kit outside the NYC area requires approval first.
 
 ## How to book
 
-Request your rental dates at https://printkitnyc.com/request. We review availability and reply by text message or email within 1–2 business days. If the dates are available, we send the rental agreement for signature, followed by payment details. Payment must be received before pickup.
+Request your rental dates at https://printkitnyc.com/request. We review availability and reply by text message or email within 1–2 business days. If the dates are available, we send the rental agreement for signature, followed by an itemized invoice. Payment is usually by card through the invoice; cash, PayPal and Venmo are also accepted. Payment must be received before pickup.
 
 ## Support
 
-Setup help and troubleshooting are available by email at hello@printkitnyc.com during your rental. There is no published phone line and no guaranteed replacement unit.
+Setup help and troubleshooting are available by text during your rental (the number is in the quick-start guide at https://printkitnyc.com/quickstart) and by email at hello@printkitnyc.com. If the printer fails through no fault of the renter, PrintKit will try to provide a backup; a replacement is not guaranteed.
 
 ## Pages
 
@@ -35,6 +37,8 @@ Setup help and troubleshooting are available by email at hello@printkitnyc.com d
 - Pricing: https://printkitnyc.com/pricing
 - FAQ: https://printkitnyc.com/faq
 - Request dates: https://printkitnyc.com/request
+- Quick-start guide: https://printkitnyc.com/quickstart
+- DS40 manual: https://printkitnyc.com/manual
 
 ## Contact
 
