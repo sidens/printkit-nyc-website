@@ -6,9 +6,9 @@ export const generalFaqs = [
       "Each PrintKit includes a DNP DS40 professional photo printer, a protective travel case, power and USB cables, and a quick-start setup guide. Nothing extra is required to get started.",
   },
   {
-    question: "How heavy is the printer?",
+    question: "How bigheavy is the printer?",
     answer:
-      "The DNP DS40 weighs approximately 24 lbs (11 kg). The protective travel case adds a few more pounds, so plan accordingly if you're carrying it up stairs or transporting it by hand. Most renters find it manageable, but it's worth being prepared.",
+      "The DNP DS40 is 12.7\"Wx14.4\"Dx6.7\"H and weighs approximately 30 lbs (14 kg). The rest of the kit in the protective travel case adds a few more inches and pounds, so plan accordingly if you're carrying it up stairs or transporting it by hand. Most renters find it manageable, but it's worth being prepared.",
   },
   {
     question: "Do I need special software to use the printer?",
@@ -80,6 +80,11 @@ export const policyFaqs = [
     question: "Is there a security deposit?",
     answer:
       "Yes. A $200 refundable security deposit is required for all rentals. It is not subject to sales tax and is refunded within 48 hours of return, provided the kit is returned in working condition.",
+  },
+  {
+    question: "How is daily billing calculated?",
+    answer:
+      "Every calendar date the printer is out counts as a day, including pickup day and return day. Friday pickup with Sunday return is 3 days; Friday to Monday is 4.",
   },
   {
     question: "When do I sign the agreement and pay?",
