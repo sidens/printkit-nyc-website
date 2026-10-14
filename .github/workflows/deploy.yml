@@ -42,6 +42,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Renders /, /pricing, /faq, /request to static HTML so AI and search crawlers that
+      # don't run JavaScript see the page text, and those URLs return 200 instead of 404.
+      # Fails the job (live site untouched) if any page doesn't render.
+      - name: Install Chromium for pre-rendering
+        run: npx playwright install --with-deps chromium
+
+      - name: Pre-render pages
+        run: npm run prerender
+
       # Vite outputs to dist/ by default
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
