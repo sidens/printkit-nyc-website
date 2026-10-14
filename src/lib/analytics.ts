@@ -25,10 +25,11 @@ export const trackPageView = (path: string, title: string) => {
 };
 
 /** Conversion: rental request form submitted successfully. */
-export const trackGenerateLead = () => {
+export const trackGenerateLead = (referral?: string) => {
   trackEvent("generate_lead", {
     event_category: "form",
     event_label: "rental_request",
+    referral,
   });
 };
 

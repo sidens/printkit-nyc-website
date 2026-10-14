@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowRight, CalendarDays, CheckCircle, Minus, Plus, RefreshCw, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { trackGenerateLead, trackFormError } from "@/lib/analytics";
@@ -62,6 +63,18 @@ const PRINT_METHODS = [
   { value: "unsure", label: "Not sure yet" },
 ];
 
+const AI_OPTION = "AI assistant (ChatGPT, Perplexity, Gemini, etc.)";
+const REFERRAL_OPTIONS = [
+  "Google search",
+  AI_OPTION,
+  "Referred by a client or colleague",
+  "Another photographer",
+  "Event planner, venue, or vendor",
+  "Saw a PrintKit printer at an event",
+  "Rented from us before",
+  "Other",
+];
+
 const rangeLabel = (from: Date, to: Date) =>
   from.getMonth() === to.getMonth()
     ? `${format(from, "MMM d")}–${format(to, "d")}`
@@ -88,6 +101,8 @@ const RequestForm = () => {
     returnDate: "",
     eventType: "",
     notes: "",
+    referralSource: "",
+    referralDetail: "",
     printSize: "4x6" as PrintSize,
     mediaKits: 1,
     mediaChoice: "kit" as MediaChoice,
@@ -179,6 +194,12 @@ const RequestForm = () => {
       ? `[${preferenceTag}] ${rangeLabel(selectedRange.from, selectedRange.to)} · ${quote.days} ${quote.days === 1 ? "day" : "days"} · ${money.format(quote.dueAtPickup)} · ${formData.name}`
       : `[${preferenceTag}] New PrintKit request · ${formData.name}`) + setupTag;
 
+  const referralValue = !formData.referralSource
+    ? "Not specified"
+    : formData.referralDetail.trim()
+      ? `${formData.referralSource} — ${formData.referralDetail.trim()}`
+      : formData.referralSource;
+
   const successCopy = () => {
     if (formData.contactPreference === "text") {
       return `We'll text you at ${formData.phone} within 24 hours. Your itemized quote will come by email to ${formData.email}.`;
@@ -232,6 +253,7 @@ const RequestForm = () => {
           "Return date": formData.returnDate,
           "Event type": formData.eventType || "Not specified",
           Notes: formData.notes || "None",
+          "How did you hear about us?": referralValue,
           days: quote.days,
           mediaChoice: formData.mediaChoice,
           mediaSize: formData.mediaChoice === "kit" ? formData.printSize : "N/A",
@@ -248,7 +270,7 @@ const RequestForm = () => {
       if (!response.ok) throw new Error("Form submission failed");
 
       setIsSubmitted(true);
-      trackGenerateLead();
+      trackGenerateLead(formData.referralSource || "not_specified");
       toast({
         title: "Request sent!",
         description: "We'll confirm availability, then send the agreement and payment details.",
@@ -283,6 +305,8 @@ const RequestForm = () => {
       returnDate: "",
       eventType: "",
       notes: "",
+      referralSource: "",
+      referralDetail: "",
       printSize: "4x6",
       mediaKits: 1,
       mediaChoice: "kit",
@@ -608,6 +632,26 @@ const RequestForm = () => {
               <div className="space-y-2">
                 <Label htmlFor="eventType">What's this for?</Label>
                 <Input id="eventType" value={formData.eventType} onChange={(event) => setFormData({ ...formData, eventType: event.target.value })} placeholder="School fundraiser, ~150 guests, souvenir prints to take home" />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="referralSource">How did you hear about us?</Label>
+                <Select value={formData.referralSource} onValueChange={(value) => setFormData({ ...formData, referralSource: value, referralDetail: "" })}>
+                  <SelectTrigger id="referralSource"><SelectValue placeholder="Select one" /></SelectTrigger>
+                  <SelectContent>
+                    {REFERRAL_OPTIONS.map((option) => (
+                      <SelectItem key={option} value={option}>{option}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {(formData.referralSource === "Other" || formData.referralSource === AI_OPTION) && (
+                  <Input
+                    aria-label={formData.referralSource === "Other" ? "Where did you hear about us?" : "Which AI assistant?"}
+                    value={formData.referralDetail}
+                    onChange={(event) => setFormData({ ...formData, referralDetail: event.target.value })}
+                    placeholder={formData.referralSource === "Other" ? "Where did you hear about us?" : "Which one?"}
+                  />
+                )}
               </div>
 
               <div className="space-y-2">
