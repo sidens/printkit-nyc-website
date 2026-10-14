@@ -9,17 +9,22 @@ required marker, skippable entirely.
 ## Proposed responses (dropdown)
 
 A compact select — a long list of radio cards would overwhelm an optional
-question. Options, tuned to a local Brooklyn pickup rental business:
+question. Options are tuned to event producers and solo photographers, and
+only include channels PrintKit actually has (no Instagram, no paid ads):
 
 - Google search
-- Instagram
-- Friend, family, or colleague
-- Event planner or another vendor
-- Saw the PrintKit at an event
+- AI assistant (ChatGPT, Perplexity, Gemini, etc.)
+- Referred by a client or colleague
+- Another photographer
+- Event planner, venue, or vendor
+- Saw a PrintKit printer at an event
+- Rented from us before
 - Other
 
 Choosing **Other** reveals a small free-text input ("Where did you hear about
-us?") so "Other" is still actionable data.
+us?") so "Other" is still actionable data. Choosing **AI assistant** also
+reveals an optional "Which one?" input, so you can see which AI tools send
+leads.
 
 ## Changes (all in `src/components/request/RequestForm.tsx`)
 
