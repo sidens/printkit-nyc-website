@@ -67,3 +67,29 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  # Tells Bing (and other IndexNow engines; Google doesn't participate) that the pages changed,
+  # so they recrawl in hours instead of whenever. Runs only for real site changes (pushes and
+  # manual runs), not the 4x-daily availability refreshes. A failure here never affects the
+  # live site; the deploy has already finished.
+  indexnow:
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.event_name != 'schedule'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Submit sitemap URLs to IndexNow
+        run: |
+          KEY_FILE=$(ls public | grep -E '^[0-9a-f]{32}\.txt$' | head -1)
+          KEY="${KEY_FILE%.txt}"
+          URLS=$(grep -o '<loc>[^<]*</loc>' public/sitemap.xml | sed -E 's#</?loc>##g' | jq -R . | jq -sc .)
+          BODY=$(jq -nc --arg key "$KEY" --argjson urls "$URLS" \
+            '{host: "printkitnyc.com", key: $key, keyLocation: ("https://printkitnyc.com/" + $key + ".txt"), urlList: $urls}')
+          echo "Submitting: $BODY"
+          CODE=$(curl -s -o response.txt -w "%{http_code}" -X POST https://api.indexnow.org/indexnow \
+            -H "Content-Type: application/json; charset=utf-8" -d "$BODY")
+          echo "IndexNow responded $CODE"; cat response.txt
+          # 200 = accepted, 202 = accepted, key check pending. Anything else needs a look.
+          [ "$CODE" = "200" ] || [ "$CODE" = "202" ]
