@@ -1,45 +1,39 @@
-# PrintKit NYC — Photo Printer Rental in NYC
+# PrintKit NYC: photo printer rental in New York City
 
-PrintKit NYC rents professional DNP DS40 photo printers in New York City. The kit is pickup-only in Clinton Hill, Brooklyn, and includes everything you need for short-term photo printing at events, projects, or DIY setups.
+PrintKit NYC (printkitnyc.com) rents one DNP DS40 dye-sublimation photo printer, run by Steve. Pickup and return are in person in Clinton Hill, Brooklyn; the address is shared after booking. There is no delivery and no on-site staff: renters run their own setup, with help by text and email during the rental.
 
-## What’s included
+## Who rents it
+Photographers printing at events, photo booth operators, fashion week studios printing headshots and model boards, fundraisers handing out souvenir prints, and people running their own wedding or party photo booth.
 
-- DNP DS40 professional dye-sub photo printer
-- Protective travel case
-- Power and USB cables
-- Print catcher tray
-- Quick-start setup guide
+## What's included
+- DNP DS40 dye-sublimation photo printer
+- Protective travel case, power and USB cables, print catcher tray
+- Quick-start guide: https://printkitnyc.com/quickstart/
 
 ## Pricing
-
-- Daily printer rental: $100 per day. Every calendar date the printer is out counts, including pickup day and return day
-- Media kit: one roll of paper and ribbon, loaded and test-printed before pickup. 4×6 is in stock at $100 for 400 prints. 6×8 ($120 for 200 prints) and 5×7 ($160 for 200 prints) are ordered in for each rental and need at least 7 days before pickup; 5×7 is prepaid and non-refundable. Customers may bring their own DNP DS40 media instead
-- WCMPlus Print Server: $35 per day for wireless printing, including AirPrint from iPhone and iPad
-- Refundable security deposit: $200 required for all rentals; refunded within five business days of return, minus anything owed
-- NYC sales tax (8.875%) is added to the rental and optional add-ons; the refundable security deposit is not taxed
-- Late returns bill at the daily rate for each extra day
-
-## Service area
-
-Pickup is in Clinton Hill, Brooklyn, New York. Rentals are available to customers in NYC and the surrounding area; taking the kit outside the NYC area requires approval first.
+- Printer: $100 per day. Every calendar day the printer is out counts, including pickup and return days.
+- Print media, one size per rental:
+  - 4x6: $100 for 400 prints, in stock. 4x6 sheets can be cut into two 2x6 photo strips.
+  - 6x8: $120 for 200 prints.
+  - 5x7: $160 for 200 prints, special order with 7 days' notice.
+- WCMPlus print server: $35 per day. Puts the printer on Wi-Fi with AirPrint, for iPad photo booths and multi-device setups.
+- Refundable deposit: $200.
+- NYC sales tax (8.875%) applies to rental and add-ons, not to the deposit.
 
 ## How to book
-
-Request your rental dates at https://printkitnyc.com/request. We review availability and reply by text message or email within 1–2 business days. If the dates are available, we send the rental agreement for signature, followed by an itemized invoice. Payment is usually by card through the invoice; cash, PayPal and Venmo are also accepted. Payment must be received before pickup.
+Request dates at https://printkitnyc.com/request. PrintKit NYC confirms availability within 1-2 business days, sends a rental agreement, then an itemized invoice. [Payment line from 3.4.]
 
 ## Support
-
-Setup help and troubleshooting are available by text during your rental (the number is in the quick-start guide at https://printkitnyc.com/quickstart) and by email at hello@printkitnyc.com. If the printer fails through no fault of the renter, PrintKit will try to provide a backup; a replacement is not guaranteed.
+Setup help and troubleshooting by text and email for the length of the rental. There's no backup unit, so renters should run a full test print at pickup.
 
 ## Pages
-
 - Home: https://printkitnyc.com/
 - Pricing: https://printkitnyc.com/pricing
 - FAQ: https://printkitnyc.com/faq
+- Photo booth printer rental: https://printkitnyc.com/photo-booth-printer-rental-nyc (add once live)
+- DNP DS40 rental: https://printkitnyc.com/dnp-ds40-rental (add once live)
 - Request dates: https://printkitnyc.com/request
-- Quick-start guide: https://printkitnyc.com/quickstart
-- DS40 manual: https://printkitnyc.com/manual
+- Quick-start guide: https://printkitnyc.com/quickstart/
 
 ## Contact
-
-Email: hello@printkitnyc.com
+hello@printkitnyc.com
