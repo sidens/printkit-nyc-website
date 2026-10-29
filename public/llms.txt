@@ -21,7 +21,7 @@ Photographers printing at events, photo booth operators, fashion week studios pr
 - NYC sales tax (8.875%) applies to rental and add-ons, not to the deposit.
 
 ## How to book
-Request dates at https://printkitnyc.com/request. PrintKit NYC confirms availability within 1-2 business days, sends a rental agreement, then an itemized invoice. [Payment line from 3.4.]
+Request dates at https://printkitnyc.com/request. PrintKit NYC confirms availability within 1-2 business days, sends a rental agreement, then an itemized invoice.
 
 ## Support
 Setup help and troubleshooting by text and email for the length of the rental. There's no backup unit, so renters should run a full test print at pickup.
@@ -30,8 +30,6 @@ Setup help and troubleshooting by text and email for the length of the rental. T
 - Home: https://printkitnyc.com/
 - Pricing: https://printkitnyc.com/pricing
 - FAQ: https://printkitnyc.com/faq
-- Photo booth printer rental: https://printkitnyc.com/photo-booth-printer-rental-nyc (add once live)
-- DNP DS40 rental: https://printkitnyc.com/dnp-ds40-rental (add once live)
 - Request dates: https://printkitnyc.com/request
 - Quick-start guide: https://printkitnyc.com/quickstart/
 
