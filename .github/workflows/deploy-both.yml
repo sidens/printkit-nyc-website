@@ -60,16 +60,9 @@ jobs:
         with:
           path: dist
 
-      # Also deploy the same dist/ to Cloudflare Pages. continue-on-error keeps a Cloudflare
+      # Also deploy the same dist/ to Cloudflare Pages (project 'printkitnyc', created
+      # 2026-11-08). continue-on-error keeps a Cloudflare
       # failure from blocking the GitHub Pages deploy while both run side by side.
-      - name: Ensure Cloudflare Pages project exists
-        uses: cloudflare/wrangler-action@v3
-        continue-on-error: true
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages project create printkitnyc --production-branch=main
-
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         continue-on-error: true
